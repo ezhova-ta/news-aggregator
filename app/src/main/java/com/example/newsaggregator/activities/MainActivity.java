@@ -5,8 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.newsaggregator.R;
@@ -22,31 +27,28 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView newsListView;
+    private NewsAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        newsListView = findViewById(R.id.newsList);
+        recyclerView = findViewById(R.id.newsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         final BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
                 final int resultResult = intent.getIntExtra("request_result", 0);
                 if(resultResult == MainService.FETCHING_NEWS_RESULT_OK) {
-                    /*
-                    TODO Получить данные из БД и отобразить
-                     */
                     final List<News> newsList = loadNewsFromDB();
                     if(newsList != null) {
                         /*
                         TODO Реализовать вывод новостей в RecyclerView
                          */
-                        newsListView.setText("");
-                        for(final News news : newsList) {
-                            newsListView.append(news.toString());
-                        }
+                        adapter = new NewsAdapter(newsList);
+                        recyclerView.setAdapter(adapter);
                     } else {
                         /*
                         TODO Сообщить пользователю о проблеме (данные не загружены из сети)
@@ -81,6 +83,57 @@ public class MainActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private class NewsHolder extends RecyclerView.ViewHolder {
+        private TextView newsTitleTextView;
+        private TextView newsLinkTextView;
+        private TextView newsDescriptionTextView;
+        private TextView newsPubDateTextView;
+        private News news;
+
+        NewsHolder(@NonNull final View itemView) {
+            super(itemView);
+            newsTitleTextView = itemView.findViewById(R.id.newsTitle);
+            newsLinkTextView = itemView.findViewById(R.id.newsLink);
+            newsDescriptionTextView = itemView.findViewById(R.id.newsDescription);
+            newsPubDateTextView = itemView.findViewById(R.id.newsPubDate);
+        }
+
+        public void bindView(final News news) {
+            this.news = news;
+            newsTitleTextView.setText(news.getTitle());
+            newsLinkTextView.setText(news.getLink());
+            newsDescriptionTextView.setText(news.getDescription());
+            newsPubDateTextView.setText(news.getPubDate());
+        }
+    }
+
+    private class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
+        private List<News> newsList;
+
+        NewsAdapter(final List<News> news) {
+            newsList = news;
+        }
+
+        @NonNull
+        @Override
+        public NewsHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
+            final LayoutInflater inflater = getLayoutInflater();
+            final View view = inflater.inflate(R.layout.news_list_item_view, viewGroup, false);
+            return new NewsHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull final NewsHolder newsHolder, final int i) {
+            final News news = newsList.get(i);
+            newsHolder.bindView(news);
+        }
+
+        @Override
+        public int getItemCount() {
+            return newsList.size();
         }
     }
 }
