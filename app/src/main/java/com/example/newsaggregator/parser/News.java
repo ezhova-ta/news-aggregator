@@ -9,6 +9,14 @@ public class News {
 
     public News() {}
 
+    public News(String title, String link, String description, String pubDate, long channelId) {
+        this.title = title;
+        this.link = link;
+        this.description = description;
+        this.pubDate = pubDate;
+        this.channelId = channelId;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -47,5 +55,16 @@ public class News {
 
     public long getChannelId() {
         return channelId;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "title='" + title + '\'' +
+                ", link='" + link + '\'' +
+                ", description='" + description + '\'' +
+                ", pubDate='" + pubDate + '\'' +
+                ", channelId=" + channelId +
+                '}';
     }
 }

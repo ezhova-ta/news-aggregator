@@ -2,7 +2,6 @@ package com.example.newsaggregator.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.Context;
 
 import com.example.newsaggregator.application.RSSReaderApplication;
 import com.example.newsaggregator.db.DBWriter;
@@ -46,7 +45,7 @@ public class MainService extends IntentService {
         final List<News> news = parser.parseXml();
 
 
-        if(news != null) {
+        if(!news.isEmpty()) {
             final RSSReaderApplication app = RSSReaderApplication.getInstance();
             final DBWriter dbWriter = app.getDbWriter();
             long channelId = dbWriter.getChannelId(channelURL);
