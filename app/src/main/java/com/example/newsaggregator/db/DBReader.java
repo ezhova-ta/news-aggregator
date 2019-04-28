@@ -14,12 +14,12 @@ public class DBReader {
     private final SQLiteOpenHelper helper;
     private final SQLiteDatabase db;
 
-    public DBReader(Context context) {
+    public DBReader(final Context context) {
         helper = new DBHelper(context);
         db = helper.getReadableDatabase();
     }
 
-    public long getChannelId(String link) {
+    public long getChannelId(final String link) {
         final Cursor cursor = db.query("rss_channels", new String[]{"id"}, "link = ?",
                 new String[]{link}, null, null, null);
         if(cursor.moveToFirst()) {
@@ -29,7 +29,7 @@ public class DBReader {
         }
     }
 
-    public List<News> getChannelNews(long channelId) {
+    public List<News> getChannelNews(final long channelId) {
         final List<News> newsList = new ArrayList<>(10);
         News news;
         final Cursor cursor = db.query(

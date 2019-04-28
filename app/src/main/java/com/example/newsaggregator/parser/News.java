@@ -9,7 +9,8 @@ public class News {
 
     public News() {}
 
-    public News(String title, String link, String description, String pubDate, long channelId) {
+    public News(final String title, final String link, final String description,
+                final String pubDate, final long channelId) {
         this.title = title;
         this.link = link;
         this.description = description;
@@ -17,23 +18,23 @@ public class News {
         this.channelId = channelId;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
-    public void setLink(String link) {
+    public void setLink(final String link) {
         this.link = link;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    public void setPubDate(String pubDate) {
+    public void setPubDate(final String pubDate) {
         this.pubDate = pubDate;
     }
 
-    public void setChannelId(long channelId) {
+    public void setChannelId(final long channelId) {
         this.channelId = channelId;
     }
 

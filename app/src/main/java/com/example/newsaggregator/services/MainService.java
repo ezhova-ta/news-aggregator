@@ -24,7 +24,7 @@ public class MainService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(final Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_FETCH_NEWS.equals(action)) {
@@ -38,7 +38,7 @@ public class MainService extends IntentService {
         }
     }
 
-    private void handleActionFetchNews(String channelURL) throws IOException, XmlPullParserException {
+    private void handleActionFetchNews(final String channelURL) throws IOException, XmlPullParserException {
         final Intent responseIntent = new Intent(ACTION_FETCH_NEWS);
 
         final XmlParser parser = new XmlParser(channelURL);
@@ -59,7 +59,7 @@ public class MainService extends IntentService {
              */
             dbWriter.removeChannelNews(channelId);
 
-            for(News elem : news) {
+            for(final News elem : news) {
                 elem.setChannelId(channelId);
                 dbWriter.addNews(elem);
             }

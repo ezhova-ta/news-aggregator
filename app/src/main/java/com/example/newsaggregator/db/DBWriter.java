@@ -13,12 +13,12 @@ public class DBWriter {
     private SQLiteDatabase db;
     private ContentValues contentValues;
 
-    public DBWriter(Context context) {
+    public DBWriter(final Context context) {
         helper = new DBHelper(context);
         db = helper.getWritableDatabase();
     }
 
-    public long getChannelId(String link) {
+    public long getChannelId(final String link) {
         final Cursor cursor = db.query("rss_channels", new String[]{"id"}, "link = ?",
                 new String[]{link}, null, null, null);
         if(cursor.moveToFirst()) {
@@ -28,13 +28,13 @@ public class DBWriter {
         }
     }
 
-    public long addChannel(String link) {
+    public long addChannel(final String link) {
         contentValues = new ContentValues();
         contentValues.put("link", link);
         return db.insert("rss_channels", null, contentValues);
     }
 
-    public long addNews(News news) {
+    public long addNews(final News news) {
         contentValues = new ContentValues();
         contentValues.put("title", news.getTitle());
         contentValues.put("link", news.getLink());
@@ -44,23 +44,23 @@ public class DBWriter {
         return db.insert("news", null, contentValues);
     }
 
-    public int removeChannel(long id) {
+    public int removeChannel(final long id) {
         return db.delete("rss_channels", "id = " + id, null);
     }
 
-    public int removeChannel(String link) {
+    public int removeChannel(final String link) {
         return db.delete("rss_channels", "link = " + link, null);
     }
 
-    public int removeNews(long id) {
+    public int removeNews(final long id) {
         return db.delete("news", "id = " + id, null);
     }
 
-    public int removeNews(String title) {
+    public int removeNews(final String title) {
         return db.delete("news", "title = " + title, null);
     }
 
-    public int removeChannelNews(long channelId) {
+    public int removeChannelNews(final long channelId) {
         return db.delete("news", "rss_channel_id = " + channelId, null);
     }
 

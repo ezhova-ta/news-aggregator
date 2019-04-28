@@ -11,7 +11,7 @@ public class DBNewsLoader implements Callable<List<News>> {
     private final Context context;
     private final String rssChannelUrl;
 
-    public DBNewsLoader(Context context, String rssChannelUrl) {
+    public DBNewsLoader(final Context context, final String rssChannelUrl) {
         this.context = context;
         this.rssChannelUrl = rssChannelUrl;
     }

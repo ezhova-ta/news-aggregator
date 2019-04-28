@@ -14,7 +14,7 @@ import java.util.List;
 public class XmlParser {
     private URL url;
 
-    public XmlParser(String url) throws MalformedURLException {
+    public XmlParser(final String url) throws MalformedURLException {
         this.url = new URL(url);
     }
 

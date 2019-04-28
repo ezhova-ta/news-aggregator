@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView newsListView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         newsListView = findViewById(R.id.newsList);
 
         final BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onReceive(final Context context, final Intent intent) {
                 final int resultResult = intent.getIntExtra("request_result", 0);
                 if(resultResult == MainService.FETCHING_NEWS_RESULT_OK) {
                     /*
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         TODO Реализовать вывод новостей в RecyclerView
                          */
                         newsListView.setText("");
-                        for(News news : newsList) {
+                        for(final News news : newsList) {
                             newsListView.append(news.toString());
                         }
                     } else {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, intentFilter);
     }
 
-    public void onUpdateNewsButtonClick(View view) {
+    public void onUpdateNewsButtonClick(final View view) {
         final Intent intent = new Intent(this, MainService.class);
         intent.setAction(MainService.ACTION_FETCH_NEWS);
         intent.putExtra(MainService.EXTRA_PARAM_CHANNEL_URL, "https://news.yandex.ru/travels.rss");
