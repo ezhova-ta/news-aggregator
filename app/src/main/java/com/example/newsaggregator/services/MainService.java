@@ -4,8 +4,8 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.example.newsaggregator.application.DBReader;
-import com.example.newsaggregator.application.RSSReaderApplication;
 import com.example.newsaggregator.application.DBWriter;
+import com.example.newsaggregator.application.RSSReaderApplication;
 import com.example.newsaggregator.parser.News;
 import com.example.newsaggregator.parser.XmlParser;
 
@@ -56,14 +56,9 @@ public class MainService extends IntentService {
                 channelId = dbWriter.addChannel(channelURL);
             }
 
-            /*
-            TODO Адекватно обновлять новости канала в БД
-             */
-            dbWriter.removeChannelNews(channelId);
-
             for(final News elem : news) {
                 elem.setChannelId(channelId);
-                dbWriter.addNews(elem);
+                dbWriter.addNewsOrIgnore(elem);
             }
 
             responseIntent.putExtra("request_result", FETCHING_NEWS_RESULT_OK);

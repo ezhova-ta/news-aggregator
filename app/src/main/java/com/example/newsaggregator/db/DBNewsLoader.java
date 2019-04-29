@@ -22,7 +22,6 @@ public class DBNewsLoader implements Callable<List<News>> {
         final DBReader reader = app.getDbReader();
         final long channelId = reader.getChannelId(rssChannelUrl);
         final List<News> newsList = reader.getChannelNews(channelId);
-        reader.close();
         return newsList;
     }
 }

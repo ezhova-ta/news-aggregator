@@ -2,7 +2,6 @@ package com.example.newsaggregator.application;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -29,19 +28,19 @@ public class DBWriter {
     }
 
     public long addChannel(final String link) {
-        contentValues = new ContentValues();
-        contentValues.put(DbConstants.CHANNEL_LINK_FIELD, link);
+        contentValues = createContentValues(link);
         return db.insert(DbConstants.RSS_CHANNELS_TABLE_NAME, null, contentValues);
     }
 
     public long addNews(final News news) {
-        contentValues = new ContentValues();
-        contentValues.put(DbConstants.NEWS_TITLE_FIELD, news.getTitle());
-        contentValues.put(DbConstants.NEWS_LINK_FIELD, news.getLink());
-        contentValues.put(DbConstants.NEWS_DESCRIPTION_FIELD, news.getDescription());
-        contentValues.put(DbConstants.NEWS_PUB_DATE_FIELD, news.getPubDate());
-        contentValues.put(DbConstants.NEWS_RSS_CHANNEL_ID_FIELS, news.getChannelId());
+        contentValues = createContentValues(news);
         return db.insert(DbConstants.NEWS_TABLE_NAME, null, contentValues);
+    }
+
+    public long addNewsOrIgnore(final News news) {
+        contentValues = createContentValues(news);
+        return db.insertWithOnConflict(DbConstants.NEWS_TABLE_NAME, null, contentValues,
+                SQLiteDatabase.CONFLICT_IGNORE);
     }
 
     public int removeChannel(final long id) {
@@ -67,6 +66,22 @@ public class DBWriter {
     public int removeChannelNews(final long channelId) {
         return db.delete(DbConstants.NEWS_TABLE_NAME,
                 DbConstants.NEWS_RSS_CHANNEL_ID_FIELS + " = " + channelId, null);
+    }
+
+    private ContentValues createContentValues(final News news) {
+        contentValues = new ContentValues();
+        contentValues.put(DbConstants.NEWS_TITLE_FIELD, news.getTitle());
+        contentValues.put(DbConstants.NEWS_LINK_FIELD, news.getLink());
+        contentValues.put(DbConstants.NEWS_DESCRIPTION_FIELD, news.getDescription());
+        contentValues.put(DbConstants.NEWS_PUB_DATE_FIELD, news.getPubDate());
+        contentValues.put(DbConstants.NEWS_RSS_CHANNEL_ID_FIELS, news.getChannelId());
+        return contentValues;
+    }
+
+    private ContentValues createContentValues(final String channelLink) {
+        contentValues = new ContentValues();
+        contentValues.put(DbConstants.CHANNEL_LINK_FIELD, channelLink);
+        return contentValues;
     }
 
     public void close() {

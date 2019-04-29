@@ -81,6 +81,24 @@ public class DBReader {
         return newsList;
     }
 
+    public long getNews(final String link) {
+        final Cursor cursor = db.query(
+                DbConstants.NEWS_TABLE_NAME,
+                new String[]{DbConstants.NEWS_ID_FIELD},
+                DbConstants.NEWS_LINK_FIELD + " = ?",
+                new String[]{link},
+                null,
+                null,
+                null
+        );
+
+        if(cursor.moveToFirst()) {
+            return cursor.getLong(0);
+        } else {
+            return 0;
+        }
+    }
+
     public void close() {
         helper.close();
         db.close();
