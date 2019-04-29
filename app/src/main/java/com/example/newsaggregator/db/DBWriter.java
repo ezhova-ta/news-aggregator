@@ -19,8 +19,12 @@ public class DBWriter {
     }
 
     public long getChannelId(final String link) {
-        final Cursor cursor = db.query("rss_channels", new String[]{"id"}, "link = ?",
-                new String[]{link}, null, null, null);
+        final Cursor cursor =
+                db.query(DbConstants.RSS_CHANNELS_TABLE_NAME,
+                new String[]{DbConstants.CHANNEL_ID_FIELD},
+                DbConstants.CHANNEL_LINK_FIELD + " = " + link,
+                null, null, null, null);
+
         if(cursor.moveToFirst()) {
             return cursor.getLong(0);
         } else {
@@ -30,38 +34,43 @@ public class DBWriter {
 
     public long addChannel(final String link) {
         contentValues = new ContentValues();
-        contentValues.put("link", link);
-        return db.insert("rss_channels", null, contentValues);
+        contentValues.put(DbConstants.CHANNEL_LINK_FIELD, link);
+        return db.insert(DbConstants.RSS_CHANNELS_TABLE_NAME, null, contentValues);
     }
 
     public long addNews(final News news) {
         contentValues = new ContentValues();
-        contentValues.put("title", news.getTitle());
-        contentValues.put("link", news.getLink());
-        contentValues.put("description", news.getDescription());
-        contentValues.put("pub_date", news.getPubDate());
-        contentValues.put("rss_channel_id", news.getChannelId());
-        return db.insert("news", null, contentValues);
+        contentValues.put(DbConstants.NEWS_TITLE_FIELD, news.getTitle());
+        contentValues.put(DbConstants.NEWS_LINK_FIELD, news.getLink());
+        contentValues.put(DbConstants.NEWS_DESCRIPTION_FIELD, news.getDescription());
+        contentValues.put(DbConstants.NEWS_PUB_DATE_FIELD, news.getPubDate());
+        contentValues.put(DbConstants.NEWS_RSS_CHANNEL_ID_FIELS, news.getChannelId());
+        return db.insert(DbConstants.NEWS_TABLE_NAME, null, contentValues);
     }
 
     public int removeChannel(final long id) {
-        return db.delete("rss_channels", "id = " + id, null);
+        return db.delete(DbConstants.RSS_CHANNELS_TABLE_NAME,
+                DbConstants.CHANNEL_ID_FIELD + " = " + id, null);
     }
 
     public int removeChannel(final String link) {
-        return db.delete("rss_channels", "link = " + link, null);
+        return db.delete(DbConstants.RSS_CHANNELS_TABLE_NAME,
+                DbConstants.CHANNEL_LINK_FIELD + " = " + link, null);
     }
 
     public int removeNews(final long id) {
-        return db.delete("news", "id = " + id, null);
+        return db.delete(DbConstants.NEWS_TABLE_NAME,
+                DbConstants.NEWS_ID_FIELD + " = " + id, null);
     }
 
     public int removeNews(final String title) {
-        return db.delete("news", "title = " + title, null);
+        return db.delete(DbConstants.NEWS_TABLE_NAME,
+                DbConstants.NEWS_TITLE_FIELD + " = " + title, null);
     }
 
     public int removeChannelNews(final long channelId) {
-        return db.delete("news", "rss_channel_id = " + channelId, null);
+        return db.delete(DbConstants.NEWS_TABLE_NAME,
+                DbConstants.NEWS_RSS_CHANNEL_ID_FIELS + " = " + channelId, null);
     }
 
     public void close() {

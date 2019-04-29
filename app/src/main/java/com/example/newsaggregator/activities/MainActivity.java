@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 if(resultResult == MainService.FETCHING_NEWS_RESULT_OK) {
                     final List<News> newsList = loadNewsFromDB();
                     if(newsList != null) {
-                        /*
-                        TODO Реализовать вывод новостей в RecyclerView
-                         */
                         adapter = new NewsAdapter(newsList);
                         recyclerView.setAdapter(adapter);
                     } else {

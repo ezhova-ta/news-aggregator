@@ -20,8 +20,12 @@ public class DBReader {
     }
 
     public long getChannelId(final String link) {
-        final Cursor cursor = db.query("rss_channels", new String[]{"id"}, "link = ?",
-                new String[]{link}, null, null, null);
+        final Cursor cursor =
+                db.query(DbConstants.RSS_CHANNELS_TABLE_NAME,
+                        new String[]{DbConstants.CHANNEL_ID_FIELD},
+                        DbConstants.CHANNEL_LINK_FIELD + " = " + link,
+                        null, null, null, null);
+
         if(cursor.moveToFirst()) {
             return cursor.getLong(0);
         } else {
@@ -33,10 +37,15 @@ public class DBReader {
         final List<News> newsList = new ArrayList<>(10);
         News news;
         final Cursor cursor = db.query(
-                "news",
-                new String[]{"title", "link", "description", "pub_date"},
-                "rss_channel_id = ?",
-                new String[]{Long.toString(channelId)},
+                DbConstants.NEWS_TABLE_NAME,
+                new String[]{
+                        DbConstants.NEWS_TITLE_FIELD,
+                        DbConstants.NEWS_LINK_FIELD,
+                        DbConstants.NEWS_DESCRIPTION_FIELD,
+                        DbConstants.NEWS_PUB_DATE_FIELD
+                },
+                DbConstants.NEWS_RSS_CHANNEL_ID_FIELS + " = " + channelId,
+                null,
                 null,
                 null,
                 null
