@@ -3,8 +3,9 @@ package com.example.newsaggregator.services;
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.example.newsaggregator.application.DBReader;
 import com.example.newsaggregator.application.RSSReaderApplication;
-import com.example.newsaggregator.db.DBWriter;
+import com.example.newsaggregator.application.DBWriter;
 import com.example.newsaggregator.parser.News;
 import com.example.newsaggregator.parser.XmlParser;
 
@@ -31,7 +32,7 @@ public class MainService extends IntentService {
                 final String channelUrl = intent.getStringExtra(EXTRA_PARAM_CHANNEL_URL);
                 try {
                     handleActionFetchNews(channelUrl);
-                } catch (IOException | XmlPullParserException e) {
+                } catch (final IOException | XmlPullParserException e) {
                     e.printStackTrace(System.err);
                 }
             }
@@ -48,7 +49,8 @@ public class MainService extends IntentService {
         if(!news.isEmpty()) {
             final RSSReaderApplication app = RSSReaderApplication.getInstance();
             final DBWriter dbWriter = app.getDbWriter();
-            long channelId = dbWriter.getChannelId(channelURL);
+            final DBReader dbReader = app.getDbReader();
+            long channelId = dbReader.getChannelId(channelURL);
 
             if(channelId == 0) {
                 channelId = dbWriter.addChannel(channelURL);

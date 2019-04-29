@@ -27,6 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class MainActivity extends AppCompatActivity {
+    private BroadcastReceiver receiver;
     private NewsAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.newsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final BroadcastReceiver receiver = new BroadcastReceiver() {
+        receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
                 final int resultResult = intent.getIntExtra("request_result", 0);
@@ -63,6 +64,32 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, intentFilter);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     public void onUpdateNewsButtonClick(final View view) {
         final Intent intent = new Intent(this, MainService.class);
         intent.setAction(MainService.ACTION_FETCH_NEWS);
@@ -77,13 +104,13 @@ public class MainActivity extends AppCompatActivity {
         final Future<List<News>> future = executor.submit(dbNewsLoader);
         try {
             return future.get();
-        } catch (ExecutionException | InterruptedException e) {
+        } catch (final ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private class NewsHolder extends RecyclerView.ViewHolder {
+    private static class NewsHolder extends RecyclerView.ViewHolder {
         private TextView newsTitleTextView;
         private TextView newsLinkTextView;
         private TextView newsDescriptionTextView;

@@ -1,30 +1,44 @@
-package com.example.newsaggregator.db;
+package com.example.newsaggregator.application;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.newsaggregator.db.DBHelper;
+import com.example.newsaggregator.db.DbConstants;
 import com.example.newsaggregator.parser.News;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBReader {
+    private static DBReader instance;
     private final SQLiteOpenHelper helper;
     private final SQLiteDatabase db;
 
-    public DBReader(final Context context) {
+    private DBReader(final Context context) {
         helper = new DBHelper(context);
         db = helper.getReadableDatabase();
     }
 
+    public static DBReader getInstance(final Context context) {
+        if(instance == null) {
+            instance = new DBReader(context);
+        }
+        return instance;
+    }
+
     public long getChannelId(final String link) {
-        final Cursor cursor =
-                db.query(DbConstants.RSS_CHANNELS_TABLE_NAME,
-                        new String[]{DbConstants.CHANNEL_ID_FIELD},
-                        DbConstants.CHANNEL_LINK_FIELD + " = " + link,
-                        null, null, null, null);
+        final Cursor cursor = db.query(
+                DbConstants.RSS_CHANNELS_TABLE_NAME,
+                new String[]{DbConstants.CHANNEL_ID_FIELD},
+                DbConstants.CHANNEL_LINK_FIELD + " = ?",
+                new String[]{link},
+                null,
+                null,
+                null
+        );
 
         if(cursor.moveToFirst()) {
             return cursor.getLong(0);

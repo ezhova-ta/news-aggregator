@@ -1,4 +1,4 @@
-package com.example.newsaggregator.db;
+package com.example.newsaggregator.application;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,30 +6,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.newsaggregator.db.DBHelper;
+import com.example.newsaggregator.db.DbConstants;
 import com.example.newsaggregator.parser.News;
 
 public class DBWriter {
+    private static DBWriter instance;
     private SQLiteOpenHelper helper;
     private SQLiteDatabase db;
     private ContentValues contentValues;
 
-    public DBWriter(final Context context) {
+    private DBWriter(final Context context) {
         helper = new DBHelper(context);
         db = helper.getWritableDatabase();
     }
 
-    public long getChannelId(final String link) {
-        final Cursor cursor =
-                db.query(DbConstants.RSS_CHANNELS_TABLE_NAME,
-                new String[]{DbConstants.CHANNEL_ID_FIELD},
-                DbConstants.CHANNEL_LINK_FIELD + " = " + link,
-                null, null, null, null);
-
-        if(cursor.moveToFirst()) {
-            return cursor.getLong(0);
-        } else {
-            return 0;
+    public static DBWriter getInstance(final Context context) {
+        if(instance == null) {
+            instance = new DBWriter(context);
         }
+        return instance;
     }
 
     public long addChannel(final String link) {
