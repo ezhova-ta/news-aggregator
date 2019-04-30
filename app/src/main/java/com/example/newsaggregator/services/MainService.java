@@ -12,6 +12,7 @@ import com.example.newsaggregator.parser.XmlParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 public class MainService extends IntentService {
@@ -30,39 +31,40 @@ public class MainService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_FETCH_NEWS.equals(action)) {
                 final String channelUrl = intent.getStringExtra(EXTRA_PARAM_CHANNEL_URL);
-                try {
-                    handleActionFetchNews(channelUrl);
-                } catch (final IOException | XmlPullParserException e) {
-                    e.printStackTrace(System.err);
-                }
+                handleActionFetchNews(channelUrl);
             }
         }
     }
 
-    private void handleActionFetchNews(final String channelURL) throws IOException, XmlPullParserException {
+    private void handleActionFetchNews(final String channelURL) {
         final Intent responseIntent = new Intent(ACTION_FETCH_NEWS);
 
-        final XmlParser parser = new XmlParser(channelURL);
-        final List<News> news = parser.parseXml();
+        final XmlParser parser;
+        try {
+            parser = new XmlParser(channelURL);
+            final List<News> news = parser.parseXml();
 
+            if(!news.isEmpty()) {
+                final RSSReaderApplication app = RSSReaderApplication.getInstance();
+                final DBWriter dbWriter = app.getDbWriter();
+                final DBReader dbReader = app.getDbReader();
+                long channelId = dbReader.getChannelId(channelURL);
 
-        if(!news.isEmpty()) {
-            final RSSReaderApplication app = RSSReaderApplication.getInstance();
-            final DBWriter dbWriter = app.getDbWriter();
-            final DBReader dbReader = app.getDbReader();
-            long channelId = dbReader.getChannelId(channelURL);
+                if(channelId == 0) {
+                    channelId = dbWriter.addChannel(channelURL);
+                }
 
-            if(channelId == 0) {
-                channelId = dbWriter.addChannel(channelURL);
+                for(final News elem : news) {
+                    elem.setChannelId(channelId);
+                    dbWriter.addNewsOrIgnore(elem);
+                }
+
+                responseIntent.putExtra("request_result", FETCHING_NEWS_RESULT_OK);
+            } else {
+                responseIntent.putExtra("request_result", FETCHING_NEWS_RESULT_FAILING);
             }
-
-            for(final News elem : news) {
-                elem.setChannelId(channelId);
-                dbWriter.addNewsOrIgnore(elem);
-            }
-
-            responseIntent.putExtra("request_result", FETCHING_NEWS_RESULT_OK);
-        } else {
+        } catch (final XmlPullParserException | IOException e) {
+            e.printStackTrace(System.err);
             responseIntent.putExtra("request_result", FETCHING_NEWS_RESULT_FAILING);
         }
 

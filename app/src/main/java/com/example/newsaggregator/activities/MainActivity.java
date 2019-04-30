@@ -27,9 +27,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String LOADING_DATA_ERROR = "Sorry! Loading data error occurred.";
     private BroadcastReceiver receiver;
     private NewsAdapter adapter;
     private RecyclerView recyclerView;
+    private TextView loadingDataErrorTextView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -37,25 +39,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.newsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        loadingDataErrorTextView = findViewById(R.id.loadingDataError);
 
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
-                final int resultResult = intent.getIntExtra("request_result", 0);
-                if(resultResult == MainService.FETCHING_NEWS_RESULT_OK) {
+                final int requestResult = intent.getIntExtra("request_result", 0);
+                if(requestResult == MainService.FETCHING_NEWS_RESULT_OK) {
                     final List<News> newsList = loadNewsFromDB();
                     if(newsList != null) {
                         adapter = new NewsAdapter(newsList);
                         recyclerView.setAdapter(adapter);
                     } else {
-                        /*
-                        TODO Сообщить пользователю о проблеме (данные не загружены из сети)
-                         */
+                        loadingDataErrorTextView.setText(LOADING_DATA_ERROR);
                     }
-                } else if(resultResult == MainService.FETCHING_NEWS_RESULT_FAILING) {
-                    /*
-                    TODO Сообщить пользователю о проблеме (данные не загружены из сети)
-                     */
+                } else if(requestResult == MainService.FETCHING_NEWS_RESULT_FAILING) {
+                    loadingDataErrorTextView.setText(LOADING_DATA_ERROR);
                 }
             }
         };
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             return future.get();
         } catch (final ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             return null;
         }
     }
