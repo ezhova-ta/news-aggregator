@@ -6,13 +6,12 @@ import android.content.Intent;
 import com.example.newsaggregator.application.DBReader;
 import com.example.newsaggregator.application.DBWriter;
 import com.example.newsaggregator.application.RSSReaderApplication;
-import com.example.newsaggregator.parser.News;
+import com.example.newsaggregator.parser.NewsEntry;
 import com.example.newsaggregator.parser.XmlParser;
 
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 public class MainService extends IntentService {
@@ -42,9 +41,9 @@ public class MainService extends IntentService {
         final XmlParser parser;
         try {
             parser = new XmlParser(channelURL);
-            final List<News> news = parser.parseXml();
+            final List<NewsEntry> newsEntryList = parser.parseXml();
 
-            if(!news.isEmpty()) {
+            if(!newsEntryList.isEmpty()) {
                 final RSSReaderApplication app = RSSReaderApplication.getInstance();
                 final DBWriter dbWriter = app.getDbWriter();
                 final DBReader dbReader = app.getDbReader();
@@ -54,7 +53,7 @@ public class MainService extends IntentService {
                     channelId = dbWriter.addChannel(channelURL);
                 }
 
-                for(final News elem : news) {
+                for(final NewsEntry elem : newsEntryList) {
                     elem.setChannelId(channelId);
                     dbWriter.addNewsOrIgnore(elem);
                 }

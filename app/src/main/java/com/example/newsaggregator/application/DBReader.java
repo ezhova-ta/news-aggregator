@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.newsaggregator.db.DBHelper;
 import com.example.newsaggregator.db.DbConstants;
-import com.example.newsaggregator.parser.News;
+import com.example.newsaggregator.parser.NewsEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +47,9 @@ public class DBReader {
         }
     }
 
-    public List<News> getChannelNews(final long channelId) {
-        final List<News> newsList = new ArrayList<>(10);
-        News news;
+    public List<NewsEntry> getChannelNews(final long channelId) {
+        final List<NewsEntry> newsEntryList = new ArrayList<>(10);
+        NewsEntry newsEntry;
         final Cursor cursor = db.query(
                 DbConstants.NEWS_TABLE_NAME,
                 new String[]{
@@ -67,18 +67,18 @@ public class DBReader {
 
         if(cursor.moveToFirst()) {
             do {
-                news = new News(
+                newsEntry = new NewsEntry(
                         cursor.getString(0),
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
                         channelId
                 );
-                newsList.add(news);
+                newsEntryList.add(newsEntry);
             } while(cursor.moveToNext());
         }
 
-        return newsList;
+        return newsEntryList;
     }
 
     public long getNews(final String link) {

@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.db.DBNewsLoader;
-import com.example.newsaggregator.parser.News;
+import com.example.newsaggregator.parser.NewsEntry;
 import com.example.newsaggregator.services.MainService;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.newsList);
+        recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadingDataErrorTextView = findViewById(R.id.loadingDataError);
 
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
             public void onReceive(final Context context, final Intent intent) {
                 final int requestResult = intent.getIntExtra("request_result", 0);
                 if(requestResult == MainService.FETCHING_NEWS_RESULT_OK) {
-                    final List<News> newsList = loadNewsFromDB();
-                    if(newsList != null) {
-                        adapter = new NewsAdapter(newsList);
+                    final List<NewsEntry> newsEntryList = loadNewsFromDB();
+                    if(newsEntryList != null) {
+                        adapter = new NewsAdapter(newsEntryList);
                         recyclerView.setAdapter(adapter);
                     } else {
                         loadingDataErrorTextView.setText(LOADING_DATA_ERROR);
@@ -96,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
     }
 
-    private List<News> loadNewsFromDB() {
+    private List<NewsEntry> loadNewsFromDB() {
         final ExecutorService executor = Executors.newFixedThreadPool(3);
-        final Callable<List<News>> dbNewsLoader =
+        final Callable<List<NewsEntry>> dbNewsLoader =
                 new DBNewsLoader(MainActivity.this, "https://news.yandex.ru/travels.rss");
-        final Future<List<News>> future = executor.submit(dbNewsLoader);
+        final Future<List<NewsEntry>> future = executor.submit(dbNewsLoader);
         try {
             return future.get();
         } catch (final ExecutionException | InterruptedException e) {
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         private TextView newsLinkTextView;
         private TextView newsDescriptionTextView;
         private TextView newsPubDateTextView;
-        private News news;
+        private NewsEntry newsEntry;
 
         NewsHolder(@NonNull final View itemView) {
             super(itemView);
@@ -124,20 +124,20 @@ public class MainActivity extends AppCompatActivity {
             newsPubDateTextView = itemView.findViewById(R.id.newsPubDate);
         }
 
-        public void bindView(final News news) {
-            this.news = news;
-            newsTitleTextView.setText(news.getTitle());
-            newsLinkTextView.setText(news.getLink());
-            newsDescriptionTextView.setText(news.getDescription());
-            newsPubDateTextView.setText(news.getPubDate());
+        public void bindView(final NewsEntry newsEntry) {
+            this.newsEntry = newsEntry;
+            newsTitleTextView.setText(newsEntry.getTitle());
+            newsLinkTextView.setText(newsEntry.getLink());
+            newsDescriptionTextView.setText(newsEntry.getDescription());
+            newsPubDateTextView.setText(newsEntry.getPubDate());
         }
     }
 
     private class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
-        private List<News> newsList;
+        private List<NewsEntry> newsEntryList;
 
-        NewsAdapter(final List<News> news) {
-            newsList = news;
+        NewsAdapter(final List<NewsEntry> newsEntryList) {
+            this.newsEntryList = newsEntryList;
         }
 
         @NonNull
@@ -150,13 +150,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull final NewsHolder newsHolder, final int i) {
-            final News news = newsList.get(i);
-            newsHolder.bindView(news);
+            final NewsEntry newsEntry = newsEntryList.get(i);
+            newsHolder.bindView(newsEntry);
         }
 
         @Override
         public int getItemCount() {
-            return newsList.size();
+            return newsEntryList.size();
         }
     }
 }

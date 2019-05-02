@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.newsaggregator.db.DBHelper;
 import com.example.newsaggregator.db.DbConstants;
-import com.example.newsaggregator.parser.News;
+import com.example.newsaggregator.parser.NewsEntry;
 
 public class DBWriter {
     private static DBWriter instance;
@@ -32,13 +32,13 @@ public class DBWriter {
         return db.insert(DbConstants.RSS_CHANNELS_TABLE_NAME, null, contentValues);
     }
 
-    public long addNews(final News news) {
-        contentValues = createContentValues(news);
+    public long addNews(final NewsEntry newsEntry) {
+        contentValues = createContentValues(newsEntry);
         return db.insert(DbConstants.NEWS_TABLE_NAME, null, contentValues);
     }
 
-    public long addNewsOrIgnore(final News news) {
-        contentValues = createContentValues(news);
+    public long addNewsOrIgnore(final NewsEntry newsEntry) {
+        contentValues = createContentValues(newsEntry);
         return db.insertWithOnConflict(DbConstants.NEWS_TABLE_NAME, null, contentValues,
                 SQLiteDatabase.CONFLICT_IGNORE);
     }
@@ -68,13 +68,13 @@ public class DBWriter {
                 DbConstants.NEWS_RSS_CHANNEL_ID_FIELS + " = " + channelId, null);
     }
 
-    private ContentValues createContentValues(final News news) {
+    private ContentValues createContentValues(final NewsEntry newsEntry) {
         contentValues = new ContentValues();
-        contentValues.put(DbConstants.NEWS_TITLE_FIELD, news.getTitle());
-        contentValues.put(DbConstants.NEWS_LINK_FIELD, news.getLink());
-        contentValues.put(DbConstants.NEWS_DESCRIPTION_FIELD, news.getDescription());
-        contentValues.put(DbConstants.NEWS_PUB_DATE_FIELD, news.getPubDate());
-        contentValues.put(DbConstants.NEWS_RSS_CHANNEL_ID_FIELS, news.getChannelId());
+        contentValues.put(DbConstants.NEWS_TITLE_FIELD, newsEntry.getTitle());
+        contentValues.put(DbConstants.NEWS_LINK_FIELD, newsEntry.getLink());
+        contentValues.put(DbConstants.NEWS_DESCRIPTION_FIELD, newsEntry.getDescription());
+        contentValues.put(DbConstants.NEWS_PUB_DATE_FIELD, newsEntry.getPubDate());
+        contentValues.put(DbConstants.NEWS_RSS_CHANNEL_ID_FIELS, newsEntry.getChannelId());
         return contentValues;
     }
 

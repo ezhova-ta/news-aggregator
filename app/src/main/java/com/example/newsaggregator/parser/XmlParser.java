@@ -26,10 +26,10 @@ public class XmlParser {
         return parser;
     }
 
-    public List<News> parseXml() throws XmlPullParserException, IOException {
+    public List<NewsEntry> parseXml() throws XmlPullParserException, IOException {
         final XmlPullParser parser = getXmlParser();
-        News news = new News();
-        final List<News> newsList = new ArrayList<>(10);
+        NewsEntry newsEntry = new NewsEntry();
+        final List<NewsEntry> newsEntryList = new ArrayList<>(10);
         boolean isItem = false;
 
         while(parser.getEventType() != XmlPullParser.END_DOCUMENT) {
@@ -39,29 +39,29 @@ public class XmlParser {
                     parser.next();
                 } else if(isItem && "title".equals(parser.getName())) {
                     parser.next();
-                    news.setTitle(parser.getText());
+                    newsEntry.setTitle(parser.getText());
                 } else if(isItem && "link".equals(parser.getName())) {
                     parser.next();
-                    news.setLink(parser.getText());
+                    newsEntry.setLink(parser.getText());
                 } else if(isItem && "description".equals(parser.getName())) {
                     parser.next();
-                    news.setDescription(parser.getText());
+                    newsEntry.setDescription(parser.getText());
                 } else if(isItem && "pubDate".equals(parser.getName())) {
                     parser.next();
-                    news.setPubDate(parser.getText());
+                    newsEntry.setPubDate(parser.getText());
                 } else {
                     parser.next();
                 }
             } else {
                 if(parser.getEventType() == XmlPullParser.END_TAG && "item".equals(parser.getName())) {
-                    newsList.add(news);
+                    newsEntryList.add(newsEntry);
                     isItem = false;
-                    news = new News();
+                    newsEntry = new NewsEntry();
                 }
                 parser.next();
             }
         }
 
-        return newsList;
+        return newsEntryList;
     }
 }

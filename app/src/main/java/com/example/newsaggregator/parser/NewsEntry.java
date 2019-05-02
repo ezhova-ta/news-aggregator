@@ -1,16 +1,16 @@
 package com.example.newsaggregator.parser;
 
-public class News {
+public class NewsEntry {
     private String title;
     private String link;
     private String description;
     private String pubDate;
     private long channelId;
 
-    public News() {}
+    public NewsEntry() {}
 
-    public News(final String title, final String link, final String description,
-                final String pubDate, final long channelId) {
+    public NewsEntry(final String title, final String link, final String description,
+                     final String pubDate, final long channelId) {
         this.title = title;
         this.link = link;
         this.description = description;
@@ -60,7 +60,7 @@ public class News {
 
     @Override
     public String toString() {
-        return "News{" +
+        return "NewsEntry{" +
                 "title='" + title + '\'' +
                 ", link='" + link + '\'' +
                 ", description='" + description + '\'' +
