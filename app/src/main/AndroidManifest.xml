@@ -11,13 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".application.RSSReaderApplication">
+        android:name=".common.RSSReaderApplication">
 
-        <service
-            android:name=".services.MainService"
-            android:exported="false"></service>
-
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".view.NewsEntryListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

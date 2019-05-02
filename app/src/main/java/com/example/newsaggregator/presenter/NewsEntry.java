@@ -1,4 +1,4 @@
-package com.example.newsaggregator.parser;
+package com.example.newsaggregator.presenter;
 
 public class NewsEntry {
     private String title;
@@ -10,7 +10,7 @@ public class NewsEntry {
     public NewsEntry() {}
 
     public NewsEntry(final String title, final String link, final String description,
-                     final String pubDate, final long channelId) {
+                final String pubDate, final long channelId) {
         this.title = title;
         this.link = link;
         this.description = description;
@@ -56,16 +56,5 @@ public class NewsEntry {
 
     public long getChannelId() {
         return channelId;
-    }
-
-    @Override
-    public String toString() {
-        return "NewsEntry{" +
-                "title='" + title + '\'' +
-                ", link='" + link + '\'' +
-                ", description='" + description + '\'' +
-                ", pubDate='" + pubDate + '\'' +
-                ", channelId=" + channelId +
-                '}';
     }
 }

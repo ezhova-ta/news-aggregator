@@ -5,20 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
+    tools:context=".view.NewsEntryListActivity"
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/updateNewsButton"
+        android:id="@+id/updateNewsEntryListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onUpdateNewsButtonClick"
+        android:onClick="onUpdateNewsEntryListButtonClick"
         android:text="@string/update_news_button" />
-
-    <TextView
-        android:id="@+id/loadingDataError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/newsEntryList"
