@@ -6,7 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.newsaggregator.R;
+import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.rss_channel_list.RssChannelListPresenter;
+
+import java.util.List;
 
 public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView {
     private RssChannelListPresenter presenter;
@@ -50,6 +53,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
     public void onAddRssChannelButtonClick() {
         throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public void showRssChannelList(final List<RssChannel> rssChannelList) {
+        final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

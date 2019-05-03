@@ -3,6 +3,7 @@ package com.example.newsaggregator.presenter.news_entry_list;
 import android.content.Intent;
 
 import com.example.newsaggregator.model.Repository;
+import com.example.newsaggregator.model.RepositoryImpl;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
 
 public class NewsEntryListPresenter {
@@ -11,11 +12,12 @@ public class NewsEntryListPresenter {
 
     public NewsEntryListPresenter(final NewsEntryListView newsEntryListView) {
         this.newsEntryListView = newsEntryListView;
+        repository = new RepositoryImpl();
     }
 
     public void onCreate() {
         /*
-        TODO Показать новости из БД
+        TODO Показать список новостей из БД
          */
 //        newsEntryListView.registerReceiver(NewsEntryListService.ACTION_FETCH_NEWS);
     }

@@ -1,4 +1,4 @@
-package com.example.newsaggregator.model;
+package com.example.newsaggregator.model.entity;
 
 public class NewsEntry {
     private String title;

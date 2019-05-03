@@ -1,7 +1,11 @@
 package com.example.newsaggregator.presenter.rss_channel_list;
 
 import com.example.newsaggregator.model.Repository;
+import com.example.newsaggregator.model.RepositoryImpl;
+import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
+
+import java.util.List;
 
 public class RssChannelListPresenter {
     private final RssChannelListView rssChannelListView;
@@ -9,10 +13,12 @@ public class RssChannelListPresenter {
 
     public RssChannelListPresenter(final RssChannelListView rssChannelListView) {
         this.rssChannelListView = rssChannelListView;
+        repository = new RepositoryImpl();
     }
 
     public void onCreate() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        final List<RssChannel> rssChannelList = repository.getRssChannelList();
+        rssChannelListView.showRssChannelList(rssChannelList);
     }
 
     public void onDestroy() {

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.model.RssChannel;
+import com.example.newsaggregator.model.entity.RssChannel;
 
 import java.util.List;
 
