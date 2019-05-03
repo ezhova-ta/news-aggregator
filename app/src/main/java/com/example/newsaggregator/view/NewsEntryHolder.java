@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.presenter.NewsEntry;
+import com.example.newsaggregator.model.NewsEntry;
 
 class NewsEntryHolder extends RecyclerView.ViewHolder {
     private TextView newsEntryTitleTextView;

@@ -61,8 +61,8 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
 
     @Override
     protected void onDestroy() {
-        presenter.onDestroy();
         super.onDestroy();
+        presenter.onDestroy();
     }
 
     public void onUpdateNewsEntryListButtonClick(final View view) {
@@ -82,5 +82,10 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     @Override
     public void showNewsEntryList() {
         throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public void resetPresenter() {
+        presenter = null;
     }
 }

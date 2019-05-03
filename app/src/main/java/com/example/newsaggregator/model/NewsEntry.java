@@ -1,21 +1,19 @@
-package com.example.newsaggregator.presenter;
+package com.example.newsaggregator.model;
 
 public class NewsEntry {
     private String title;
     private String link;
     private String description;
     private String pubDate;
-    private long channelId;
 
     public NewsEntry() {}
 
     public NewsEntry(final String title, final String link, final String description,
-                final String pubDate, final long channelId) {
+                final String pubDate) {
         this.title = title;
         this.link = link;
         this.description = description;
         this.pubDate = pubDate;
-        this.channelId = channelId;
     }
 
     public void setTitle(final String title) {
@@ -34,10 +32,6 @@ public class NewsEntry {
         this.pubDate = pubDate;
     }
 
-    public void setChannelId(final long channelId) {
-        this.channelId = channelId;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -52,9 +46,5 @@ public class NewsEntry {
 
     public String getPubDate() {
         return pubDate;
-    }
-
-    public long getChannelId() {
-        return channelId;
     }
 }

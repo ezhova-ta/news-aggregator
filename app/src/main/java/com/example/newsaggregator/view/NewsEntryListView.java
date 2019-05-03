@@ -4,4 +4,5 @@ public interface NewsEntryListView {
     void registerReceiver(String action);
     void unregisterReceiver();
     void showNewsEntryList();
+    void resetPresenter();
 }
