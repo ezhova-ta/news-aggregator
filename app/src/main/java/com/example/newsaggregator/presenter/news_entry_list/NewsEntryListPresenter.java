@@ -1,9 +1,9 @@
-package com.example.newsaggregator.presenter;
+package com.example.newsaggregator.presenter.news_entry_list;
 
 import android.content.Intent;
 
 import com.example.newsaggregator.model.Repository;
-import com.example.newsaggregator.view.NewsEntryListView;
+import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
 
 public class NewsEntryListPresenter {
     private final NewsEntryListView newsEntryListView;

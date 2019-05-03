@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view;
+package com.example.newsaggregator.view.news_entry_list;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">News Aggregator</string>
-    <string name="update_news_button">Update</string>
+    <string name="update_news_entry_list_button">Update</string>
+    <string name="add_rss_channel_button">Add</string>
 </resources>

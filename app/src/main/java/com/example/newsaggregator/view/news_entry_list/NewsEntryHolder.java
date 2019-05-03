@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view;
+package com.example.newsaggregator.view.news_entry_list;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +9,10 @@ import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.NewsEntry;
 
 class NewsEntryHolder extends RecyclerView.ViewHolder {
-    private TextView newsEntryTitleTextView;
-    private TextView newsEntryLinkTextView;
-    private TextView newsEntryDescriptionTextView;
-    private TextView newsEntryPubDateTextView;
+    private final TextView newsEntryTitleTextView;
+    private final TextView newsEntryLinkTextView;
+    private final TextView newsEntryDescriptionTextView;
+    private final TextView newsEntryPubDateTextView;
 
     NewsEntryHolder(@NonNull final View newsEntryView) {
         super(newsEntryView);

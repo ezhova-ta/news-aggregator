@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view;
+package com.example.newsaggregator.view.news_entry_list;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,10 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.presenter.NewsEntryListPresenter;
+import com.example.newsaggregator.presenter.news_entry_list.NewsEntryListPresenter;
 
 public class NewsEntryListActivity extends AppCompatActivity implements NewsEntryListView {
-    private static final String LOADING_DATA_ERROR = "Sorry! Loading data error occurred.";
     private NewsEntryListPresenter presenter;
     private BroadcastReceiver receiver;
     private NewsEntryAdapter adapter;

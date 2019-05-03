@@ -5,18 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.news_entry_list.NewsEntryListActivity"
+    tools:context=".view.rss_channel_list.RssChannelListActivity"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/updateNewsEntryListButton"
+    <EditText
+        android:id="@+id/addRssChannelEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onUpdateNewsEntryListButtonClick"
-        android:text="@string/update_news_entry_list_button" />
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/addRssChannelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onAddRssChannelButtonClick"
+        android:text="@string/add_rss_channel_button" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/newsEntryList"
+        android:id="@+id/rssChannelList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />

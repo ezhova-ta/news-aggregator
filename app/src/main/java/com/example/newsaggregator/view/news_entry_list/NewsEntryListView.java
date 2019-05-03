@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view;
+package com.example.newsaggregator.view.news_entry_list;
 
 public interface NewsEntryListView {
     void registerReceiver(String action);
