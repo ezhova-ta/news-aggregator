@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 public class RssChannelListDBLoader implements Callable<List<RssChannel>> {
-    /*
-    TODO Протестировать загрузку каналов из БД
-     */
     @Override
     public List<RssChannel> call() throws Exception {
         final SQLiteOpenHelper sqLiteOpenHelper =

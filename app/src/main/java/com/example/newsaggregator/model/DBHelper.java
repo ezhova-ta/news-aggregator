@@ -14,7 +14,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(
                 "create table " + DbConstants.RSS_CHANNELS_TABLE_NAME +
                 " (" + DbConstants.RSS_CHANNEL_ID_FIELD + " integer primary key autoincrement, " +
-                DbConstants.RSS_CHANNEL_LINK_FIELD + " text)");
+                DbConstants.RSS_CHANNEL_LINK_FIELD + " text," +
+                "unique (" + DbConstants.RSS_CHANNEL_LINK_FIELD + "))"
+        );
         db.execSQL(
                 "create table " + DbConstants.NEWS_ENTRIES_TABLE_NAME +
                 " (" + DbConstants.NEWS_ENTRY_ID_FIELD + " integer primary key autoincrement, " +
@@ -25,7 +27,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + " integer not null, " +
                 "unique (" + DbConstants.NEWS_ENTRY_LINK_FIELD + ")," +
                 "foreign key (" + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + ") references " +
-                DbConstants.RSS_CHANNELS_TABLE_NAME + "(id))");
+                DbConstants.RSS_CHANNELS_TABLE_NAME + "(id))"
+        );
     }
 
     @Override
