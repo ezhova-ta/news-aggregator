@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.EditText;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.RssChannel;
@@ -51,8 +53,8 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         presenter.onDestroy();
     }
 
-    public void onAddRssChannelButtonClick() {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public void onAddRssChannelButtonClick(final View view) {
+        presenter.onAddRssChannelButtonClick();
     }
 
     @Override
@@ -64,5 +66,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     public void resetPresenter() {
         presenter = null;
+    }
+
+    @Override
+    public String getAddRssChannelEditTextValue() {
+        final EditText addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
+        return addRssChannelEditText.getText().toString();
     }
 }

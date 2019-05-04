@@ -34,6 +34,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void addRssChannel(final String link) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        final Thread rssChannelSaver = new Thread(new RssChannelSaver(link));
+        rssChannelSaver.start();
     }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class RssChannelListDBLoader implements Callable<List<RssChannel>> {
+class RssChannelListDBLoader implements Callable<List<RssChannel>> {
     @Override
     public List<RssChannel> call() throws Exception {
         final SQLiteOpenHelper sqLiteOpenHelper =

@@ -24,4 +24,15 @@ public class RssChannelListPresenter {
     public void onDestroy() {
         rssChannelListView.resetPresenter();
     }
+
+    public void onAddRssChannelButtonClick() {
+        final String rssChannelLink = rssChannelListView.getAddRssChannelEditTextValue();
+        if(!rssChannelLink.isEmpty()) {
+            repository.addRssChannel(rssChannelLink);
+        }
+
+        /*
+        TODO Обновить список каналов в представлении
+         */
+    }
 }

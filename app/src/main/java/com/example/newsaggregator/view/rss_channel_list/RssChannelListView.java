@@ -7,4 +7,5 @@ import java.util.List;
 public interface RssChannelListView {
     void showRssChannelList(List<RssChannel> rssChannelList);
     void resetPresenter();
+    String getAddRssChannelEditTextValue();
 }

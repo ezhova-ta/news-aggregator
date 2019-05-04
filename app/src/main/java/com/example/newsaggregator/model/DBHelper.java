@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBHelper extends SQLiteOpenHelper {
-    public DBHelper(final Context context) {
+class DBHelper extends SQLiteOpenHelper {
+    DBHelper(final Context context) {
         super(context, DbConstants.DB_NAME, null, 1);
     }
 

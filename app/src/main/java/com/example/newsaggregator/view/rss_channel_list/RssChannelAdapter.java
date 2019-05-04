@@ -39,7 +39,7 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
             @Override
             public void onClick(final View view) {
                 final Intent intent = new Intent(view.getContext(), NewsEntryListActivity.class);
-                intent.putExtra("rssChannel", rssChannel.getLink());
+                intent.putExtra("rssChannelLink", rssChannel.getLink());
                 view.getContext().startActivity(intent);
             }
         });
