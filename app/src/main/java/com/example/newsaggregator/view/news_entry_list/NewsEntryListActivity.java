@@ -24,6 +24,8 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry_list);
 
+        final String rssChannel = getIntent().getStringExtra("rssChannel");
+
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         presenter = new NewsEntryListPresenter(this);
