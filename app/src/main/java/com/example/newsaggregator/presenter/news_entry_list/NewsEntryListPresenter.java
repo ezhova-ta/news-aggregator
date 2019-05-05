@@ -4,7 +4,10 @@ import android.content.Intent;
 
 import com.example.newsaggregator.model.Repository;
 import com.example.newsaggregator.model.RepositoryImpl;
+import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
+
+import java.util.List;
 
 public class NewsEntryListPresenter {
     private final NewsEntryListView newsEntryListView;
@@ -15,11 +18,16 @@ public class NewsEntryListPresenter {
         repository = new RepositoryImpl();
     }
 
-    public void onCreate() {
+    public void onCreate(final String rssChannelLink) {
         /*
-        TODO Показать список новостей из БД
+        TODO registerReceiver()
          */
 //        newsEntryListView.registerReceiver(NewsEntryListService.ACTION_FETCH_NEWS);
+
+        final List<NewsEntry> newsEntryList = repository.getNewsEntryList(rssChannelLink);
+        if(!newsEntryList.isEmpty()) {
+            newsEntryListView.showNewsEntryList(newsEntryList);
+        }
     }
 
     public void onDestroy() {

@@ -11,7 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.newsaggregator.R;
+import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.presenter.news_entry_list.NewsEntryListPresenter;
+
+import java.util.List;
 
 public class NewsEntryListActivity extends AppCompatActivity implements NewsEntryListView {
     private NewsEntryListPresenter presenter;
@@ -37,7 +40,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
             }
         };
 
-        presenter.onCreate();
+        presenter.onCreate(rssChannelLink);
     }
 
     @Override
@@ -81,8 +84,9 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     }
 
     @Override
-    public void showNewsEntryList() {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public void showNewsEntryList(final List<NewsEntry> newsEntryList) {
+        final NewsEntryAdapter adapter = new NewsEntryAdapter(this, newsEntryList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

@@ -11,6 +11,9 @@ class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
+        /*
+        TODO Тип Date для поля pub_date таблицы news_entries
+         */
         db.execSQL(
                 "create table " + DbConstants.RSS_CHANNELS_TABLE_NAME +
                 " (" + DbConstants.RSS_CHANNEL_ID_FIELD + " integer primary key autoincrement, " +
