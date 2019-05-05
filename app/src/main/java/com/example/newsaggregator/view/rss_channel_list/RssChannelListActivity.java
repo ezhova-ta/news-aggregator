@@ -14,6 +14,7 @@ import com.example.newsaggregator.presenter.rss_channel_list.RssChannelListPrese
 import java.util.List;
 
 public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView {
+    private EditText addRssChannelEditText;
     private RssChannelListPresenter presenter;
     private RecyclerView recyclerView;
 
@@ -21,6 +22,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rss_channel_list);
+        addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
         recyclerView = findViewById(R.id.rssChannelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         presenter = new RssChannelListPresenter(this);
@@ -64,13 +66,17 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
-    public void resetPresenter() {
-        presenter = null;
+    public String getAddRssChannelEditTextValue() {
+        addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
+        return addRssChannelEditText.getText().toString();
     }
 
     @Override
-    public String getAddRssChannelEditTextValue() {
-        final EditText addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
-        return addRssChannelEditText.getText().toString();
+    public void clearAddRssChannelEditText() {
+        addRssChannelEditText.setText("");
+    }
+    @Override
+    public void resetPresenter() {
+        presenter = null;
     }
 }

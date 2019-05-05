@@ -17,8 +17,7 @@ public class RssChannelListPresenter {
     }
 
     public void onCreate() {
-        final List<RssChannel> rssChannelList = repository.getRssChannelList();
-        rssChannelListView.showRssChannelList(rssChannelList);
+        showAvailableRssChannelList();
     }
 
     public void onDestroy() {
@@ -29,10 +28,13 @@ public class RssChannelListPresenter {
         final String rssChannelLink = rssChannelListView.getAddRssChannelEditTextValue();
         if(!rssChannelLink.isEmpty()) {
             repository.addRssChannel(rssChannelLink);
+            rssChannelListView.clearAddRssChannelEditText();
+            showAvailableRssChannelList();
         }
+    }
 
-        /*
-        TODO Обновить список каналов в представлении
-         */
+    private void showAvailableRssChannelList() {
+        final List<RssChannel> rssChannelList = repository.getRssChannelList();
+        rssChannelListView.showRssChannelList(rssChannelList);
     }
 }
