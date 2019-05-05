@@ -18,6 +18,10 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     private RssChannelListPresenter presenter;
     private RecyclerView recyclerView;
 
+    public RssChannelListPresenter getPresenter() {
+        return presenter;
+    }
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

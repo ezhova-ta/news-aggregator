@@ -1,7 +1,5 @@
 package com.example.newsaggregator.view.rss_channel_list;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,15 +8,14 @@ import android.view.ViewGroup;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.RssChannel;
-import com.example.newsaggregator.view.news_entry_list.NewsEntryListActivity;
 
 import java.util.List;
 
 class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     private final List<RssChannel> rssChannelList;
-    private final Activity activity;
+    private final RssChannelListActivity activity;
 
-    RssChannelAdapter(final Activity activity, final List<RssChannel> rssChannelList) {
+    RssChannelAdapter(final RssChannelListActivity activity, final List<RssChannel> rssChannelList) {
         this.rssChannelList = rssChannelList;
         this.activity = activity;
     }
@@ -38,9 +35,7 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
         rssChannelHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                final Intent intent = new Intent(view.getContext(), NewsEntryListActivity.class);
-                intent.putExtra("rssChannelLink", rssChannel.getLink());
-                view.getContext().startActivity(intent);
+                activity.getPresenter().onRssChannelListItemClick(view.getContext(), rssChannel);
             }
         });
     }
