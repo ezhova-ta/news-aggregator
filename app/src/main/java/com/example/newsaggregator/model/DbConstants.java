@@ -1,6 +1,6 @@
 package com.example.newsaggregator.model;
 
-final class DbConstants {
+public final class DbConstants {
     private DbConstants() {}
 
     public static final String DB_NAME = "rss_news_reader";

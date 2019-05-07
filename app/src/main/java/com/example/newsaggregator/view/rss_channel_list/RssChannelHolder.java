@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.model.entity.RssChannel;
 
 class RssChannelHolder extends RecyclerView.ViewHolder {
     private final TextView rssChannelLinkTextView;
@@ -16,7 +15,7 @@ class RssChannelHolder extends RecyclerView.ViewHolder {
         rssChannelLinkTextView = rssChannelView.findViewById(R.id.rssChannelLink);
     }
 
-    void fillView(final RssChannel rssChannel) {
-        rssChannelLinkTextView.setText(rssChannel.getLink());
+    void fillView(final String rssChannelLink) {
+        rssChannelLinkTextView.setText(rssChannelLink);
     }
 }

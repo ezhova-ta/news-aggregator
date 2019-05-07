@@ -7,16 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.model.entity.RssChannel;
 
 import java.util.List;
 
 class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
-    private final List<RssChannel> rssChannelList;
+    private final List<String> rssChannelLinkList;
     private final RssChannelListActivity activity;
 
-    RssChannelAdapter(final RssChannelListActivity activity, final List<RssChannel> rssChannelList) {
-        this.rssChannelList = rssChannelList;
+    RssChannelAdapter(final RssChannelListActivity activity, final List<String> rssChannelLinkList) {
+        this.rssChannelLinkList = rssChannelLinkList;
         this.activity = activity;
     }
 
@@ -30,18 +29,18 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final RssChannelHolder rssChannelHolder, final int position) {
-        final RssChannel rssChannel = rssChannelList.get(position);
-        rssChannelHolder.fillView(rssChannel);
+        final String rssChannelLink = rssChannelLinkList.get(position);
+        rssChannelHolder.fillView(rssChannelLink);
         rssChannelHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                activity.getPresenter().onRssChannelListItemClick(rssChannel);
+                activity.getPresenter().onRssChannelListItemClick(rssChannelLink);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return rssChannelList.size();
+        return rssChannelLinkList.size();
     }
 }

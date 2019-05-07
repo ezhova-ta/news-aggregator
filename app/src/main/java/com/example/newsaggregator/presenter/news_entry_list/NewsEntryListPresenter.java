@@ -1,7 +1,7 @@
 package com.example.newsaggregator.presenter.news_entry_list;
 
-import com.example.newsaggregator.model.NewsEntryListRepository;
-import com.example.newsaggregator.model.NewsEntryListRepositoryImpl;
+import com.example.newsaggregator.model.repository.NewsEntryListRepository;
+import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
 
