@@ -1,7 +1,7 @@
 package com.example.newsaggregator.presenter.rss_channel_list;
 
-import com.example.newsaggregator.model.Repository;
-import com.example.newsaggregator.model.RepositoryImpl;
+import com.example.newsaggregator.model.RssChannelListRepository;
+import com.example.newsaggregator.model.RssChannelListRepositoryImpl;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListActivity;
 import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
@@ -10,11 +10,14 @@ import java.util.List;
 
 public class RssChannelListPresenter {
     private final RssChannelListView rssChannelListView;
-    private final Repository repository;
+    private final RssChannelListRepository repository;
 
     public RssChannelListPresenter(final RssChannelListView rssChannelListView) {
         this.rssChannelListView = rssChannelListView;
-        repository = new RepositoryImpl();
+        /*
+        TODO Закидывать зависимости извне
+         */
+        repository = new RssChannelListRepositoryImpl();
     }
 
     public void onCreate() {

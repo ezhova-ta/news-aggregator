@@ -1,7 +1,7 @@
 package com.example.newsaggregator.presenter.news_entry_list;
 
-import com.example.newsaggregator.model.Repository;
-import com.example.newsaggregator.model.RepositoryImpl;
+import com.example.newsaggregator.model.NewsEntryListRepository;
+import com.example.newsaggregator.model.NewsEntryListRepositoryImpl;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
 
@@ -9,14 +9,14 @@ import java.util.List;
 
 public class NewsEntryListPresenter {
     private final NewsEntryListView newsEntryListView;
-    private final Repository repository;
+    private final NewsEntryListRepository repository;
 
     public NewsEntryListPresenter(final NewsEntryListView newsEntryListView) {
         this.newsEntryListView = newsEntryListView;
         /*
         TODO Закидывать зависимости извне
          */
-        repository = new RepositoryImpl();
+        repository = new NewsEntryListRepositoryImpl();
     }
 
     public void onCreate(final String rssChannelLink) {
