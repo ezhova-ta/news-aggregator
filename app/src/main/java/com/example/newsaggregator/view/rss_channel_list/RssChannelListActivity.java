@@ -1,7 +1,8 @@
 package com.example.newsaggregator.view.rss_channel_list;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -56,7 +57,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
     }
 
     public void onAddRssChannelButtonClick(final View view) {
@@ -79,8 +79,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     public void clearAddRssChannelEditText() {
         addRssChannelEditText.setText("");
     }
+
     @Override
-    public void resetPresenter() {
-        presenter = null;
+    public void startActivityToDisplayNewsEntryList(final Class<?> activityClass,
+            final String rssChannelLinkExtraKey, final String rssChannelLinkExtraValue) {
+        final Intent intent = new Intent(this, activityClass);
+        intent.putExtra(rssChannelLinkExtraKey, rssChannelLinkExtraValue);
+        startActivity(intent);
     }
 }

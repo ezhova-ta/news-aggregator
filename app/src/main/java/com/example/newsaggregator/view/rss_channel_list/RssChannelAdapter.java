@@ -35,7 +35,7 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
         rssChannelHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                activity.getPresenter().onRssChannelListItemClick(view.getContext(), rssChannel);
+                activity.getPresenter().onRssChannelListItemClick(rssChannel);
             }
         });
     }

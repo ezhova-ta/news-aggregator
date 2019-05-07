@@ -1,8 +1,5 @@
 package com.example.newsaggregator.presenter.rss_channel_list;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.example.newsaggregator.model.Repository;
 import com.example.newsaggregator.model.RepositoryImpl;
 import com.example.newsaggregator.model.entity.RssChannel;
@@ -24,10 +21,6 @@ public class RssChannelListPresenter {
         showAvailableRssChannelList();
     }
 
-    public void onDestroy() {
-        rssChannelListView.resetPresenter();
-    }
-
     public void onAddRssChannelButtonClick() {
         final String rssChannelLink = rssChannelListView.getAddRssChannelEditTextValue();
         if(!rssChannelLink.isEmpty()) {
@@ -37,10 +30,12 @@ public class RssChannelListPresenter {
         }
     }
 
-    public void onRssChannelListItemClick(final Context context, final RssChannel rssChannel) {
-        final Intent intent = new Intent(context, NewsEntryListActivity.class);
-        intent.putExtra("rssChannelLink", rssChannel.getLink());
-        context.startActivity(intent);
+    public void onRssChannelListItemClick(final RssChannel rssChannel) {
+        /*
+        TODO Вынести magic const в константы
+         */
+        rssChannelListView.startActivityToDisplayNewsEntryList(NewsEntryListActivity.class,
+                "rssChannelLink", rssChannel.getLink());
     }
 
     private void showAvailableRssChannelList() {
