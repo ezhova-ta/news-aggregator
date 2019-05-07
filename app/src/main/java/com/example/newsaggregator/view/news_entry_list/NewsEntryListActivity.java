@@ -27,6 +27,9 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry_list);
 
+        /*
+        TODO Вынести magic const в константы
+         */
         final String rssChannelLink = getIntent().getStringExtra("rssChannelLink");
 
         recyclerView = findViewById(R.id.newsEntryList);
@@ -36,7 +39,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
-                presenter.onReceivedBroadcastMessage(intent);
+                presenter.onReceivedBroadcastMessage();
             }
         };
 
@@ -66,7 +69,6 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
     }
 
     public void onUpdateNewsEntryListButtonClick(final View view) {
@@ -74,23 +76,8 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     }
 
     @Override
-    public void registerReceiver(final String action) {
-        registerReceiver(receiver, new IntentFilter(action));
-    }
-
-    @Override
-    public void unregisterReceiver() {
-        unregisterReceiver(receiver);
-    }
-
-    @Override
     public void showNewsEntryList(final List<NewsEntry> newsEntryList) {
         final NewsEntryAdapter adapter = new NewsEntryAdapter(this, newsEntryList);
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void resetPresenter() {
-        presenter = null;
     }
 }

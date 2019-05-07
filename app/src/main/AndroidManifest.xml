@@ -19,8 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.news_entry_list.NewsEntryListActivity"></activity>
+        <activity android:name=".view.news_entry_list.NewsEntryListActivity" />
     </application>
 
 </manifest>
