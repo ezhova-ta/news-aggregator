@@ -2,7 +2,6 @@ package com.example.newsaggregator.model.repository;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.newsaggregator.application.NewsAggregatorApplication;
@@ -14,19 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
-    private final SQLiteOpenHelper sqLiteOpenHelper;
-    private final SQLiteDatabase db;
-
-    public NewsEntryListRepositoryImpl() throws SQLiteException {
-        sqLiteOpenHelper = new DBHelper(NewsAggregatorApplication.getInstance().getContext());
-        db = sqLiteOpenHelper.getWritableDatabase();
-    }
-
     @Override
     public List<NewsEntry> getNewsEntryList(final String rssChannelLink) {
         /*
         TODO Пока просто получение новостей канала из БД
          */
+
+        final SQLiteOpenHelper sqLiteOpenHelper =
+                new DBHelper(NewsAggregatorApplication.getInstance().getContext());
+        final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
 
         final List<NewsEntry> newsEntryList = new ArrayList<>(10);
         NewsEntry newsEntry;
@@ -57,12 +52,10 @@ public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
             } while(cursor.moveToNext());
         }
 
-        return newsEntryList;
-    }
-
-    @Override
-    public void closeResources() {
+        cursor.close();
         sqLiteOpenHelper.close();
         db.close();
+
+        return newsEntryList;
     }
 }

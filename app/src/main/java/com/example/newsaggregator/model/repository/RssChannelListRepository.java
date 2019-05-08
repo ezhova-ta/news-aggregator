@@ -7,5 +7,4 @@ import java.util.List;
 public interface RssChannelListRepository {
     List<RssChannel> getRssChannelList();
     void addRssChannel(RssChannel rssChannel);
-    void closeResources();
 }
