@@ -3,7 +3,6 @@ package com.example.newsaggregator.view.news_entry_list;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +11,7 @@ import android.view.View;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.NewsEntry;
+import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
 import com.example.newsaggregator.presenter.news_entry_list.NewsEntryListPresenter;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
 
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        presenter = new NewsEntryListPresenter(this);
+        presenter = new NewsEntryListPresenter(this, new NewsEntryListRepositoryImpl());
 
         receiver = new BroadcastReceiver() {
             @Override

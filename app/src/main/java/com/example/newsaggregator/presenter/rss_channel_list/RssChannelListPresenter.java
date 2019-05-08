@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
-import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListActivity;
 import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
 
@@ -14,12 +13,10 @@ public class RssChannelListPresenter {
     private final RssChannelListView rssChannelListView;
     private final RssChannelListRepository repository;
 
-    public RssChannelListPresenter(final RssChannelListView rssChannelListView) {
+    public RssChannelListPresenter(final RssChannelListView rssChannelListView,
+                                   final RssChannelListRepository repository) {
         this.rssChannelListView = rssChannelListView;
-        /*
-        TODO Закидывать зависимости извне
-         */
-        repository = new RssChannelListRepositoryImpl();
+        this.repository = repository;
         /*
         TODO repository.closeResources()
          */

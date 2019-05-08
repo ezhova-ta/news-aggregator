@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface NewsEntryListRepository {
     List<NewsEntry> getNewsEntryList(final String channelLink);
+    void closeResources();
 }

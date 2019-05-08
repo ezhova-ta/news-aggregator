@@ -27,6 +27,11 @@ public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
         }
     }
 
+    @Override
+    public void closeResources() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     private List<NewsEntry> getNewsEntryListFromDB(final String channelLink) throws
             ExecutionException, InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(1);
