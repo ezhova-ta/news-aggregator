@@ -32,6 +32,9 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     public void onBindViewHolder(@NonNull final RssChannelHolder rssChannelHolder, final int position) {
         final RssChannel rssChannel = rssChannelList.get(position);
         rssChannelHolder.fillView(rssChannel);
+        /*
+        TODO Лучше засетить в адаптер абстрактный листенер
+         */
         rssChannelHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {

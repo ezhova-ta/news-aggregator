@@ -1,5 +1,7 @@
 package com.example.newsaggregator.presenter.news_entry_list;
 
+import android.os.AsyncTask;
+
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepository;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
@@ -20,10 +22,8 @@ public class NewsEntryListPresenter {
     }
 
     public void onCreate(final String rssChannelLink) {
-        final List<NewsEntry> newsEntryList = repository.getNewsEntryList(rssChannelLink);
-        if(!newsEntryList.isEmpty()) {
-            newsEntryListView.showNewsEntryList(newsEntryList);
-        }
+        final ShowNewsEntryListTask task = new ShowNewsEntryListTask();
+        task.execute(rssChannelLink);
     }
 
     public void onUpdateNewsEntryListButtonClick() {
@@ -32,5 +32,19 @@ public class NewsEntryListPresenter {
 
     public void onReceivedBroadcastMessage() {
         throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    private class ShowNewsEntryListTask extends AsyncTask<String, Void, List<NewsEntry>> {
+        @Override
+        protected List<NewsEntry> doInBackground(final String... rssChannelLinks) {
+            return repository.getNewsEntryList(rssChannelLinks[0]);
+        }
+
+        @Override
+        protected void onPostExecute(final List<NewsEntry> newsEntryList) {
+            if(!newsEntryList.isEmpty()) {
+                newsEntryListView.showNewsEntryList(newsEntryList);
+            }
+        }
     }
 }

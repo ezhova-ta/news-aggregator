@@ -71,13 +71,13 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         super.onDestroy();
     }
 
-    public void onUpdateNewsEntryListButtonClick(final View view) {
-        presenter.onUpdateNewsEntryListButtonClick();
-    }
-
     @Override
     public void showNewsEntryList(final List<NewsEntry> newsEntryList) {
         final NewsEntryAdapter adapter = new NewsEntryAdapter(this, newsEntryList);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void onUpdateNewsEntryListButtonClick(final View view) {
+        presenter.onUpdateNewsEntryListButtonClick();
     }
 }

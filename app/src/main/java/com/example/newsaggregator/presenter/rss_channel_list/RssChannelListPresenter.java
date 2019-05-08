@@ -47,7 +47,7 @@ public class RssChannelListPresenter {
         task.execute();
     }
 
-    private class ShowRssChannelListTask extends AsyncTask<Void ,Void, List<RssChannel>> {
+    private class ShowRssChannelListTask extends AsyncTask<Void, Void, List<RssChannel>> {
         @Override
         protected List<RssChannel> doInBackground(final Void... voids) {
             /*
@@ -58,7 +58,9 @@ public class RssChannelListPresenter {
 
         @Override
         protected void onPostExecute(final List<RssChannel> rssChannelList) {
-            rssChannelListView.showRssChannelList(rssChannelList);
+            if(!rssChannelList.isEmpty()) {
+                rssChannelListView.showRssChannelList(rssChannelList);
+            }
         }
     }
 
