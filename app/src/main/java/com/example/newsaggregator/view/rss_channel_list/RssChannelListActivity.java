@@ -12,9 +12,7 @@ import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.rss_channel_list.RssChannelListPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView {
     private EditText addRssChannelEditText;
@@ -66,10 +64,8 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
-    public void showRssChannelSet(final Set<String> rssChannelLinkSet) {
-        final List<String> rssChannelLinkList = new ArrayList<>();
-        rssChannelLinkList.addAll(rssChannelLinkSet);
-        final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelLinkList);
+    public void showRssChannelList(final List<RssChannel> rssChannelList) {
+        final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelList);
         recyclerView.setAdapter(adapter);
     }
 

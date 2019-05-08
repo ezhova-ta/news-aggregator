@@ -1,13 +1,14 @@
 package com.example.newsaggregator.presenter.rss_channel_list;
 
+import android.os.AsyncTask;
+
+import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
-import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListActivity;
 import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
 
 import java.util.List;
-import java.util.Set;
 
 public class RssChannelListPresenter {
     private final RssChannelListView rssChannelListView;
@@ -19,6 +20,9 @@ public class RssChannelListPresenter {
         TODO Закидывать зависимости извне
          */
         repository = new RssChannelListRepositoryImpl();
+        /*
+        TODO repository.closeResources()
+         */
     }
 
     public void onCreate() {
@@ -28,24 +32,55 @@ public class RssChannelListPresenter {
     public void onAddRssChannelButtonClick() {
         final String rssChannelLink = rssChannelListView.getAddRssChannelEditTextValue();
         if(!rssChannelLink.isEmpty()) {
-            repository.addRssChannel(rssChannelLink);
-            rssChannelListView.clearAddRssChannelEditText();
-            showAvailableRssChannelList();
+            final AddRssChannelTask task = new AddRssChannelTask();
+            task.execute(new RssChannel(rssChannelLink));
         }
     }
 
-    public void onRssChannelListItemClick(final String rssChannelLink) {
+    public void onRssChannelListItemClick(final RssChannel rssChannel) {
         /*
         TODO Вынести magic const в константы
          */
         rssChannelListView.startActivityToDisplayNewsEntryList(NewsEntryListActivity.class,
-                "rssChannelLink", rssChannelLink);
+                "rssChannelLink", rssChannel.getLink());
     }
 
     private void showAvailableRssChannelList() {
-        final Set<String> rssChannelLinkSet = repository.getRssChannelLinkSet();
-        if(rssChannelLinkSet != null) {
-            rssChannelListView.showRssChannelSet(rssChannelLinkSet);
+        final ShowRssChannelListTask task = new ShowRssChannelListTask();
+        task.execute();
+    }
+
+    private class ShowRssChannelListTask extends AsyncTask<Void ,Void, List<RssChannel>> {
+        @Override
+        protected List<RssChannel> doInBackground(final Void... voids) {
+            /*
+            TODO Обработать SQLiteException
+             */
+            return repository.getRssChannelList();
+        }
+
+        @Override
+        protected void onPostExecute(final List<RssChannel> rssChannelList) {
+            rssChannelListView.showRssChannelList(rssChannelList);
+        }
+    }
+
+    private class AddRssChannelTask extends AsyncTask<RssChannel, Void, Void> {
+        @Override
+        protected Void doInBackground(final RssChannel... rssChannels) {
+            for(final RssChannel rssChannel : rssChannels) {
+                /*
+                TODO Обработать SQLiteException
+                 */
+                repository.addRssChannel(rssChannel);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(final Void aVoid) {
+            rssChannelListView.clearAddRssChannelEditText();
+            showAvailableRssChannelList();
         }
     }
 }

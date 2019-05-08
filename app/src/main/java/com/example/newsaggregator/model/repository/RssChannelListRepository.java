@@ -1,8 +1,11 @@
 package com.example.newsaggregator.model.repository;
 
-import java.util.Set;
+import com.example.newsaggregator.model.entity.RssChannel;
+
+import java.util.List;
 
 public interface RssChannelListRepository {
-    Set<String> getRssChannelLinkSet();
-    void addRssChannel(String link);
+    List<RssChannel> getRssChannelList();
+    void addRssChannel(RssChannel rssChannel);
+    void closeResources();
 }
