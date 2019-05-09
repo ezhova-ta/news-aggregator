@@ -7,6 +7,7 @@ import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepository;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class NewsEntryListPresenter {
@@ -39,23 +40,26 @@ public class NewsEntryListPresenter {
     }
 
     private void showNewsEntryList(final String rssChannelLink) {
-        final ShowNewsEntryListTask task = new ShowNewsEntryListTask();
+        final ShowNewsEntryListTask task = new ShowNewsEntryListTask(this);
         task.execute(rssChannelLink);
     }
 
-    /*
-    TODO Сделать AsyncTask не inner классом
-     */
-    private class ShowNewsEntryListTask extends AsyncTask<String, Void, List<NewsEntry>> {
+    private static final class ShowNewsEntryListTask extends AsyncTask<String, Void, List<NewsEntry>> {
+        private final WeakReference<NewsEntryListPresenter> presenterWeakReference;
+
+        private ShowNewsEntryListTask(final NewsEntryListPresenter presenter) {
+            presenterWeakReference = new WeakReference<>(presenter);
+        }
+
         @Override
         protected List<NewsEntry> doInBackground(final String... rssChannelLinks) {
-            return repository.getNewsEntryList(rssChannelLinks[0]);
+            return presenterWeakReference.get().repository.getNewsEntryList(rssChannelLinks[0]);
         }
 
         @Override
         protected void onPostExecute(final List<NewsEntry> newsEntryList) {
             if(!newsEntryList.isEmpty()) {
-                newsEntryListView.showNewsEntryList(newsEntryList);
+                presenterWeakReference.get().newsEntryListView.showNewsEntryList(newsEntryList);
             }
         }
     }

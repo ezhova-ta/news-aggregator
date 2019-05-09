@@ -7,6 +7,7 @@ import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListActivity;
 import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RssChannelListPresenter {
@@ -20,13 +21,14 @@ public class RssChannelListPresenter {
     }
 
     public void onCreate() {
-        showAvailableRssChannelList();
+        final ShowRssChannelListTask task = new ShowRssChannelListTask(this);
+        task.execute();
     }
 
     public void onAddRssChannelButtonClick() {
         final String rssChannelLink = rssChannelListView.getAddRssChannelEditTextValue();
         if(!rssChannelLink.isEmpty()) {
-            final AddRssChannelTask task = new AddRssChannelTask();
+            final AddRssChannelTask task = new AddRssChannelTask(this);
             task.execute(new RssChannel(rssChannelLink));
         }
     }
@@ -36,50 +38,52 @@ public class RssChannelListPresenter {
                 RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY, rssChannel.getLink());
     }
 
-    private void showAvailableRssChannelList() {
-        final ShowRssChannelListTask task = new ShowRssChannelListTask();
-        task.execute();
-    }
+    private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, List<RssChannel>> {
+        private WeakReference<RssChannelListPresenter> presenterWeakReference;
 
-    /*
-    TODO Сделать AsyncTask не inner классом
-     */
-    private class ShowRssChannelListTask extends AsyncTask<Void, Void, List<RssChannel>> {
+        private ShowRssChannelListTask(final RssChannelListPresenter presenter) {
+            presenterWeakReference = new WeakReference<>(presenter);
+        }
+
         @Override
         protected List<RssChannel> doInBackground(final Void... voids) {
             /*
             TODO Обработать SQLiteException
              */
-            return repository.getRssChannelList();
+            return presenterWeakReference.get().repository.getRssChannelList();
         }
 
         @Override
         protected void onPostExecute(final List<RssChannel> rssChannelList) {
             if(!rssChannelList.isEmpty()) {
-                rssChannelListView.showRssChannelList(rssChannelList);
+                presenterWeakReference.get().rssChannelListView.showRssChannelList(rssChannelList);
             }
         }
     }
 
-    /*
-    TODO Сделать AsyncTask не inner классом
-     */
-    private class AddRssChannelTask extends AsyncTask<RssChannel, Void, Void> {
+    private static final class AddRssChannelTask extends AsyncTask<RssChannel, Void, Void> {
+        private WeakReference<RssChannelListPresenter> presenterWeakReference;
+
+        private AddRssChannelTask(final RssChannelListPresenter presenter) {
+            presenterWeakReference = new WeakReference<>(presenter);
+        }
+
         @Override
         protected Void doInBackground(final RssChannel... rssChannels) {
             for(final RssChannel rssChannel : rssChannels) {
                 /*
                 TODO Обработать SQLiteException
                  */
-                repository.addRssChannel(rssChannel);
+                presenterWeakReference.get().repository.addRssChannel(rssChannel);
             }
             return null;
         }
 
         @Override
         protected void onPostExecute(final Void aVoid) {
-            rssChannelListView.clearAddRssChannelEditText();
-            showAvailableRssChannelList();
+            presenterWeakReference.get().rssChannelListView.clearAddRssChannelEditText();
+            final ShowRssChannelListTask task = new ShowRssChannelListTask(presenterWeakReference.get());
+            task.execute();
         }
     }
 }
