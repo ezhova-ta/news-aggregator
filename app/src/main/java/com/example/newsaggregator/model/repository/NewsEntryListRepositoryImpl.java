@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.newsaggregator.application.NewsAggregatorApplication;
-import com.example.newsaggregator.model.DBHelper;
 import com.example.newsaggregator.model.DbConstants;
 import com.example.newsaggregator.model.entity.NewsEntry;
 

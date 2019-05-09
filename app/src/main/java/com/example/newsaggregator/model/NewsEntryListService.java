@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.newsaggregator.application.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.NewsEntry;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -51,7 +50,7 @@ public class NewsEntryListService extends IntentService {
 
             if(!newsEntryList.isEmpty()) {
                 final SQLiteOpenHelper sqLiteOpenHelper =
-                        new DBHelper(NewsAggregatorApplication.getInstance().getContext());
+                        new DBHelper(this);
                 final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
                 final long rssChannelId;
                 ContentValues contentValues;
