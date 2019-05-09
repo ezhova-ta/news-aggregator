@@ -70,6 +70,10 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     public void showRssChannelList(final List<RssChannel> rssChannelList) {
         final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelList);
         recyclerView.setAdapter(adapter);
+        adapter.subscribeOnRssChannelListItemClick(presenter);
+        /*
+        TODO Где вызывать adapter.unSubscribeOnRssChannelListItemClick()?
+         */
     }
 
     @Override

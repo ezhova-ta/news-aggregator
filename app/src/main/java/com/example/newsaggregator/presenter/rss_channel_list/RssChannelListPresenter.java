@@ -5,12 +5,13 @@ import android.os.AsyncTask;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListActivity;
+import com.example.newsaggregator.view.rss_channel_list.OnRssChannelListItemClickListener;
 import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class RssChannelListPresenter {
+public class RssChannelListPresenter implements OnRssChannelListItemClickListener {
     private final RssChannelListView rssChannelListView;
     private final RssChannelListRepository repository;
 
@@ -33,6 +34,7 @@ public class RssChannelListPresenter {
         }
     }
 
+    @Override
     public void onRssChannelListItemClick(final RssChannel rssChannel) {
         rssChannelListView.startActivityToDisplayNewsEntryList(NewsEntryListActivity.class,
                 RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY, rssChannel.getLink());

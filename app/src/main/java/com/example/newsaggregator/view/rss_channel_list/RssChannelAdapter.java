@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.RssChannel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     private final List<RssChannel> rssChannelList;
     private final RssChannelListActivity activity;
+    private final List<OnRssChannelListItemClickListener> onRssChannelListItemClickListeners =
+            new ArrayList<>();
 
     RssChannelAdapter(final RssChannelListActivity activity, final List<RssChannel> rssChannelList) {
         this.rssChannelList = rssChannelList;
@@ -32,13 +35,11 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     public void onBindViewHolder(@NonNull final RssChannelHolder rssChannelHolder, final int position) {
         final RssChannel rssChannel = rssChannelList.get(position);
         rssChannelHolder.fillView(rssChannel);
-        /*
-        TODO Лучше засетить в адаптер абстрактный листенер
-         */
+
         rssChannelHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                activity.getPresenter().onRssChannelListItemClick(rssChannel);
+                notifyOnRssChannelListItemClickListeners(rssChannel);
             }
         });
     }
@@ -46,5 +47,19 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     @Override
     public int getItemCount() {
         return rssChannelList.size();
+    }
+
+    public void subscribeOnRssChannelListItemClick(final OnRssChannelListItemClickListener listener) {
+        onRssChannelListItemClickListeners.add(listener);
+    }
+
+    public void unSubscribeOnRssChannelListItemClick(final OnRssChannelListItemClickListener listener) {
+        onRssChannelListItemClickListeners.remove(listener);
+    }
+
+    private void notifyOnRssChannelListItemClickListeners(final RssChannel rssChannel) {
+        for(final OnRssChannelListItemClickListener listener : onRssChannelListItemClickListeners) {
+            listener.onRssChannelListItemClick(rssChannel);
+        }
     }
 }
