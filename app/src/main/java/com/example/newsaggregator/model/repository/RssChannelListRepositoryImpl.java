@@ -15,12 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RssChannelListRepositoryImpl implements RssChannelListRepository {
+    private final SQLiteOpenHelper sqLiteOpenHelper;
+
+    public RssChannelListRepositoryImpl(final SQLiteOpenHelper sqLiteOpenHelper) {
+        this.sqLiteOpenHelper = sqLiteOpenHelper;
+    }
+
     @Override
     public List<RssChannel> getRssChannelList() throws SQLiteException {
-        final SQLiteOpenHelper sqLiteOpenHelper =
-                new DBHelper(NewsAggregatorApplication.getInstance().getContext());
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
-
         final List<RssChannel> rssChannelList = new ArrayList<>(10);
         RssChannel rssChannel;
 
@@ -52,13 +55,14 @@ public class RssChannelListRepositoryImpl implements RssChannelListRepository {
 
     @Override
     public void addRssChannel(final RssChannel rssChannel) throws SQLiteException {
-        final SQLiteOpenHelper sqLiteOpenHelper =
-                new DBHelper(NewsAggregatorApplication.getInstance().getContext());
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
         final ContentValues contentValues = new ContentValues();
 
         contentValues.put(DbConstants.RSS_CHANNEL_LINK_FIELD, rssChannel.getLink());
         db.insertWithOnConflict(DbConstants.RSS_CHANNELS_TABLE_NAME, null,
                 contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+
+        sqLiteOpenHelper.close();
+        db.close();
     }
 }

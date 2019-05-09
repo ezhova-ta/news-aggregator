@@ -14,16 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
+    private final SQLiteOpenHelper sqLiteOpenHelper;
+
+    public NewsEntryListRepositoryImpl(final SQLiteOpenHelper sqLiteOpenHelper) {
+        this.sqLiteOpenHelper = sqLiteOpenHelper;
+    }
+
     @Override
     public List<NewsEntry> getNewsEntryList(final String rssChannelLink) throws SQLiteException {
         /*
         TODO Пока получение новостей из БД
          */
 
-        final SQLiteOpenHelper sqLiteOpenHelper =
-                new DBHelper(NewsAggregatorApplication.getInstance().getContext());
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
-
         final List<NewsEntry> newsEntryList = new ArrayList<>(10);
         NewsEntry newsEntry;
 

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.newsaggregator.R;
+import com.example.newsaggregator.model.DBHelper;
 import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
@@ -34,7 +35,8 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        presenter = new NewsEntryListPresenter(this, new NewsEntryListRepositoryImpl());
+        presenter = new NewsEntryListPresenter(this,
+                new NewsEntryListRepositoryImpl(new DBHelper(this)));
         presenter.onCreate();
 
         receiver = new BroadcastReceiver() {

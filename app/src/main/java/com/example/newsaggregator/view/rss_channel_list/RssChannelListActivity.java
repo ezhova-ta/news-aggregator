@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.newsaggregator.R;
+import com.example.newsaggregator.model.DBHelper;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
 import com.example.newsaggregator.presenter.rss_channel_list.RssChannelListPresenter;
@@ -31,7 +32,8 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
         recyclerView = findViewById(R.id.rssChannelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        presenter = new RssChannelListPresenter(this, new RssChannelListRepositoryImpl());
+        presenter = new RssChannelListPresenter(this,
+                new RssChannelListRepositoryImpl(new DBHelper(this)));
         presenter.onCreate();
     }
 
