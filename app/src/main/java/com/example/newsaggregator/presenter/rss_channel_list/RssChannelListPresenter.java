@@ -32,11 +32,8 @@ public class RssChannelListPresenter {
     }
 
     public void onRssChannelListItemClick(final RssChannel rssChannel) {
-        /*
-        TODO Вынести magic const в константы
-         */
         rssChannelListView.startActivityToDisplayNewsEntryList(NewsEntryListActivity.class,
-                "rssChannelLink", rssChannel.getLink());
+                RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY, rssChannel.getLink());
     }
 
     private void showAvailableRssChannelList() {
@@ -44,6 +41,9 @@ public class RssChannelListPresenter {
         task.execute();
     }
 
+    /*
+    TODO Сделать AsyncTask не inner классом
+     */
     private class ShowRssChannelListTask extends AsyncTask<Void, Void, List<RssChannel>> {
         @Override
         protected List<RssChannel> doInBackground(final Void... voids) {
@@ -61,6 +61,9 @@ public class RssChannelListPresenter {
         }
     }
 
+    /*
+    TODO Сделать AsyncTask не inner классом
+     */
     private class AddRssChannelTask extends AsyncTask<RssChannel, Void, Void> {
         @Override
         protected Void doInBackground(final RssChannel... rssChannels) {

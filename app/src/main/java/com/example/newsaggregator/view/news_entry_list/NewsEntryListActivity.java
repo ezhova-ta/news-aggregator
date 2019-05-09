@@ -15,6 +15,7 @@ import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
 import com.example.newsaggregator.presenter.news_entry_list.NewsEntryListPresenter;
+import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
 
 import java.util.List;
 
@@ -30,10 +31,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry_list);
 
-        /*
-        TODO Вынести magic const в константы
-         */
-        rssChannelLink = getIntent().getStringExtra("rssChannelLink");
+        rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         presenter = new NewsEntryListPresenter(this, new NewsEntryListRepositoryImpl());
@@ -42,10 +40,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
-                /*
-                TODO Вынести magic const в константы
-                 */
-                final int requestResult = intent.getIntExtra("request_result",
+                final int requestResult = intent.getIntExtra(NewsEntryListService.EXTRA_PARAM_REQUEST_RESULT,
                         FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT);
                 presenter.onReceiveBroadcastMessage(requestResult);
             }

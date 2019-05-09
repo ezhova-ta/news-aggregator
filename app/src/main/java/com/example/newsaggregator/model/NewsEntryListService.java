@@ -21,6 +21,8 @@ public class NewsEntryListService extends IntentService {
             "com.example.newsaggregator.model.action.FETCH_NEWS_ENTRY_LIST";
     public static final String EXTRA_PARAM_RSS_CHANNEL_URL =
             "com.example.newsaggregator.model.extra.RSS_CHANNEL_URL";
+    public static final String EXTRA_PARAM_REQUEST_RESULT =
+            "com.example.newsaggregator.model.extra.REQUEST_RESULT";
     public static final int FETCHING_NEWS_ENTRY_LIST_RESULT_OK = 1;
     public static final int FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING = -1;
 
@@ -84,16 +86,13 @@ public class NewsEntryListService extends IntentService {
                             contentValues, SQLiteDatabase.CONFLICT_IGNORE);
                 }
 
-                /*
-                TODO Вынести magic const в константы
-                 */
-                responseIntent.putExtra("request_result", FETCHING_NEWS_ENTRY_LIST_RESULT_OK);
+                responseIntent.putExtra(EXTRA_PARAM_REQUEST_RESULT, FETCHING_NEWS_ENTRY_LIST_RESULT_OK);
             } else {
-                responseIntent.putExtra("request_result", FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING);
+                responseIntent.putExtra(EXTRA_PARAM_REQUEST_RESULT, FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING);
             }
         } catch (final XmlPullParserException | IOException | SQLiteException e) {
             e.printStackTrace(System.err);
-            responseIntent.putExtra("request_result", FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING);
+            responseIntent.putExtra(EXTRA_PARAM_REQUEST_RESULT, FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING);
         }
 
         sendBroadcast(responseIntent);

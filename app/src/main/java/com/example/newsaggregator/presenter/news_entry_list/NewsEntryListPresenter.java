@@ -43,6 +43,9 @@ public class NewsEntryListPresenter {
         task.execute(rssChannelLink);
     }
 
+    /*
+    TODO Сделать AsyncTask не inner классом
+     */
     private class ShowNewsEntryListTask extends AsyncTask<String, Void, List<NewsEntry>> {
         @Override
         protected List<NewsEntry> doInBackground(final String... rssChannelLinks) {
