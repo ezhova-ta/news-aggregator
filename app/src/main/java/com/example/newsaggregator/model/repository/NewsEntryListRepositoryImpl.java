@@ -2,6 +2,7 @@ package com.example.newsaggregator.model.repository;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.newsaggregator.application.NewsAggregatorApplication;
@@ -14,9 +15,9 @@ import java.util.List;
 
 public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
     @Override
-    public List<NewsEntry> getNewsEntryList(final String rssChannelLink) {
+    public List<NewsEntry> getNewsEntryList(final String rssChannelLink) throws SQLiteException {
         /*
-        TODO Пока просто получение новостей канала из БД
+        TODO Пока получение новостей из БД
          */
 
         final SQLiteOpenHelper sqLiteOpenHelper =
@@ -28,10 +29,10 @@ public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
 
         final String sqlQuery =
                 "select * from " + DbConstants.NEWS_ENTRIES_TABLE_NAME +
-                " inner join " + DbConstants.RSS_CHANNELS_TABLE_NAME +
-                " on " + DbConstants.NEWS_ENTRIES_TABLE_NAME + "." + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD +
-                " = " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_ID_FIELD +
-                " where " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?";
+                        " inner join " + DbConstants.RSS_CHANNELS_TABLE_NAME +
+                        " on " + DbConstants.NEWS_ENTRIES_TABLE_NAME + "." + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD +
+                        " = " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_ID_FIELD +
+                        " where " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?";
 
         final Cursor cursor = db.rawQuery(sqlQuery, new String[]{rssChannelLink});
 

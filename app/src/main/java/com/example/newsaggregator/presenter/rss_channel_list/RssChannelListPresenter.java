@@ -17,9 +17,6 @@ public class RssChannelListPresenter {
                                    final RssChannelListRepository repository) {
         this.rssChannelListView = rssChannelListView;
         this.repository = repository;
-        /*
-        TODO repository.closeResources()
-         */
     }
 
     public void onCreate() {
