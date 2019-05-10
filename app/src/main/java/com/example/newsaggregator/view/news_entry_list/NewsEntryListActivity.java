@@ -84,6 +84,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     public void showNewsEntryList(final List<NewsEntry> newsEntryList) {
         final NewsEntryAdapter adapter = new NewsEntryAdapter(this, newsEntryList);
         recyclerView.setAdapter(adapter);
+        adapter.subscribeOnRssChannelListItemClick(presenter);
     }
 
     @Override
@@ -108,5 +109,13 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    @Override
+    public void startActivityToDisplayNewsEntry(final Class<?> activityClass,
+            final String newsEntryLinkExtraKey, final String newsEntryLinkExtraValue) {
+        final Intent intent = new Intent(this, activityClass);
+        intent.putExtra(newsEntryLinkExtraKey, newsEntryLinkExtraValue);
+        startActivity(intent);
     }
 }

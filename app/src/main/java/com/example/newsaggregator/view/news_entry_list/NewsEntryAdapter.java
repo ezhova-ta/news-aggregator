@@ -9,12 +9,16 @@ import android.view.ViewGroup;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.NewsEntry;
+import com.example.newsaggregator.view.rss_channel_list.OnNewsEntryLinkClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class NewsEntryAdapter extends RecyclerView.Adapter<NewsEntryHolder> {
     private final List<NewsEntry> newsEntryList;
     private final Activity activity;
+    private final List<OnNewsEntryLinkClickListener> onNewsEntryLinkClickListeners =
+            new ArrayList<>();
 
     NewsEntryAdapter(final Activity activity, final List<NewsEntry> newsEntryList) {
         this.newsEntryList = newsEntryList;
@@ -33,10 +37,31 @@ class NewsEntryAdapter extends RecyclerView.Adapter<NewsEntryHolder> {
     public void onBindViewHolder(@NonNull final NewsEntryHolder newsEntryHolder, final int position) {
         final NewsEntry newsEntry = newsEntryList.get(position);
         newsEntryHolder.fillView(newsEntry);
+
+        newsEntryHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                notifyOnNewsEntryLinkClickisteners(newsEntry.getLink());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return newsEntryList.size();
+    }
+
+    public void subscribeOnRssChannelListItemClick(final OnNewsEntryLinkClickListener listener) {
+        onNewsEntryLinkClickListeners.add(listener);
+    }
+
+    public void unSubscribeOnRssChannelListItemClick(final OnNewsEntryLinkClickListener listener) {
+        onNewsEntryLinkClickListeners.remove(listener);
+    }
+
+    private void notifyOnNewsEntryLinkClickisteners(final String newsEntryLink) {
+        for(final OnNewsEntryLinkClickListener listener : onNewsEntryLinkClickListeners) {
+            listener.onNewsEntryLinkClick(newsEntryLink);
+        }
     }
 }
