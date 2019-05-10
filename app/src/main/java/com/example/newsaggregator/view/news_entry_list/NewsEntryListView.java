@@ -9,4 +9,5 @@ public interface NewsEntryListView {
     void showNewsEntryList(final List<NewsEntry> newsEntryList);
     void startServiceToUpdateNewsEntryList();
     String getRssChannelLink();
+    void showPopupMessage(String text);
 }

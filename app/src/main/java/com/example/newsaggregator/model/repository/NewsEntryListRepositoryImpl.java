@@ -20,10 +20,6 @@ public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
 
     @Override
     public List<NewsEntry> getNewsEntryList(final String rssChannelLink) throws SQLiteException {
-        /*
-        TODO Пока получение новостей из БД
-         */
-
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
         final List<NewsEntry> newsEntryList = new ArrayList<>(10);
         NewsEntry newsEntry;

@@ -45,7 +45,7 @@ public class RssChannelListPresenter implements OnItemClickListener {
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
         private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "RSS-channels downloaded successfully!";
-        private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Loading RSS-channels error!";
+        private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading RSS-channels error!";
         private WeakReference<RssChannelListPresenter> presenter;
 
         private ShowRssChannelListTask(final RssChannelListPresenter presenter) {
@@ -66,7 +66,7 @@ public class RssChannelListPresenter implements OnItemClickListener {
         protected void onPostExecute(final AsyncTaskResult<List<RssChannel>> result) {
             if(result.getException() != null) {
                 presenter.get().rssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
-            } else {
+            } else if(!result.getResult().isEmpty()) {
                 presenter.get().rssChannelListView.showRssChannelList(result.getResult());
                 presenter.get().rssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DOWNLOADING);
             }
