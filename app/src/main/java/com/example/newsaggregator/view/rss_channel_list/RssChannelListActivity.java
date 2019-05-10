@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.DBHelper;
@@ -93,5 +95,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         final Intent intent = new Intent(this, activityClass);
         intent.putExtra(rssChannelLinkExtraKey, rssChannelLinkExtraValue);
         startActivity(intent);
+    }
+
+    @Override
+    public void showPopupMessage(final String text) {
+        final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

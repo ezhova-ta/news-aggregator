@@ -1,9 +1,12 @@
 package com.example.newsaggregator.presenter.rss_channel_list;
 
+import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
+import com.example.newsaggregator.presenter.AsyncTaskResult;
+import com.example.newsaggregator.presenter.VoidAsyncTaskResult;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListActivity;
 import com.example.newsaggregator.view.rss_channel_list.OnItemClickListener;
 import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
@@ -40,52 +43,67 @@ public class RssChannelListPresenter implements OnItemClickListener {
                 RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY, rssChannel.getLink());
     }
 
-    private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, List<RssChannel>> {
-        private WeakReference<RssChannelListPresenter> presenterWeakReference;
+    private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
+        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "RSS-channels downloaded successfully!";
+        private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Loading RSS-channels error!";
+        private WeakReference<RssChannelListPresenter> presenter;
 
         private ShowRssChannelListTask(final RssChannelListPresenter presenter) {
-            presenterWeakReference = new WeakReference<>(presenter);
+            this.presenter = new WeakReference<>(presenter);
         }
 
         @Override
-        protected List<RssChannel> doInBackground(final Void... voids) {
-            /*
-            TODO Обработать SQLiteException
-             */
-            return presenterWeakReference.get().repository.getRssChannelList();
+        protected AsyncTaskResult<List<RssChannel>> doInBackground(final Void... voids) {
+            try {
+                final List<RssChannel> rssChannelList = presenter.get().repository.getRssChannelList();
+                return new AsyncTaskResult<>(rssChannelList);
+            } catch(final SQLiteException e) {
+                return new AsyncTaskResult<>(e);
+            }
         }
 
         @Override
-        protected void onPostExecute(final List<RssChannel> rssChannelList) {
-            if(!rssChannelList.isEmpty()) {
-                presenterWeakReference.get().rssChannelListView.showRssChannelList(rssChannelList);
+        protected void onPostExecute(final AsyncTaskResult<List<RssChannel>> result) {
+            if(result.getException() != null) {
+                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
+            } else {
+                presenter.get().rssChannelListView.showRssChannelList(result.getResult());
+                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DOWNLOADING);
             }
         }
     }
 
-    private static final class AddRssChannelTask extends AsyncTask<RssChannel, Void, Void> {
-        private WeakReference<RssChannelListPresenter> presenterWeakReference;
+    private static final class AddRssChannelTask extends AsyncTask<RssChannel, Void, VoidAsyncTaskResult> {
+        private static final String MESSAGE_SUCCESSFUL_DATA_ADDING = "RSS-channels added successfully!";
+        private static final String MESSAGE_UNSUCCESSFUL_DATA_ADDING = "Adding RSS-channels error!";
+        private WeakReference<RssChannelListPresenter> presenter;
 
         private AddRssChannelTask(final RssChannelListPresenter presenter) {
-            presenterWeakReference = new WeakReference<>(presenter);
+            this.presenter = new WeakReference<>(presenter);
         }
 
         @Override
-        protected Void doInBackground(final RssChannel... rssChannels) {
-            for(final RssChannel rssChannel : rssChannels) {
-                /*
-                TODO Обработать SQLiteException
-                 */
-                presenterWeakReference.get().repository.addRssChannel(rssChannel);
+        protected VoidAsyncTaskResult doInBackground(final RssChannel... rssChannels) {
+            try {
+                for(final RssChannel rssChannel : rssChannels) {
+                    presenter.get().repository.addRssChannel(rssChannel);
+                }
+                return new VoidAsyncTaskResult();
+            } catch(final SQLiteException e) {
+                return new VoidAsyncTaskResult(e);
             }
-            return null;
         }
 
         @Override
-        protected void onPostExecute(final Void aVoid) {
-            presenterWeakReference.get().rssChannelListView.clearAddRssChannelEditText();
-            final ShowRssChannelListTask task = new ShowRssChannelListTask(presenterWeakReference.get());
-            task.execute();
+        protected void onPostExecute(final VoidAsyncTaskResult result) {
+            if(result.getException() != null) {
+                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_ADDING);
+            } else {
+                presenter.get().rssChannelListView.clearAddRssChannelEditText();
+                final ShowRssChannelListTask task = new ShowRssChannelListTask(presenter.get());
+                task.execute();
+                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_ADDING);
+            }
         }
     }
 }
