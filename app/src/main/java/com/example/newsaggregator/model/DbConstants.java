@@ -8,10 +8,10 @@ public final class DbConstants {
     public static final String NEWS_ENTRIES_TABLE_NAME = "news_entries";
 
     public static final String RSS_CHANNEL_ID_FIELD = "id";
-    public static final String RSS_CHANNEL_LINK_FIELD = "link";
+    public static final String RSS_CHANNEL_LINK_FIELD = "rss_channel_link";
     public static final String NEWS_ENTRY_ID_FIELD = "id";
     public static final String NEWS_ENTRY_TITLE_FIELD = "title";
-    public static final String NEWS_ENTRY_LINK_FIELD = "link";
+    public static final String NEWS_ENTRY_LINK_FIELD = "news_entry_link";
     public static final String NEWS_ENTRY_DESCRIPTION_FIELD = "description";
     public static final String NEWS_ENTRY_PUB_DATE_FIELD = "pub_date";
     public static final String NEWS_ENTRY_RSS_CHANNEL_ID_FIELD = "rss_channel_id";

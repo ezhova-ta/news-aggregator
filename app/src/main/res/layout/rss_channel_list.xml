@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.rss_channel_list.RssChannelListActivity"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <EditText
         android:id="@+id/addRssChannelEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/add_rss_channel_edit_text_hint"
-        android:inputType="text" />
+        android:hint="@string/add_rss_channel_edit_text_hint" />
 
     <Button
         android:id="@+id/addRssChannelButton"
@@ -26,5 +26,6 @@
         android:id="@+id/rssChannelList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:layout_marginTop="20dp" />
 </LinearLayout>

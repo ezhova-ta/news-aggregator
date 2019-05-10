@@ -3,24 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_marginBottom="20dp" >
 
     <TextView
+        style="@style/NewsEntryTitle"
         android:id="@+id/newsEntryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/newsEntryLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
+        style="@style/NewsEntryDescription"
         android:id="@+id/newsEntryDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        style="@style/NewsEntryLink"
+        android:id="@+id/newsEntryLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/NewsEntryPubDate"
         android:id="@+id/newsEntryPubDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

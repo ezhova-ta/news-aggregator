@@ -7,5 +7,28 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="NewsEntryTitle">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorNewsEntryTitle</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="NewsEntryDescription">
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="NewsEntryLink">
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="NewsEntryPubDate">
+        <item name="android:gravity">right</item>
+        <item name="android:textSize">16dp</item>
+    </style>
 
 </resources>

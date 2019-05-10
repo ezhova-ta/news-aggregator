@@ -30,10 +30,10 @@ public class NewsEntryListRepositoryImpl implements NewsEntryListRepository {
 
         final String sqlQuery =
                 "select * from " + DbConstants.NEWS_ENTRIES_TABLE_NAME +
-                        " inner join " + DbConstants.RSS_CHANNELS_TABLE_NAME +
-                        " on " + DbConstants.NEWS_ENTRIES_TABLE_NAME + "." + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD +
-                        " = " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_ID_FIELD +
-                        " where " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?";
+                " inner join " + DbConstants.RSS_CHANNELS_TABLE_NAME +
+                " on " + DbConstants.NEWS_ENTRIES_TABLE_NAME + "." + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD +
+                " = " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_ID_FIELD +
+                " where " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?";
 
         final Cursor cursor = db.rawQuery(sqlQuery, new String[]{rssChannelLink});
 

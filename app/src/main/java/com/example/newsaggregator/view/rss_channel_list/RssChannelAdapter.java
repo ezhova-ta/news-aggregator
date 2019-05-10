@@ -15,7 +15,7 @@ import java.util.List;
 class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     private final List<RssChannel> rssChannelList;
     private final RssChannelListActivity activity;
-    private final List<OnRssChannelListItemClickListener> onRssChannelListItemClickListeners =
+    private final List<OnItemClickListener> onItemClickListeners =
             new ArrayList<>();
 
     RssChannelAdapter(final RssChannelListActivity activity, final List<RssChannel> rssChannelList) {
@@ -49,17 +49,17 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
         return rssChannelList.size();
     }
 
-    public void subscribeOnRssChannelListItemClick(final OnRssChannelListItemClickListener listener) {
-        onRssChannelListItemClickListeners.add(listener);
+    public void subscribeOnRssChannelListItemClick(final OnItemClickListener listener) {
+        onItemClickListeners.add(listener);
     }
 
-    public void unSubscribeOnRssChannelListItemClick(final OnRssChannelListItemClickListener listener) {
-        onRssChannelListItemClickListeners.remove(listener);
+    public void unSubscribeOnRssChannelListItemClick(final OnItemClickListener listener) {
+        onItemClickListeners.remove(listener);
     }
 
     private void notifyOnRssChannelListItemClickListeners(final RssChannel rssChannel) {
-        for(final OnRssChannelListItemClickListener listener : onRssChannelListItemClickListeners) {
-            listener.onRssChannelListItemClick(rssChannel);
+        for(final OnItemClickListener listener : onItemClickListeners) {
+            listener.onItemClick(rssChannel);
         }
     }
 }
