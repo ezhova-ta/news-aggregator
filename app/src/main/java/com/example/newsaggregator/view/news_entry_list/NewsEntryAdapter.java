@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.NewsEntry;
-import com.example.newsaggregator.view.rss_channel_list.OnNewsEntryLinkClickListener;
+import com.example.newsaggregator.view.rss_channel_list.OnNewsEntryListItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 class NewsEntryAdapter extends RecyclerView.Adapter<NewsEntryHolder> {
     private final List<NewsEntry> newsEntryList;
     private final Activity activity;
-    private final List<OnNewsEntryLinkClickListener> onNewsEntryLinkClickListeners =
+    private final List<OnNewsEntryListItemClickListener> onNewsEntryListItemClickListeners =
             new ArrayList<>();
 
     NewsEntryAdapter(final Activity activity, final List<NewsEntry> newsEntryList) {
@@ -51,17 +51,17 @@ class NewsEntryAdapter extends RecyclerView.Adapter<NewsEntryHolder> {
         return newsEntryList.size();
     }
 
-    public void subscribeOnRssChannelListItemClick(final OnNewsEntryLinkClickListener listener) {
-        onNewsEntryLinkClickListeners.add(listener);
+    public void subscribeOnRssChannelListItemClick(final OnNewsEntryListItemClickListener listener) {
+        onNewsEntryListItemClickListeners.add(listener);
     }
 
-    public void unSubscribeOnRssChannelListItemClick(final OnNewsEntryLinkClickListener listener) {
-        onNewsEntryLinkClickListeners.remove(listener);
+    public void unSubscribeOnRssChannelListItemClick(final OnNewsEntryListItemClickListener listener) {
+        onNewsEntryListItemClickListeners.remove(listener);
     }
 
     private void notifyOnNewsEntryLinkClickisteners(final String newsEntryLink) {
-        for(final OnNewsEntryLinkClickListener listener : onNewsEntryLinkClickListeners) {
-            listener.onNewsEntryLinkClick(newsEntryLink);
+        for(final OnNewsEntryListItemClickListener listener : onNewsEntryListItemClickListeners) {
+            listener.onNewsEntryListItemClick(newsEntryLink);
         }
     }
 }

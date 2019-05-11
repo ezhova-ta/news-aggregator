@@ -9,12 +9,12 @@ import com.example.newsaggregator.model.repository.NewsEntryListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
 import com.example.newsaggregator.view.news_entry.NewsEntryActivity;
 import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
-import com.example.newsaggregator.view.rss_channel_list.OnNewsEntryLinkClickListener;
+import com.example.newsaggregator.view.rss_channel_list.OnNewsEntryListItemClickListener;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class NewsEntryListPresenter implements OnNewsEntryLinkClickListener {
+public class NewsEntryListPresenter implements OnNewsEntryListItemClickListener {
     private static final String MESSAGE_UNSUCCESSFUL_DATA_UPDATING = "Updating news entry list error!";
     private final NewsEntryListView newsEntryListView;
     private final NewsEntryListRepository repository;
@@ -48,7 +48,7 @@ public class NewsEntryListPresenter implements OnNewsEntryLinkClickListener {
     }
 
     @Override
-    public void onNewsEntryLinkClick(final String newsEntryLink) {
+    public void onNewsEntryListItemClick(final String newsEntryLink) {
         newsEntryListView.startActivityToDisplayNewsEntry(NewsEntryActivity.class,
                 NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY, newsEntryLink);
     }
