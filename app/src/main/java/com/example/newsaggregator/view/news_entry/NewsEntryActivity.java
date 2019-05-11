@@ -12,23 +12,14 @@ import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
 
 public class NewsEntryActivity extends AppCompatActivity implements NewsEntryView {
     private NewsEntryPresenter presenter;
-    private String newsEntryLink;
     private WebView newsEntryWebView;
-
-    private WebViewClient webViewClient = new WebViewClient() {
-        @Override
-        public boolean shouldOverrideUrlLoading(final WebView view, final WebResourceRequest request) {
-            view.loadUrl(request.getUrl().toString());
-            return true;
-        }
-    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry);
         newsEntryWebView = findViewById(R.id.newsEntryWebView);
-        newsEntryLink = getIntent().getStringExtra(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY);
+        final String newsEntryLink = getIntent().getStringExtra(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY);
         presenter = new NewsEntryPresenter(this);
         presenter.onCreate(newsEntryLink);
     }
@@ -59,7 +50,7 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
     }
 
     @Override
-    public void showNewsEntry(final String newsEntryLink) {
+    public void showNewsEntry(final WebViewClient webViewClient, final String newsEntryLink) {
         newsEntryWebView.setWebViewClient(webViewClient);
         newsEntryWebView.loadUrl(newsEntryLink);
     }

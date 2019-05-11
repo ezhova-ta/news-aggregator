@@ -54,7 +54,7 @@ public class NewsEntryListPresenter implements OnNewsEntryLinkClickListener {
     }
 
     private static final class ShowNewsEntryListTask extends AsyncTask<String, Void, AsyncTaskResult<List<NewsEntry>>> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "News entry list downloaded successfully!";
+        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "News entry list downloaded successfully";
         private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading news entry list error!";
         private final WeakReference<NewsEntryListPresenter> presenter;
 

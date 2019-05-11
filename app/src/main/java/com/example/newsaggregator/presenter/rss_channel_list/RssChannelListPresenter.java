@@ -44,7 +44,7 @@ public class RssChannelListPresenter implements OnRssChannelListItemClickListene
     }
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "RSS-channels downloaded successfully!";
+        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "RSS-channels downloaded successfully";
         private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading RSS-channels error!";
         private WeakReference<RssChannelListPresenter> presenter;
 
@@ -74,7 +74,7 @@ public class RssChannelListPresenter implements OnRssChannelListItemClickListene
     }
 
     private static final class AddRssChannelTask extends AsyncTask<RssChannel, Void, VoidAsyncTaskResult> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_ADDING = "RSS-channels added successfully!";
+        private static final String MESSAGE_SUCCESSFUL_DATA_ADDING = "RSS-channels added successfully";
         private static final String MESSAGE_UNSUCCESSFUL_DATA_ADDING = "Adding RSS-channels error!";
         private WeakReference<RssChannelListPresenter> presenter;
 

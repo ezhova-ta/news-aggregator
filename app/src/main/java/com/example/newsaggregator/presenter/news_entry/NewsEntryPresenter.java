@@ -1,6 +1,7 @@
 package com.example.newsaggregator.presenter.news_entry;
 
 import com.example.newsaggregator.view.news_entry.NewsEntryView;
+import com.example.newsaggregator.view.news_entry.NewsEntryWebViewClient;
 
 public class NewsEntryPresenter {
     private final NewsEntryView newsEntryView;
@@ -10,6 +11,6 @@ public class NewsEntryPresenter {
     }
 
     public void onCreate(final String newsEntryLink) {
-        newsEntryView.showNewsEntry(newsEntryLink);
+        newsEntryView.showNewsEntry(new NewsEntryWebViewClient(), newsEntryLink);
     }
 }
