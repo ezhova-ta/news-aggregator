@@ -19,12 +19,6 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        style="@style/NewsEntryLink"
-        android:id="@+id/newsEntryLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
         style="@style/NewsEntryPubDate"
         android:id="@+id/newsEntryPubDate"
         android:layout_width="match_parent"
