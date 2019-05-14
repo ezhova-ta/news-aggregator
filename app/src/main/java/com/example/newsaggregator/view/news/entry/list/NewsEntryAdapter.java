@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.NewsEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class NewsEntryAdapter extends RecyclerView.Adapter<NewsEntryHolder> {
     private final List<NewsEntry> newsEntryList;
     private final Activity activity;
-    private final List<OnNewsEntryListItemClickListener> onNewsEntryListItemClickListeners =
-            new ArrayList<>();
+    private OnNewsEntryListItemClickListener onNewsEntryListItemClickListener;
 
     NewsEntryAdapter(final Activity activity, final List<NewsEntry> newsEntryList) {
         this.newsEntryList = newsEntryList;
@@ -40,7 +38,7 @@ class NewsEntryAdapter extends RecyclerView.Adapter<NewsEntryHolder> {
         newsEntryHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                notifyOnNewsEntryLinkClickisteners(newsEntry.getLink());
+                notifyOnNewsEntryLinkClickistener(newsEntry.getLink());
             }
         });
     }
@@ -51,16 +49,14 @@ class NewsEntryAdapter extends RecyclerView.Adapter<NewsEntryHolder> {
     }
 
     public void subscribeOnRssChannelListItemClick(final OnNewsEntryListItemClickListener listener) {
-        onNewsEntryListItemClickListeners.add(listener);
+        onNewsEntryListItemClickListener = listener;
     }
 
     public void unSubscribeOnRssChannelListItemClick(final OnNewsEntryListItemClickListener listener) {
-        onNewsEntryListItemClickListeners.remove(listener);
+        onNewsEntryListItemClickListener = null;
     }
 
-    private void notifyOnNewsEntryLinkClickisteners(final String newsEntryLink) {
-        for(final OnNewsEntryListItemClickListener listener : onNewsEntryListItemClickListeners) {
-            listener.onNewsEntryListItemClick(newsEntryLink);
-        }
+    private void notifyOnNewsEntryLinkClickistener(final String newsEntryLink) {
+        onNewsEntryListItemClickListener.onNewsEntryListItemClick(newsEntryLink);
     }
 }

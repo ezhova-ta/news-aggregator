@@ -7,7 +7,6 @@ import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
-import com.example.newsaggregator.view.news.entry.NewsEntryActivity;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
 import com.example.newsaggregator.view.news.entry.list.OnNewsEntryListItemClickListener;
 
