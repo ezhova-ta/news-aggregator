@@ -3,11 +3,11 @@ package com.example.newsaggregator.presenter.channel.list;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
+import com.example.newsaggregator.model.DbException;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
 import com.example.newsaggregator.presenter.VoidAsyncTaskResult;
-import com.example.newsaggregator.view.news.entry.list.NewsEntryListActivity;
 import com.example.newsaggregator.view.channel.list.OnRssChannelListItemClickListener;
 import com.example.newsaggregator.view.channel.list.RssChannelListView;
 
@@ -58,7 +58,8 @@ public class RssChannelListPresenter implements OnRssChannelListItemClickListene
                 final List<RssChannel> rssChannelList = presenter.get().repository.getRssChannelList();
                 return new AsyncTaskResult<>(rssChannelList);
             } catch(final SQLiteException e) {
-                return new AsyncTaskResult<>(e);
+                final DbException dbException = new DbException(e.getMessage(), e.getStackTrace());
+                return new AsyncTaskResult<>(dbException);
             }
         }
 
@@ -90,7 +91,8 @@ public class RssChannelListPresenter implements OnRssChannelListItemClickListene
                 }
                 return new VoidAsyncTaskResult();
             } catch(final SQLiteException e) {
-                return new VoidAsyncTaskResult(e);
+                final DbException dbException = new DbException(e.getMessage(), e.getStackTrace());
+                return new VoidAsyncTaskResult(dbException);
             }
         }
 

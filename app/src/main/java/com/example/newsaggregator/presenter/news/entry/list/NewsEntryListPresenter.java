@@ -3,6 +3,7 @@ package com.example.newsaggregator.presenter.news.entry.list;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
+import com.example.newsaggregator.model.DbException;
 import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepository;
@@ -67,7 +68,8 @@ public class NewsEntryListPresenter implements OnNewsEntryListItemClickListener 
                 final List<NewsEntry> newsEntryList = presenter.get().repository.getNewsEntryList(rssChannelLinks[0]);
                 return new AsyncTaskResult<>(newsEntryList);
             } catch(final SQLiteException e) {
-                return new AsyncTaskResult<>(e);
+                final DbException dbException = new DbException(e.getMessage(), e.getStackTrace());
+                return new AsyncTaskResult<>(dbException);
             }
         }
 
