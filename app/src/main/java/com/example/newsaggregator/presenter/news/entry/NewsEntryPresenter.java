@@ -1,7 +1,7 @@
-package com.example.newsaggregator.presenter.news_entry;
+package com.example.newsaggregator.presenter.news.entry;
 
-import com.example.newsaggregator.view.news_entry.NewsEntryView;
-import com.example.newsaggregator.view.news_entry.NewsEntryWebViewClient;
+import com.example.newsaggregator.view.news.entry.NewsEntryView;
+import com.example.newsaggregator.view.news.entry.NewsEntryWebViewClient;
 
 public class NewsEntryPresenter {
     private final NewsEntryView newsEntryView;

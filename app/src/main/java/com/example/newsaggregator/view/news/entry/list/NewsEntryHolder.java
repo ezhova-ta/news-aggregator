@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.news_entry_list;
+package com.example.newsaggregator.view.news.entry.list;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

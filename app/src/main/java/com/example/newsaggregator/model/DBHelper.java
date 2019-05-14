@@ -12,13 +12,13 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(final SQLiteDatabase db) {
         db.execSQL(
-                "create table " + DbConstants.RSS_CHANNELS_TABLE_NAME +
+                "create table if not exists " + DbConstants.RSS_CHANNELS_TABLE_NAME +
                 " (" + DbConstants.RSS_CHANNEL_ID_FIELD + " integer primary key autoincrement, " +
                 DbConstants.RSS_CHANNEL_LINK_FIELD + " text," +
                 "unique (" + DbConstants.RSS_CHANNEL_LINK_FIELD + "))"
         );
         db.execSQL(
-                "create table " + DbConstants.NEWS_ENTRIES_TABLE_NAME +
+                "create table if not exists " + DbConstants.NEWS_ENTRIES_TABLE_NAME +
                 " (" + DbConstants.NEWS_ENTRY_ID_FIELD + " integer primary key autoincrement, " +
                 DbConstants.NEWS_ENTRY_TITLE_FIELD + " text, " +
                 DbConstants.NEWS_ENTRY_LINK_FIELD + " text, " +

@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.rss_channel_list;
+package com.example.newsaggregator.view.channel.list;
 
 import com.example.newsaggregator.model.entity.RssChannel;
 

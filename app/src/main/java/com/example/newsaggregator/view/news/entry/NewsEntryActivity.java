@@ -1,14 +1,13 @@
-package com.example.newsaggregator.view.news_entry;
+package com.example.newsaggregator.view.news.entry;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.presenter.news_entry.NewsEntryPresenter;
-import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
+import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenter;
+import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
 
 public class NewsEntryActivity extends AppCompatActivity implements NewsEntryView {
     private NewsEntryPresenter presenter;

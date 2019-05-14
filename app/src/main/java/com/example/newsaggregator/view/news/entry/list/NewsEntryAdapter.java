@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.news_entry_list;
+package com.example.newsaggregator.view.news.entry.list;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.NewsEntry;
-import com.example.newsaggregator.view.rss_channel_list.OnNewsEntryListItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

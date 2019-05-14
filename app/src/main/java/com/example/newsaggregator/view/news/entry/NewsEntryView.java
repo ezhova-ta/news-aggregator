@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.news_entry;
+package com.example.newsaggregator.view.news.entry;
 
 import android.webkit.WebViewClient;
 

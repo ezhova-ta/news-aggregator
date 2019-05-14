@@ -1,4 +1,4 @@
-package com.example.newsaggregator.presenter.news_entry_list;
+package com.example.newsaggregator.presenter.news.entry.list;
 
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
@@ -7,9 +7,9 @@ import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
-import com.example.newsaggregator.view.news_entry.NewsEntryActivity;
-import com.example.newsaggregator.view.news_entry_list.NewsEntryListView;
-import com.example.newsaggregator.view.rss_channel_list.OnNewsEntryListItemClickListener;
+import com.example.newsaggregator.view.news.entry.NewsEntryActivity;
+import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
+import com.example.newsaggregator.view.news.entry.list.OnNewsEntryListItemClickListener;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.news_entry_list;
+package com.example.newsaggregator.view.news.entry.list;
 
 import com.example.newsaggregator.model.entity.NewsEntry;
 

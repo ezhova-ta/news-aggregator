@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.rss_channel_list;
+package com.example.newsaggregator.view.channel.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.DBHelper;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
-import com.example.newsaggregator.presenter.rss_channel_list.RssChannelListPresenter;
+import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter;
 
 import java.util.List;
 

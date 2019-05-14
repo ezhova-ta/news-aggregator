@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.rss_channel_list;
+package com.example.newsaggregator.view.channel.list;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +16,7 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     private final List<RssChannel> rssChannelList;
     private final RssChannelListActivity activity;
     private final List<OnRssChannelListItemClickListener> onRssChannelListItemClickListeners =
-            new ArrayList<>();
+            new ArrayList<>(1);
 
     RssChannelAdapter(final RssChannelListActivity activity, final List<RssChannel> rssChannelList) {
         this.rssChannelList = rssChannelList;

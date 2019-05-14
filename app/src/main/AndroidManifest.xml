@@ -12,20 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".view.news_entry.NewsEntryActivity"></activity>
+        <activity android:name=".view.news.entry.NewsEntryActivity"></activity>
 
         <service
             android:name=".model.NewsEntryListService"
             android:exported="false" />
 
-        <activity android:name=".view.rss_channel_list.RssChannelListActivity">
+        <activity android:name=".view.channel.list.RssChannelListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.news_entry_list.NewsEntryListActivity" />
+        <activity android:name=".view.news.entry.list.NewsEntryListActivity" />
     </application>
 
 </manifest>

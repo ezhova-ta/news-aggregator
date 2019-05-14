@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.news_entry_list;
+package com.example.newsaggregator.view.news.entry.list;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,8 +17,8 @@ import com.example.newsaggregator.model.DBHelper;
 import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
-import com.example.newsaggregator.presenter.news_entry_list.NewsEntryListPresenter;
-import com.example.newsaggregator.view.rss_channel_list.RssChannelListView;
+import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenter;
+import com.example.newsaggregator.view.channel.list.RssChannelListView;
 
 import java.util.List;
 

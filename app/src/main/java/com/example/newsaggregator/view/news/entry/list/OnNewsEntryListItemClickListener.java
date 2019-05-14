@@ -1,4 +1,4 @@
-package com.example.newsaggregator.view.rss_channel_list;
+package com.example.newsaggregator.view.news.entry.list;
 
 public interface OnNewsEntryListItemClickListener {
     void onNewsEntryListItemClick(String newsEntryLink);
