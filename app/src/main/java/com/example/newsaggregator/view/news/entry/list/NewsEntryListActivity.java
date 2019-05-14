@@ -19,6 +19,7 @@ import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
 import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenter;
 import com.example.newsaggregator.view.channel.list.RssChannelListView;
+import com.example.newsaggregator.view.news.entry.NewsEntryActivity;
 
 import java.util.List;
 
@@ -112,9 +113,9 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     }
 
     @Override
-    public void startActivityToDisplayNewsEntry(final Class<?> activityClass,
-            final String newsEntryLinkExtraKey, final String newsEntryLinkExtraValue) {
-        final Intent intent = new Intent(this, activityClass);
+    public void startActivityToDisplayNewsEntry(final String newsEntryLinkExtraKey,
+                                                final String newsEntryLinkExtraValue) {
+        final Intent intent = new Intent(this, NewsEntryActivity.class);
         intent.putExtra(newsEntryLinkExtraKey, newsEntryLinkExtraValue);
         startActivity(intent);
     }

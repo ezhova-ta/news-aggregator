@@ -11,6 +11,6 @@ public interface NewsEntryListView {
     void startServiceToUpdateNewsEntryList();
     String getRssChannelLink();
     void showPopupMessage(String text);
-    void startActivityToDisplayNewsEntry(Class<?> activityClass, String newsEntryLinkExtraKey,
+    void startActivityToDisplayNewsEntry(String newsEntryLinkExtraKey,
             String newsEntryLinkExtraValue);
 }

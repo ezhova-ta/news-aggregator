@@ -39,8 +39,8 @@ public class RssChannelListPresenter implements OnRssChannelListItemClickListene
 
     @Override
     public void onRssChannelListItemClick(final RssChannel rssChannel) {
-        rssChannelListView.startActivityToDisplayNewsEntryList(NewsEntryListActivity.class,
-                RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY, rssChannel.getLink());
+        rssChannelListView.startActivityToDisplayNewsEntryList(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY,
+                rssChannel.getLink());
     }
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {

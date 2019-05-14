@@ -49,8 +49,8 @@ public class NewsEntryListPresenter implements OnNewsEntryListItemClickListener 
 
     @Override
     public void onNewsEntryListItemClick(final String newsEntryLink) {
-        newsEntryListView.startActivityToDisplayNewsEntry(NewsEntryActivity.class,
-                NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY, newsEntryLink);
+        newsEntryListView.startActivityToDisplayNewsEntry(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY,
+                newsEntryLink);
     }
 
     private static final class ShowNewsEntryListTask extends AsyncTask<String, Void, AsyncTaskResult<List<NewsEntry>>> {

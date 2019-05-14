@@ -15,6 +15,7 @@ import com.example.newsaggregator.model.DBHelper;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
 import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter;
+import com.example.newsaggregator.view.news.entry.list.NewsEntryListActivity;
 
 import java.util.List;
 
@@ -87,9 +88,9 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
-    public void startActivityToDisplayNewsEntryList(final Class<?> activityClass,
-            final String rssChannelLinkExtraKey, final String rssChannelLinkExtraValue) {
-        final Intent intent = new Intent(this, activityClass);
+    public void startActivityToDisplayNewsEntryList(final String rssChannelLinkExtraKey,
+                                                    final String rssChannelLinkExtraValue) {
+        final Intent intent = new Intent(this, NewsEntryListActivity.class);
         intent.putExtra(rssChannelLinkExtraKey, rssChannelLinkExtraValue);
         startActivity(intent);
     }

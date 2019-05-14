@@ -9,7 +9,6 @@ public interface RssChannelListView {
     void showRssChannelList(List<RssChannel> rssChannelList);
     String getAddRssChannelEditTextValue();
     void clearAddRssChannelEditText();
-    void startActivityToDisplayNewsEntryList(Class<?> activityClass,
-            String rssChannelLinkExtraKey, String rssChannelLinkExtraValue);
+    void startActivityToDisplayNewsEntryList(String rssChannelLinkExtraKey, String rssChannelLinkExtraValue);
     void showPopupMessage(String text);
 }
