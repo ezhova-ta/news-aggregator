@@ -1,6 +1,5 @@
 package com.example.newsaggregator.presenter.news.entry.list;
 
-import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
 import com.example.newsaggregator.model.DbException;
@@ -67,9 +66,8 @@ public class NewsEntryListPresenter implements OnNewsEntryListItemClickListener 
             try {
                 final List<NewsEntry> newsEntryList = presenter.get().repository.getNewsEntryList(rssChannelLinks[0]);
                 return new AsyncTaskResult<>(newsEntryList);
-            } catch(final SQLiteException e) {
-                final DbException dbException = new DbException(e.getMessage(), e.getStackTrace());
-                return new AsyncTaskResult<>(dbException);
+            } catch(final DbException e) {
+                return new AsyncTaskResult<>(e);
             }
         }
 

@@ -1,6 +1,5 @@
 package com.example.newsaggregator.presenter.channel.list;
 
-import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
 import com.example.newsaggregator.model.DbException;
@@ -57,9 +56,8 @@ public class RssChannelListPresenter implements OnRssChannelListItemClickListene
             try {
                 final List<RssChannel> rssChannelList = presenter.get().repository.getRssChannelList();
                 return new AsyncTaskResult<>(rssChannelList);
-            } catch(final SQLiteException e) {
-                final DbException dbException = new DbException(e.getMessage(), e.getStackTrace());
-                return new AsyncTaskResult<>(dbException);
+            } catch(final DbException e) {
+                return new AsyncTaskResult<>(e);
             }
         }
 
@@ -90,9 +88,8 @@ public class RssChannelListPresenter implements OnRssChannelListItemClickListene
                     presenter.get().repository.addRssChannel(rssChannel);
                 }
                 return new VoidAsyncTaskResult();
-            } catch(final SQLiteException e) {
-                final DbException dbException = new DbException(e.getMessage(), e.getStackTrace());
-                return new VoidAsyncTaskResult(dbException);
+            } catch(final DbException e) {
+                return new VoidAsyncTaskResult(e);
             }
         }
 
