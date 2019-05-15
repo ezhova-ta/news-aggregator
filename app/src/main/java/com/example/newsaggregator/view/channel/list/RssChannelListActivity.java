@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.model.DBHelper;
+import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.RssChannel;
-import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
 import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter;
+import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenterImpl;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListActivity;
 
 import java.util.List;
@@ -22,11 +22,8 @@ import java.util.List;
 public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView {
     private EditText addRssChannelEditText;
     private RssChannelListPresenter presenter;
+    private OnRssChannelListItemClickListener onRssChannelListItemClickListener;
     private RecyclerView recyclerView;
-
-    public RssChannelListPresenter getPresenter() {
-        return presenter;
-    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -35,8 +32,10 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
         recyclerView = findViewById(R.id.rssChannelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        presenter = new RssChannelListPresenter(this,
-                new RssChannelListRepositoryImpl(new DBHelper(this)));
+        onRssChannelListItemClickListener = new RssChannelListPresenterImpl(this,
+                NewsAggregatorApplication.getInstance().getDiFactory().provideRssChannelListRepository());
+        presenter = new RssChannelListPresenterImpl(this,
+                NewsAggregatorApplication.getInstance().getDiFactory().provideRssChannelListRepository());
         presenter.onCreate();
     }
 
@@ -73,7 +72,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     public void showRssChannelList(final List<RssChannel> rssChannelList) {
         final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelList);
         recyclerView.setAdapter(adapter);
-        adapter.subscribeOnRssChannelListItemClick(presenter);
+        adapter.subscribeOnRssChannelListItemClick(onRssChannelListItemClickListener);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.webkit.WebViewClient;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenter;
+import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenterImpl;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
 
 public class NewsEntryActivity extends AppCompatActivity implements NewsEntryView {
@@ -19,7 +20,7 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
         setContentView(R.layout.news_entry);
         newsEntryWebView = findViewById(R.id.newsEntryWebView);
         final String newsEntryLink = getIntent().getStringExtra(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY);
-        presenter = new NewsEntryPresenter(this);
+        presenter = new NewsEntryPresenterImpl(this);
         presenter.onCreate(newsEntryLink);
     }
 

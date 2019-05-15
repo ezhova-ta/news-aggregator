@@ -13,11 +13,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
-import com.example.newsaggregator.model.DBHelper;
+import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
-import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
 import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenter;
+import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenterImpl;
 import com.example.newsaggregator.view.channel.list.RssChannelListView;
 import com.example.newsaggregator.view.news.entry.NewsEntryActivity;
 
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class NewsEntryListActivity extends AppCompatActivity implements NewsEntryListView {
     private NewsEntryListPresenter presenter;
-    private NewsEntryAdapter adapter;
+    private OnNewsEntryListItemClickListener onNewsEntryListItemClickListener;
     private RecyclerView recyclerView;
     private BroadcastReceiver receiver;
     private String rssChannelLink;
@@ -38,8 +38,10 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        presenter = new NewsEntryListPresenter(this,
-                new NewsEntryListRepositoryImpl(new DBHelper(this)));
+        onNewsEntryListItemClickListener = new NewsEntryListPresenterImpl(this,
+                NewsAggregatorApplication.getInstance().getDiFactory().provideNewsEntryListRepository());
+        presenter = new NewsEntryListPresenterImpl(this,
+                NewsAggregatorApplication.getInstance().getDiFactory().provideNewsEntryListRepository());
         presenter.onCreate();
 
         receiver = new BroadcastReceiver() {
@@ -85,7 +87,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     public void showNewsEntryList(final List<NewsEntry> newsEntryList) {
         final NewsEntryAdapter adapter = new NewsEntryAdapter(this, newsEntryList);
         recyclerView.setAdapter(adapter);
-        adapter.subscribeOnRssChannelListItemClick(presenter);
+        adapter.subscribeOnRssChannelListItemClick(onNewsEntryListItemClickListener);
     }
 
     @Override

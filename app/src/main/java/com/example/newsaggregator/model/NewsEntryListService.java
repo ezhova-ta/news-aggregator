@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.NewsEntry;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -42,15 +43,15 @@ public class NewsEntryListService extends IntentService {
 
     private void handleActionFetchNewsEntryList(final String rssChannelUrl) {
         final Intent responseIntent = new Intent(ACTION_FETCH_NEWS_ENTRY_LIST);
-        final XmlParser parser;
+        final Parser parser;
 
         try {
-            parser = new XmlParser(rssChannelUrl);
-            final List<NewsEntry> newsEntryList = parser.parseXml();
+            parser = NewsAggregatorApplication.getInstance().getDiFactory().provideParser();
+            final List<NewsEntry> newsEntryList = (List<NewsEntry>) parser.parse(rssChannelUrl);
 
             if(!newsEntryList.isEmpty()) {
                 final SQLiteOpenHelper sqLiteOpenHelper =
-                        new DBHelper(this);
+                        NewsAggregatorApplication.getInstance().getDiFactory().provideSQLiteOpenHelper();
                 final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
                 final long rssChannelId;
                 ContentValues contentValues;

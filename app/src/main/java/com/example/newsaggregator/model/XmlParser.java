@@ -8,25 +8,18 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XmlParser {
+public class XmlParser implements Parser<List<NewsEntry>> {
     private static final String ITEM_TAG_NAME = "item";
     private static final String TITLE_TAG_NAME = "title";
     private static final String LINK_TAG_NAME = "link";
     private static final String DESCRIPTION_TAG_NAME = "description";
     private static final String PUB_DATE_TAG_NAME = "pubDate";
 
-    private URL url;
-
-    public XmlParser(final String url) throws MalformedURLException {
-        this.url = new URL(url);
-    }
-
-    private XmlPullParser getXmlParser() throws IOException, XmlPullParserException {
+    private XmlPullParser getXmlParser(final URL url) throws IOException, XmlPullParserException {
         final XmlPullParserFactory parserFactory = XmlPullParserFactory.newInstance();
         final XmlPullParser parser = parserFactory.newPullParser();
         final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -34,8 +27,9 @@ public class XmlParser {
         return parser;
     }
 
-    public List<NewsEntry> parseXml() throws XmlPullParserException, IOException {
-        final XmlPullParser parser = getXmlParser();
+    @Override
+    public List<NewsEntry> parse(final String url) throws XmlPullParserException, IOException {
+        final XmlPullParser parser = getXmlParser(new URL(url));
         NewsEntry newsEntry = new NewsEntry();
         final List<NewsEntry> newsEntryList = new ArrayList<>(10);
         boolean isItem = false;
