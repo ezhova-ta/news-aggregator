@@ -21,10 +21,10 @@ import com.example.newsaggregator.view.news.entry.NewsEntryWebViewClient;
 
 import java.util.List;
 
-public class DIFactory {
+public class DependencyInjectionFactory {
     private final Context context;
 
-    public DIFactory(final Context context) {
+    public DependencyInjectionFactory(final Context context) {
         this.context = context;
     }
 

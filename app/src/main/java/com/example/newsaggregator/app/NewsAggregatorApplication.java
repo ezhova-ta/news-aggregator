@@ -4,13 +4,13 @@ import android.app.Application;
 
 public class NewsAggregatorApplication extends Application {
     private static NewsAggregatorApplication instance;
-    private DIFactory diFactory;
+    private DependencyInjectionFactory diFactory;
 
     public static NewsAggregatorApplication getInstance() {
         return instance;
     }
 
-    public DIFactory getDiFactory() {
+    public DependencyInjectionFactory getDiFactory() {
         return diFactory;
     }
 
@@ -18,6 +18,6 @@ public class NewsAggregatorApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        diFactory = new DIFactory(getApplicationContext());
+        diFactory = new DependencyInjectionFactory(getApplicationContext());
     }
 }
