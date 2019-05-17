@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface NewsEntryListRepository {
     List<NewsEntry> getNewsEntryList(String rssChannelLink) throws DbException;
+    void deleteOutdatedNewsEntries() throws DbException;
 }

@@ -7,6 +7,7 @@ import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.repository.NewsEntryListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
+import com.example.newsaggregator.presenter.VoidAsyncTaskResult;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
 import com.example.newsaggregator.view.news.entry.list.OnNewsEntryListItemClickListener;
 
@@ -26,6 +27,7 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
 
     @Override
     public void onCreate() {
+        deleteOutdatedNewsEntries();
         showNewsEntryList(newsEntryListView.getRssChannelLink());
     }
 
@@ -47,6 +49,11 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
     private void showNewsEntryList(final String rssChannelLink) {
         final ShowNewsEntryListTask task = new ShowNewsEntryListTask(this);
         task.execute(rssChannelLink);
+    }
+
+    private void deleteOutdatedNewsEntries() {
+        final DeleteOutdatedNewsEntriesTask task = new DeleteOutdatedNewsEntriesTask(this);
+        task.execute();
     }
 
     @Override
@@ -81,6 +88,28 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
             } else if(!result.getResult().isEmpty()) {
                 presenter.get().newsEntryListView.showNewsEntryList(result.getResult());
                 presenter.get().newsEntryListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DOWNLOADING);
+            }
+        }
+    }
+
+    private static final class DeleteOutdatedNewsEntriesTask extends AsyncTask<Void, Void, VoidAsyncTaskResult> {
+        private WeakReference<NewsEntryListPresenterImpl> presenter;
+
+        private DeleteOutdatedNewsEntriesTask(final NewsEntryListPresenterImpl presenter) {
+            this.presenter = new WeakReference<>(presenter);
+        }
+
+        /*
+        TODO Обработка ошибок
+        */
+
+        @Override
+        protected VoidAsyncTaskResult doInBackground(final Void... voids) {
+            try {
+                presenter.get().repository.deleteOutdatedNewsEntries();
+                return new VoidAsyncTaskResult();
+            } catch(final DbException e) {
+                return new VoidAsyncTaskResult(e);
             }
         }
     }

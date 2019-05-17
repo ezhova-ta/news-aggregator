@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface LocalNewsEntryListDataSource {
     List<NewsEntry> getNewsEntryList(String rssChannelLink) throws SQLiteException;
+    int deleteOutdatedNewsEntries() throws SQLiteException;
 }

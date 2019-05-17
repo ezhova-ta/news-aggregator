@@ -9,6 +9,7 @@ import com.example.newsaggregator.model.DbConstants;
 import com.example.newsaggregator.model.entity.NewsEntry;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataSource {
@@ -56,5 +57,30 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
         db.close();
 
         return newsEntryList;
+    }
+
+    @Override
+    public int deleteOutdatedNewsEntries() throws SQLiteException {
+        /*
+        TODO Разрешение зависимостей.
+         */
+        /*
+        TODO Избавиться от magic const.
+         */
+        final long currentDate = Calendar.getInstance().getTimeInMillis();
+        final long periodInMillis = 259_200_000;
+        final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+        final int rowCount = db.delete(
+                DbConstants.NEWS_ENTRIES_TABLE_NAME,
+                DbConstants.NEWS_ENTRY_PUB_DATE_FIELD + " < ?",
+                new String[]{Long.toString(currentDate - periodInMillis)}
+        );
+
+        sqLiteOpenHelper.close();
+        db.close();
+
+        System.out.println("---> delete Outdated NewsEntries Deleted " + rowCount + " rows");
+
+        return rowCount;
     }
 }
