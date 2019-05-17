@@ -20,10 +20,10 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry);
+        initViewElement();
 
-        diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
-        newsEntryWebView = findViewById(R.id.newsEntryWebView);
         final String newsEntryLink = getIntent().getStringExtra(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY);
+        diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         presenter = diFactory.provideNewsEntryPresenter(this);
         presenter.onCreate(newsEntryLink);
     }
@@ -51,6 +51,10 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void initViewElement() {
+        newsEntryWebView = findViewById(R.id.newsEntryWebView);
     }
 
     @Override

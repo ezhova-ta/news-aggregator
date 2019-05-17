@@ -36,11 +36,10 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry_list);
+        initViewElement();
 
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
-        recyclerView = findViewById(R.id.newsEntryList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         onNewsEntryListItemClickListener = diFactory.provideOnNewsEntryListItemClickListener(this);
         presenter = diFactory.provideNewsEntryListPresenter(this);
         presenter.onCreate();
@@ -84,6 +83,15 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         unregisterReceiver(receiver);
     }
 
+    private void initViewElement() {
+        recyclerView = findViewById(R.id.newsEntryList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void onUpdateNewsEntryListButtonClick(final View view) {
+        presenter.onUpdateNewsEntryListButtonClick();
+    }
+
     @Override
     public void showNewsEntryList(final List<NewsEntry> newsEntryList) {
         final NewsEntryAdapter adapter = new NewsEntryAdapter(this, newsEntryList);
@@ -97,10 +105,6 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         intent.setAction(NewsEntryListService.ACTION_FETCH_NEWS_ENTRY_LIST);
         intent.putExtra(NewsEntryListService.EXTRA_PARAM_RSS_CHANNEL_URL, rssChannelLink);
         startService(intent);
-    }
-
-    public void onUpdateNewsEntryListButtonClick(final View view) {
-        presenter.onUpdateNewsEntryListButtonClick();
     }
 
     @Override

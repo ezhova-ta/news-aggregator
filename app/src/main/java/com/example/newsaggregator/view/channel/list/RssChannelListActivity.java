@@ -30,10 +30,9 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rss_channel_list);
+        initViewElement();
+
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
-        addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
-        recyclerView = findViewById(R.id.rssChannelList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         onRssChannelListItemClickListener = diFactory.provideOnRssChannelListItemClickListener(this);
         presenter = diFactory.provideRssChannelListPresenter(this);
         presenter.onCreate();
@@ -62,6 +61,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void initViewElement() {
+        addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
+        recyclerView = findViewById(R.id.rssChannelList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void onAddRssChannelButtonClick(final View view) {
