@@ -15,4 +15,8 @@ public final class DbConstants {
     public static final String NEWS_ENTRY_DESCRIPTION_FIELD = "description";
     public static final String NEWS_ENTRY_PUB_DATE_FIELD = "pub_date";
     public static final String NEWS_ENTRY_RSS_CHANNEL_ID_FIELD = "rss_channel_id";
+
+    public static final long MILLISECONDS_PER_DAY = 86_400_000;
+    public static final long NEWS_ENTRY_STORAGE_PERIOD_IN_MILLIS = MILLISECONDS_PER_DAY * 3;
+    public static final long NEWS_ENTRIES_CHECK_PERIODICITY = MILLISECONDS_PER_DAY;
 }

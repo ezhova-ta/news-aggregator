@@ -61,25 +61,17 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
 
     @Override
     public int deleteOutdatedNewsEntries() throws SQLiteException {
-        /*
-        TODO Разрешение зависимостей.
-         */
-        /*
-        TODO Избавиться от magic const.
-         */
-        final long currentDate = Calendar.getInstance().getTimeInMillis();
-        final long periodInMillis = 259_200_000;
+        final long currentDateInMillis = Calendar.getInstance().getTimeInMillis();
+        final long storagePeriodInMillis = DbConstants.NEWS_ENTRY_STORAGE_PERIOD_IN_MILLIS;
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
         final int rowCount = db.delete(
                 DbConstants.NEWS_ENTRIES_TABLE_NAME,
                 DbConstants.NEWS_ENTRY_PUB_DATE_FIELD + " < ?",
-                new String[]{Long.toString(currentDate - periodInMillis)}
+                new String[]{Long.toString(currentDateInMillis - storagePeriodInMillis)}
         );
 
         sqLiteOpenHelper.close();
         db.close();
-
-        System.out.println("---> delete Outdated NewsEntries Deleted " + rowCount + " rows");
 
         return rowCount;
     }

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -120,5 +121,20 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         final Intent intent = new Intent(this, NewsEntryActivity.class);
         intent.putExtra(newsEntryLinkExtraKey, newsEntryLinkExtraValue);
         startActivity(intent);
+    }
+
+    @Override
+    public long getNewsEntriesDetetionDateInMillis() {
+        final SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE);
+        return preferences.getLong(PREFERENCE_NAME, DEFAULT_PREFERENCE_VALUE);
+    }
+
+    @Override
+    public void setNewsEntriesDetetionDate(final long newsEntriesDetetionDateInMillis) {
+        final SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE);
+        preferences
+                .edit()
+                .putLong(PREFERENCE_NAME, newsEntriesDetetionDateInMillis)
+                .apply();
     }
 }

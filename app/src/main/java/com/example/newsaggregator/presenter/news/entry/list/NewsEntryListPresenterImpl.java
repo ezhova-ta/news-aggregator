@@ -2,6 +2,7 @@ package com.example.newsaggregator.presenter.news.entry.list;
 
 import android.os.AsyncTask;
 
+import com.example.newsaggregator.model.DbConstants;
 import com.example.newsaggregator.model.DbException;
 import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
@@ -12,6 +13,7 @@ import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
 import com.example.newsaggregator.view.news.entry.list.OnNewsEntryListItemClickListener;
 
 import java.lang.ref.WeakReference;
+import java.util.Calendar;
 import java.util.List;
 
 public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNewsEntryListItemClickListener {
@@ -27,7 +29,15 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
 
     @Override
     public void onCreate() {
-        deleteOutdatedNewsEntries();
+        final long currentDateInMillis = Calendar.getInstance().getTimeInMillis();
+        final long newsEntriesDetetionDateInMillis = newsEntryListView.getNewsEntriesDetetionDateInMillis();
+
+        if(newsEntriesDetetionDateInMillis < (currentDateInMillis - DbConstants.NEWS_ENTRIES_CHECK_PERIODICITY) ||
+                newsEntriesDetetionDateInMillis == NewsEntryListView.DEFAULT_PREFERENCE_VALUE) {
+            deleteOutdatedNewsEntries();
+            newsEntryListView.setNewsEntriesDetetionDate(currentDateInMillis);
+        }
+
         showNewsEntryList(newsEntryListView.getRssChannelLink());
     }
 
