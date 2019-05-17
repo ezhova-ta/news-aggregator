@@ -6,11 +6,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.newsaggregator.R;
+import com.example.newsaggregator.app.DependencyInjectionFactory;
+import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenter;
-import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenterImpl;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
 
 public class NewsEntryActivity extends AppCompatActivity implements NewsEntryView {
+    private DependencyInjectionFactory diFactory;
     private NewsEntryPresenter presenter;
     private WebView newsEntryWebView;
 
@@ -18,9 +20,11 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry);
+
+        diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         newsEntryWebView = findViewById(R.id.newsEntryWebView);
         final String newsEntryLink = getIntent().getStringExtra(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY);
-        presenter = new NewsEntryPresenterImpl(this);
+        presenter = diFactory.provideNewsEntryPresenter(this);
         presenter.onCreate(newsEntryLink);
     }
 

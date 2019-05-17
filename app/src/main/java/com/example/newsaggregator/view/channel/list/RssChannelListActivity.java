@@ -11,15 +11,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
+import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter;
-import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenterImpl;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListActivity;
 
 import java.util.List;
 
 public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView {
+    private DependencyInjectionFactory diFactory;
     private EditText addRssChannelEditText;
     private RssChannelListPresenter presenter;
     private OnRssChannelListItemClickListener onRssChannelListItemClickListener;
@@ -29,13 +30,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rss_channel_list);
+        diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
         recyclerView = findViewById(R.id.rssChannelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        onRssChannelListItemClickListener = new RssChannelListPresenterImpl(this,
-                NewsAggregatorApplication.getInstance().getDiFactory().provideRssChannelListRepository());
-        presenter = new RssChannelListPresenterImpl(this,
-                NewsAggregatorApplication.getInstance().getDiFactory().provideRssChannelListRepository());
+        onRssChannelListItemClickListener = diFactory.provideOnRssChannelListItemClickListener(this);
+        presenter = diFactory.provideRssChannelListPresenter(this);
         presenter.onCreate();
     }
 

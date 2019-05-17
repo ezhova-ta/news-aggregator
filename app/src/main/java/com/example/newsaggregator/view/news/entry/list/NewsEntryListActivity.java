@@ -13,17 +13,18 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
+import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.NewsEntryListService;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenter;
-import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenterImpl;
 import com.example.newsaggregator.view.channel.list.RssChannelListView;
 import com.example.newsaggregator.view.news.entry.NewsEntryActivity;
 
 import java.util.List;
 
 public class NewsEntryListActivity extends AppCompatActivity implements NewsEntryListView {
+    private DependencyInjectionFactory diFactory;
     private NewsEntryListPresenter presenter;
     private OnNewsEntryListItemClickListener onNewsEntryListItemClickListener;
     private RecyclerView recyclerView;
@@ -35,13 +36,12 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_entry_list);
 
+        diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        onNewsEntryListItemClickListener = new NewsEntryListPresenterImpl(this,
-                NewsAggregatorApplication.getInstance().getDiFactory().provideNewsEntryListRepository());
-        presenter = new NewsEntryListPresenterImpl(this,
-                NewsAggregatorApplication.getInstance().getDiFactory().provideNewsEntryListRepository());
+        onNewsEntryListItemClickListener = diFactory.provideOnNewsEntryListItemClickListener(this);
+        presenter = diFactory.provideNewsEntryListPresenter(this);
         presenter.onCreate();
 
         receiver = new BroadcastReceiver() {

@@ -17,7 +17,18 @@ import com.example.newsaggregator.model.repository.NewsEntryListRepository;
 import com.example.newsaggregator.model.repository.NewsEntryListRepositoryImpl;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
+import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter;
+import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenterImpl;
+import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenter;
+import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenterImpl;
+import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenter;
+import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenterImpl;
+import com.example.newsaggregator.view.channel.list.OnRssChannelListItemClickListener;
+import com.example.newsaggregator.view.channel.list.RssChannelListView;
+import com.example.newsaggregator.view.news.entry.NewsEntryView;
 import com.example.newsaggregator.view.news.entry.NewsEntryWebViewClient;
+import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
+import com.example.newsaggregator.view.news.entry.list.OnNewsEntryListItemClickListener;
 
 import java.util.List;
 
@@ -53,6 +64,26 @@ public class DependencyInjectionFactory {
 
     public Parser<List<NewsEntry>> provideParser() {
         return new XmlParser();
+    }
+
+    public RssChannelListPresenter provideRssChannelListPresenter(final RssChannelListView view) {
+        return new RssChannelListPresenterImpl(view, provideRssChannelListRepository());
+    }
+
+    public OnRssChannelListItemClickListener provideOnRssChannelListItemClickListener(final RssChannelListView view) {
+        return new RssChannelListPresenterImpl(view, provideRssChannelListRepository());
+    }
+
+    public NewsEntryListPresenter provideNewsEntryListPresenter(final NewsEntryListView view) {
+        return new NewsEntryListPresenterImpl(view, provideNewsEntryListRepository());
+    }
+
+    public OnNewsEntryListItemClickListener provideOnNewsEntryListItemClickListener(final NewsEntryListView view) {
+        return new NewsEntryListPresenterImpl(view, provideNewsEntryListRepository());
+    }
+
+    public NewsEntryPresenter provideNewsEntryPresenter(final NewsEntryView view) {
+        return new NewsEntryPresenterImpl(view);
     }
 
     public WebViewClient provideWebViewClient() {

@@ -8,6 +8,13 @@ import android.widget.TextView;
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.NewsEntry;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 class NewsEntryHolder extends RecyclerView.ViewHolder {
     private final TextView newsEntryTitleTextView;
     private final TextView newsEntryDescriptionTextView;
@@ -24,6 +31,14 @@ class NewsEntryHolder extends RecyclerView.ViewHolder {
     void fillView(final NewsEntry newsEntry) {
         newsEntryTitleTextView.setText(newsEntry.getTitle());
         newsEntryDescriptionTextView.setText(newsEntry.getDescription());
-        newsEntryPubDateTextView.setText(newsEntry.getPubDate());
+        newsEntryPubDateTextView.setText(convertToString(newsEntry.getPubDate()));
+    }
+
+    private String convertToString(final long dateInMillis) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateInMillis);
+        return  calendar.get(Calendar.DAY_OF_MONTH) + "." +
+                (calendar.get(Calendar.MONTH) + 1) + "." +
+                calendar.get(Calendar.YEAR);
     }
 }

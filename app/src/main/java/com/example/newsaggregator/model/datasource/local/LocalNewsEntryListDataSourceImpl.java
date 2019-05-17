@@ -26,10 +26,11 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
 
         final String sqlQuery =
                 "select * from " + DbConstants.NEWS_ENTRIES_TABLE_NAME +
-                        " inner join " + DbConstants.RSS_CHANNELS_TABLE_NAME +
-                        " on " + DbConstants.NEWS_ENTRIES_TABLE_NAME + "." + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD +
-                        " = " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_ID_FIELD +
-                        " where " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?";
+                " inner join " + DbConstants.RSS_CHANNELS_TABLE_NAME +
+                " on " + DbConstants.NEWS_ENTRIES_TABLE_NAME + "." + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD +
+                " = " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_ID_FIELD +
+                " where " + DbConstants.RSS_CHANNELS_TABLE_NAME + "." + DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?" +
+                " order by " + DbConstants.NEWS_ENTRIES_TABLE_NAME + "." + DbConstants.NEWS_ENTRY_PUB_DATE_FIELD + " desc";
 
         final Cursor cursor = db.rawQuery(sqlQuery, new String[]{rssChannelLink});
 
@@ -44,7 +45,7 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
                         cursor.getString(titleColumnIndex),
                         cursor.getString(linkColumnIndex),
                         cursor.getString(descriptionColumnIndex),
-                        cursor.getString(pubDateColumnIndex)
+                        cursor.getLong(pubDateColumnIndex)
                 );
                 newsEntryList.add(newsEntry);
             } while(cursor.moveToNext());
