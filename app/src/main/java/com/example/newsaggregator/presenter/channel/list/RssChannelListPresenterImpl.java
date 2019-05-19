@@ -39,6 +39,11 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     }
 
     @Override
+    public void onDeleteRssChannelsButtonClick() {
+        rssChannelListView.startActivityToDeleteRssChannels();
+    }
+
+    @Override
     public void onRssChannelListItemClick(final RssChannel rssChannel) {
         rssChannelListView.startActivityToDisplayNewsEntryList(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY,
                 rssChannel.getLink());

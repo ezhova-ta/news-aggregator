@@ -10,5 +10,6 @@ public interface RssChannelListView {
     String getAddRssChannelEditTextValue();
     void clearAddRssChannelEditText();
     void startActivityToDisplayNewsEntryList(String rssChannelLinkExtraKey, String rssChannelLinkExtraValue);
+    void startActivityToDeleteRssChannels();
     void showPopupMessage(String text);
 }

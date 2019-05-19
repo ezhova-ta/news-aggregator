@@ -19,12 +19,16 @@ import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.model.repository.RssChannelListRepositoryImpl;
 import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter;
 import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenterImpl;
+import com.example.newsaggregator.presenter.channel.list.deleting.DeletingRssChannelListPresenter;
+import com.example.newsaggregator.presenter.channel.list.deleting.DeletingRssChannelListPresenterImpl;
 import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenter;
 import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenterImpl;
 import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenter;
 import com.example.newsaggregator.presenter.news.entry.list.NewsEntryListPresenterImpl;
 import com.example.newsaggregator.view.channel.list.OnRssChannelListItemClickListener;
 import com.example.newsaggregator.view.channel.list.RssChannelListView;
+import com.example.newsaggregator.view.channel.list.deleting.DeletingRssChannelListView;
+import com.example.newsaggregator.view.channel.list.deleting.OnRssChannelListItemCheckListener;
 import com.example.newsaggregator.view.news.entry.NewsEntryView;
 import com.example.newsaggregator.view.news.entry.NewsEntryWebViewClient;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
@@ -86,11 +90,15 @@ public class DependencyInjectionFactory {
         return new NewsEntryPresenterImpl(view);
     }
 
+    public DeletingRssChannelListPresenter provideDeletingRssChannelListPresenter(final DeletingRssChannelListView view) {
+        return new DeletingRssChannelListPresenterImpl(view, provideRssChannelListRepository());
+    }
+
+    public OnRssChannelListItemCheckListener provideOnRssChannelListItemCheckListener(final DeletingRssChannelListView view) {
+        return new DeletingRssChannelListPresenterImpl(view, provideRssChannelListRepository());
+    }
+
     public WebViewClient provideWebViewClient() {
         return new NewsEntryWebViewClient();
     }
-
-    /*
-    TODO Экземпляры презентеров создаются в активити.
-     */
 }

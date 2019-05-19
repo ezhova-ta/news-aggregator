@@ -15,6 +15,7 @@ import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter;
+import com.example.newsaggregator.view.channel.list.deleting.DeletingRssChannelListActivity;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListActivity;
 
 import java.util.List;
@@ -73,13 +74,17 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         presenter.onAddRssChannelButtonClick();
     }
 
+    public void onDeleteRssChannelsButtonClick(final View view) {
+        presenter.onDeleteRssChannelsButtonClick();
+    }
+
+
     @Override
     public void showRssChannelList(final List<RssChannel> rssChannelList) {
         final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelList);
         recyclerView.setAdapter(adapter);
         adapter.subscribeOnRssChannelListItemClick(onRssChannelListItemClickListener);
     }
-
     @Override
     public String getAddRssChannelEditTextValue() {
         addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
@@ -96,6 +101,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
                                                     final String rssChannelLinkExtraValue) {
         final Intent intent = new Intent(this, NewsEntryListActivity.class);
         intent.putExtra(rssChannelLinkExtraKey, rssChannelLinkExtraValue);
+        startActivity(intent);
+    }
+
+    @Override
+    public void startActivityToDeleteRssChannels() {
+        final Intent intent = new Intent(this, DeletingRssChannelListActivity.class);
         startActivity(intent);
     }
 

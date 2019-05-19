@@ -22,6 +22,13 @@
         android:onClick="onAddRssChannelButtonClick"
         android:text="@string/add_rss_channel_button_text" />
 
+    <Button
+        android:id="@+id/deleteRssChannelsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onDeleteRssChannelsButtonClick"
+        android:text="@string/delete_rss_channels_button_text" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rssChannelList"
         android:layout_width="match_parent"
