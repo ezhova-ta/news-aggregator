@@ -25,6 +25,11 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
     @Override
     public void onCreate() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public void onResume() {
         final ShowRssChannelListTask task = new ShowRssChannelListTask(this);
         task.execute();
     }

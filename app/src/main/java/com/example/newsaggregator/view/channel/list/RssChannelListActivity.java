@@ -36,7 +36,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         onRssChannelListItemClickListener = diFactory.provideOnRssChannelListItemClickListener(this);
         presenter = diFactory.provideRssChannelListPresenter(this);
-        presenter.onCreate();
     }
 
     @Override
@@ -47,6 +46,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     protected void onResume() {
         super.onResume();
+        presenter.onResume();
     }
 
     @Override
