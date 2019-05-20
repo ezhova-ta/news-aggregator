@@ -35,4 +35,13 @@ public class RssChannelListRepositoryImpl implements RssChannelListRepository {
             throw new DbException(e.getMessage());
         }
     }
+
+    @Override
+    public void deleteRssChannel(final String link) throws DbException {
+        try {
+            dataSource.deleteRssChannel(link);
+        } catch(final SQLiteException e) {
+            throw new DbException(e.getMessage());
+        }
+    }
 }

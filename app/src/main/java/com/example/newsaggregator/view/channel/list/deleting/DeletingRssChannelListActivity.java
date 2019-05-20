@@ -14,6 +14,7 @@ import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.channel.list.deleting.DeletingRssChannelListPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeletingRssChannelListActivity extends AppCompatActivity implements DeletingRssChannelListView {
@@ -21,6 +22,9 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     private RecyclerView recyclerView;
     private OnRssChannelListItemCheckListener onRssChannelListItemCheckListener;
     private DeletingRssChannelListPresenter presenter;
+    private ArrayList<String> checkedRssChannelLinkList = new ArrayList<>();
+
+    private static final String CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY = "checkedRssChannelLinks";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -61,8 +65,20 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
-    public void onConfirmDeletingRssChannelsButtonClick(final View view) {
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList(CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY, checkedRssChannelLinkList);
+    }
 
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        checkedRssChannelLinkList = savedInstanceState.getStringArrayList(CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY);
+    }
+
+    public void onConfirmDeletingRssChannelsButtonClick(final View view) {
+        presenter.onConfirmDeletingRssChannelsButtonClick();
     }
 
     @Override
@@ -77,5 +93,20 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
         final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    @Override
+    public void addRssChannelLink(final String rssChannelLink) {
+        checkedRssChannelLinkList.add(rssChannelLink);
+    }
+
+    @Override
+    public void removeRssChannelLink(final String rssChannelLink) {
+        checkedRssChannelLinkList.remove(rssChannelLink);
+    }
+
+    @Override
+    public List<String> getCheckedRssChannelLinkList() {
+        return checkedRssChannelLinkList;
     }
 }

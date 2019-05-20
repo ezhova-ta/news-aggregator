@@ -6,6 +6,8 @@ import com.example.newsaggregator.model.DbException;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
+import com.example.newsaggregator.presenter.VoidAsyncTaskResult;
+import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenterImpl;
 import com.example.newsaggregator.view.channel.list.deleting.DeletingRssChannelListView;
 import com.example.newsaggregator.view.channel.list.deleting.OnRssChannelListItemCheckListener;
 
@@ -29,8 +31,23 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
     }
 
     @Override
+    public void onConfirmDeletingRssChannelsButtonClick() {
+        final List<String> checkedRssChannelLinkList = deletingRssChannelListView.getCheckedRssChannelLinkList();
+        if(!checkedRssChannelLinkList.isEmpty()) {
+            final DeleteRssChannelListTask task = new DeleteRssChannelListTask(this);
+            task.execute(checkedRssChannelLinkList);
+        }
+    }
+
+    @Override
     public void onRssChannelListItemCheck(final RssChannel rssChannel, final boolean checked) {
         System.out.println("---> Click on rss-channel: " + rssChannel.getLink() + ". Checked: " + checked);
+
+        if(checked) {
+            deletingRssChannelListView.addRssChannelLink(rssChannel.getLink());
+        } else {
+            deletingRssChannelListView.removeRssChannelLink(rssChannel.getLink());
+        }
     }
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
@@ -59,6 +76,43 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
             } else if(!result.getResult().isEmpty()) {
                 presenter.get().deletingRssChannelListView.showRssChannelList(result.getResult());
                 presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DOWNLOADING);
+            }
+        }
+    }
+
+    private static final class DeleteRssChannelListTask extends AsyncTask<List<String>, Void, VoidAsyncTaskResult> {
+        private static final String MESSAGE_SUCCESSFUL_DATA_DELETING = "RSS-channels deleted successfully";
+        private static final String MESSAGE_UNSUCCESSFUL_DATA_DELETING = "Deleting RSS-channels error!";
+        private WeakReference<DeletingRssChannelListPresenterImpl> presenter;
+
+        private DeleteRssChannelListTask(final DeletingRssChannelListPresenterImpl presenter) {
+            this.presenter = new WeakReference<>(presenter);
+        }
+
+        @Override
+        protected VoidAsyncTaskResult doInBackground(final List<String>... linkLists) {
+            try {
+                for(final List<String> linkList : linkLists) {
+                    for(final String link: linkList) {
+                        presenter.get().repository.deleteRssChannel(link);
+                    }
+                }
+                return new
+                        VoidAsyncTaskResult();
+            } catch(final DbException e) {
+                return new VoidAsyncTaskResult(e);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final VoidAsyncTaskResult result) {
+            if(result.getException() != null) {
+                presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DELETING);
+            } else {
+                presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DELETING);
+                /*
+                TODO Что-то сделать со списком..
+                 */
             }
         }
     }

@@ -57,12 +57,26 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
         final ContentValues contentValues = new ContentValues();
 
         contentValues.put(DbConstants.RSS_CHANNEL_LINK_FIELD, rssChannel.getLink());
-        final long rowId = db.insertWithOnConflict(DbConstants.RSS_CHANNELS_TABLE_NAME, null,
-                contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        final long rowId = db.insertWithOnConflict(
+                DbConstants.RSS_CHANNELS_TABLE_NAME,
+                null,
+                contentValues,
+                SQLiteDatabase.CONFLICT_IGNORE
+        );
 
         sqLiteOpenHelper.close();
         db.close();
 
         return rowId;
+    }
+
+    @Override
+    public int deleteRssChannel(final String link) throws SQLiteException {
+        final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+        return db.delete(
+                DbConstants.RSS_CHANNELS_TABLE_NAME,
+                DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?",
+                new String[]{link}
+        );
     }
 }

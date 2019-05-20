@@ -9,4 +9,5 @@ import java.util.List;
 public interface LocalRssChannelDataSource {
     List<RssChannel> getRssChannelList() throws SQLiteException;
     long addRssChannel(RssChannel rssChannel) throws SQLiteException;
+    int deleteRssChannel(String link) throws SQLiteException;
 }
