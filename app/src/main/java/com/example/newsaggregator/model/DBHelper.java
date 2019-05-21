@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + " integer not null, " +
                 "unique (" + DbConstants.NEWS_ENTRY_LINK_FIELD + ")," +
                 "foreign key (" + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + ") references " +
-                DbConstants.RSS_CHANNELS_TABLE_NAME + "(id))"
+                DbConstants.RSS_CHANNELS_TABLE_NAME + "(" + DbConstants.RSS_CHANNEL_ID_FIELD + "))"
         );
     }
 
