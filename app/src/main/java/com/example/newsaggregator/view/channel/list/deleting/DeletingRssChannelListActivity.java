@@ -76,7 +76,6 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     protected void onRestoreInstanceState(final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         checkedRssChannelLinkList = savedInstanceState.getStringArrayList(CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY);
-        presenter.onRestoreInstanceState();
     }
 
     public void onConfirmDeletingRssChannelsButtonClick(final View view) {
@@ -85,7 +84,7 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
 
     @Override
     public void showRssChannelList(final List<RssChannel> rssChannelList) {
-        adapter = new RssChannelAdapter(this, rssChannelList);
+        adapter = new RssChannelAdapter(this, rssChannelList, checkedRssChannelLinkList);
         recyclerView.setAdapter(adapter);
         adapter.subscribeOnRssChannelListItemCheck(onRssChannelListItemCheckListener);
     }
@@ -115,12 +114,5 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     @Override
     public void clearCheckedRssChannelLinkList() {
         checkedRssChannelLinkList.clear();
-    }
-
-    @Override
-    public void updateCheckedTextViews() {
-        /*
-        TODO Обновить флажки.
-         */
     }
 }

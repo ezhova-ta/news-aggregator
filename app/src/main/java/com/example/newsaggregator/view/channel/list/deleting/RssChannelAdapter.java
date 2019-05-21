@@ -9,16 +9,21 @@ import android.view.ViewGroup;
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.RssChannel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     private final List<RssChannel> rssChannelList;
     private final DeletingRssChannelListActivity activity;
     private OnRssChannelListItemCheckListener onRssChannelListItemCheckListener;
+    private final ArrayList<String> checkedRssChannelLinkList;
 
-    RssChannelAdapter(final DeletingRssChannelListActivity activity, final List<RssChannel> rssChannelList) {
+    RssChannelAdapter(final DeletingRssChannelListActivity activity,
+                      final List<RssChannel> rssChannelList,
+                      final ArrayList<String> checkedRssChannelLinkList) {
         this.rssChannelList = rssChannelList;
         this.activity = activity;
+        this.checkedRssChannelLinkList = checkedRssChannelLinkList;
     }
 
     @NonNull
@@ -33,6 +38,10 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
     public void onBindViewHolder(@NonNull final RssChannelHolder rssChannelHolder, final int position) {
         final RssChannel rssChannel = rssChannelList.get(position);
         rssChannelHolder.fillView(rssChannel);
+
+        if(checkedRssChannelLinkList.contains(rssChannel.getLink())) {
+            rssChannelHolder.setChecked(true);
+        }
 
         rssChannelHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

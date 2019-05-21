@@ -39,11 +39,6 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
     }
 
     @Override
-    public void onRestoreInstanceState() {
-        deletingRssChannelListView.updateCheckedTextViews();
-    }
-
-    @Override
     public void onRssChannelListItemCheck(final RssChannel rssChannel, final boolean checked) {
         if(checked) {
             deletingRssChannelListView.addRssChannelLink(rssChannel.getLink());
