@@ -44,10 +44,7 @@ public class DependencyInjectionFactory {
     }
 
     public SQLiteOpenHelper provideSQLiteOpenHelper() {
-        /*
-        TODO Избавиться от magic const
-         */
-        return new DBHelper(context, DbConstants.DB_NAME, null, 1);
+        return new DBHelper(context, DbConstants.DB_NAME, null, DbConstants.DB_VERSION);
     }
 
     public LocalRssChannelDataSource provideLocalRssChannelDataSource() {

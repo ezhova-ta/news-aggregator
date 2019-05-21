@@ -7,7 +7,6 @@ import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
 import com.example.newsaggregator.presenter.VoidAsyncTaskResult;
-import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenterImpl;
 import com.example.newsaggregator.view.channel.list.deleting.DeletingRssChannelListView;
 import com.example.newsaggregator.view.channel.list.deleting.OnRssChannelListItemCheckListener;
 
@@ -40,9 +39,12 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
     }
 
     @Override
-    public void onRssChannelListItemCheck(final RssChannel rssChannel, final boolean checked) {
-        System.out.println("---> Click on rss-channel: " + rssChannel.getLink() + ". Checked: " + checked);
+    public void onRestoreInstanceState() {
+        deletingRssChannelListView.updateCheckedTextViews();
+    }
 
+    @Override
+    public void onRssChannelListItemCheck(final RssChannel rssChannel, final boolean checked) {
         if(checked) {
             deletingRssChannelListView.addRssChannelLink(rssChannel.getLink());
         } else {
@@ -112,6 +114,7 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
                 final ShowRssChannelListTask task = new ShowRssChannelListTask(presenter.get());
                 task.execute();
                 presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DELETING);
+                presenter.get().deletingRssChannelListView.clearCheckedRssChannelLinkList();
             }
         }
     }

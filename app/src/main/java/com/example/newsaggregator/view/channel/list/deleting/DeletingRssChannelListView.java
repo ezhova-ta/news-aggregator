@@ -10,4 +10,6 @@ public interface DeletingRssChannelListView {
     void addRssChannelLink(String rssChannelLink);
     void removeRssChannelLink(String rssChannelLink);
     List<String> getCheckedRssChannelLinkList();
+    void clearCheckedRssChannelLinkList();
+    void updateCheckedTextViews();
 }

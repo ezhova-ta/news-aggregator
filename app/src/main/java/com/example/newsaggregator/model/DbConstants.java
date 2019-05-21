@@ -19,4 +19,6 @@ public final class DbConstants {
     public static final long MILLISECONDS_PER_DAY = 86_400_000;
     public static final long NEWS_ENTRY_STORAGE_PERIOD_IN_MILLIS = MILLISECONDS_PER_DAY * 3;
     public static final long NEWS_ENTRIES_CHECK_PERIODICITY = MILLISECONDS_PER_DAY;
+
+    public static final int DB_VERSION = 1;
 }

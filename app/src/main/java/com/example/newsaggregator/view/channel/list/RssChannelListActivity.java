@@ -78,7 +78,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         presenter.onDeleteRssChannelsButtonClick();
     }
 
-
     @Override
     public void showRssChannelList(final List<RssChannel> rssChannelList) {
         final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelList);
