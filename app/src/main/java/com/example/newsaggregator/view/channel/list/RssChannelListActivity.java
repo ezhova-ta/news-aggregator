@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
@@ -26,6 +27,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     private RssChannelListPresenter presenter;
     private OnRssChannelListItemClickListener onRssChannelListItemClickListener;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
         recyclerView = findViewById(R.id.rssChannelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        progressBar = findViewById(R.id.rssChannelsLoadingProgress);
     }
 
     public void onAddRssChannelButtonClick(final View view) {
@@ -114,5 +117,15 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }

@@ -57,6 +57,11 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
         }
 
         @Override
+        protected void onPreExecute() {
+            presenter.get().deletingRssChannelListView.showProgressBar();
+        }
+
+        @Override
         protected AsyncTaskResult<List<RssChannel>> doInBackground(final Void... voids) {
             try {
                 final List<RssChannel> rssChannelList = presenter.get().repository.getRssChannelList();
@@ -68,11 +73,12 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
 
         @Override
         protected void onPostExecute(final AsyncTaskResult<List<RssChannel>> result) {
+            presenter.get().deletingRssChannelListView.hideProgressBar();
+
             if(result.getException() != null) {
                 presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
             } else if(!result.getResult().isEmpty()) {
                 presenter.get().deletingRssChannelListView.showRssChannelList(result.getResult());
-                presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DOWNLOADING);
             }
         }
     }

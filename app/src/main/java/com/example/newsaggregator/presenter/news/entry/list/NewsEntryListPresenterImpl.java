@@ -82,6 +82,11 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
         }
 
         @Override
+        protected void onPreExecute() {
+            presenter.get().newsEntryListView.showProgressBar();
+        }
+
+        @Override
         protected AsyncTaskResult<List<NewsEntry>> doInBackground(final String... rssChannelLinks) {
             try {
                 final List<NewsEntry> newsEntryList = presenter.get().repository.getNewsEntryList(rssChannelLinks[0]);
@@ -93,11 +98,12 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
 
         @Override
         protected void onPostExecute(final AsyncTaskResult<List<NewsEntry>> result) {
+            presenter.get().newsEntryListView.hideProgressBar();
+
             if(result.getException() != null) {
                 presenter.get().newsEntryListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
             } else if(!result.getResult().isEmpty()) {
                 presenter.get().newsEntryListView.showNewsEntryList(result.getResult());
-                presenter.get().newsEntryListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DOWNLOADING);
             }
         }
     }

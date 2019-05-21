@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
@@ -29,6 +30,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     private NewsEntryListPresenter presenter;
     private OnNewsEntryListItemClickListener onNewsEntryListItemClickListener;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
     private BroadcastReceiver receiver;
     private String rssChannelLink;
 
@@ -86,6 +88,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     private void initViewElement() {
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        progressBar = findViewById(R.id.NewsEntriesLoadingProgress);
     }
 
     public void onUpdateNewsEntryListButtonClick(final View view) {
@@ -140,5 +143,15 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
                 .edit()
                 .putLong(PREFERENCE_NAME, newsEntriesDetetionDateInMillis)
                 .apply();
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }

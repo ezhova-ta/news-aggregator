@@ -12,4 +12,6 @@ public interface RssChannelListView {
     void startActivityToDisplayNewsEntryList(String rssChannelLinkExtraKey, String rssChannelLinkExtraValue);
     void startActivityToDeleteRssChannels();
     void showPopupMessage(String text);
+    void showProgressBar();
+    void hideProgressBar();
 }

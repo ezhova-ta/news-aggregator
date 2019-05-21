@@ -19,4 +19,6 @@ public interface NewsEntryListView {
             String newsEntryLinkExtraValue);
     long getNewsEntriesDetetionDateInMillis();
     void setNewsEntriesDetetionDate(long newsEntriesDetetionDateInMillis);
+    void showProgressBar();
+    void hideProgressBar();
 }

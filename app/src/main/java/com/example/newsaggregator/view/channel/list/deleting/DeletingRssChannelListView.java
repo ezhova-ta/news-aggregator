@@ -11,4 +11,6 @@ public interface DeletingRssChannelListView {
     void removeRssChannelLink(String rssChannelLink);
     List<String> getCheckedRssChannelLinkList();
     void clearCheckedRssChannelLinkList();
+    void showProgressBar();
+    void hideProgressBar();
 }

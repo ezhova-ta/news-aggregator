@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
@@ -20,6 +21,7 @@ import java.util.List;
 public class DeletingRssChannelListActivity extends AppCompatActivity implements DeletingRssChannelListView {
     private DependencyInjectionFactory diFactory;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
     private RssChannelAdapter adapter;
     private OnRssChannelListItemCheckListener onRssChannelListItemCheckListener;
     private DeletingRssChannelListPresenter presenter;
@@ -32,8 +34,7 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deleting_rss_channel_list);
 
-        recyclerView = findViewById(R.id.rssChannelListForDeleting);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        initViewElement();
 
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         onRssChannelListItemCheckListener = diFactory.provideOnRssChannelListItemCheckListener(this);
@@ -78,6 +79,12 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
         checkedRssChannelLinkList = savedInstanceState.getStringArrayList(CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY);
     }
 
+    private void initViewElement() {
+        recyclerView = findViewById(R.id.rssChannelListForDeleting);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        progressBar = findViewById(R.id.rssChannelsDeletingProgress);
+    }
+
     public void onConfirmDeletingRssChannelsButtonClick(final View view) {
         presenter.onConfirmDeletingRssChannelsButtonClick();
     }
@@ -114,5 +121,15 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     @Override
     public void clearCheckedRssChannelLinkList() {
         checkedRssChannelLinkList.clear();
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }

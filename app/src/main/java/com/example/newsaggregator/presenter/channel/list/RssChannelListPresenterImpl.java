@@ -64,6 +64,11 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
         }
 
         @Override
+        protected void onPreExecute() {
+            presenter.get().rssChannelListView.showProgressBar();
+        }
+
+        @Override
         protected AsyncTaskResult<List<RssChannel>> doInBackground(final Void... voids) {
             try {
                 final List<RssChannel> rssChannelList = presenter.get().repository.getRssChannelList();
@@ -75,11 +80,12 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
         @Override
         protected void onPostExecute(final AsyncTaskResult<List<RssChannel>> result) {
+            presenter.get().rssChannelListView.hideProgressBar();
+
             if(result.getException() != null) {
                 presenter.get().rssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
             } else if(!result.getResult().isEmpty()) {
                 presenter.get().rssChannelListView.showRssChannelList(result.getResult());
-                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DOWNLOADING);
             }
         }
     }
