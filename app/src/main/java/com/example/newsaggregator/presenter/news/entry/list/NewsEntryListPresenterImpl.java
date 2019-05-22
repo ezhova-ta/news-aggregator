@@ -73,8 +73,8 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
     }
 
     private static final class ShowNewsEntryListTask extends AsyncTask<String, Void, AsyncTaskResult<List<NewsEntry>>> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "News entry list downloaded successfully";
         private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading news entry list error!";
+        private static final String MESSAGE_NEWS_ENTRY_LIST_IS_EMPTY = "Update news list required";
         private final WeakReference<NewsEntryListPresenterImpl> presenter;
 
         private ShowNewsEntryListTask(final NewsEntryListPresenterImpl presenter) {
@@ -102,8 +102,12 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
 
             if(result.getException() != null) {
                 presenter.get().newsEntryListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
-            } else if(!result.getResult().isEmpty()) {
-                presenter.get().newsEntryListView.showNewsEntryList(result.getResult());
+            } else {
+                if(result.getResult().isEmpty()) {
+                    presenter.get().newsEntryListView.showPopupMessage(MESSAGE_NEWS_ENTRY_LIST_IS_EMPTY);
+                } else {
+                    presenter.get().newsEntryListView.showNewsEntryList(result.getResult());
+                }
             }
         }
     }

@@ -55,7 +55,6 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     }
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "RSS-channels downloaded successfully";
         private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading RSS-channels error!";
         private WeakReference<RssChannelListPresenterImpl> presenter;
 

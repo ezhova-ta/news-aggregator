@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Агрегатор новостей</string>
+    <string name="update_news_entry_list_button_text">Обновить</string>
+    <string name="add_rss_channel_button_text">Добавить</string>
+    <string name="add_rss_channel_edit_text_hint">Введите адрес RSS-канала</string>
+    <string name="delete_rss_channels_button_text">Удалить каналы</string>
+    <string name="confirm_deleting_rss_channels_button_text">Удалить</string>
+</resources>
