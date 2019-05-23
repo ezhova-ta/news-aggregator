@@ -1,6 +1,14 @@
 package com.example.newsaggregator.view.channel.list.deleting;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +22,7 @@ import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.channel.list.deleting.DeletingRssChannelListPresenter;
+import com.example.newsaggregator.view.channel.list.RssChannelListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +158,47 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     @Override
     public void hideConfirmDeletingRssChannelsButton() {
         findViewById(R.id.confirmDeletingRssChannelsButton).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRssChannelListUpdatedNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            /*
+            TODO Выполнить сразу после запуска приложения.
+             */
+            createNotificationChannel();
+
+            final Intent intent = new Intent(this, RssChannelListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+            final NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(this, "com.example.newsaggregator")
+                            .setSmallIcon(R.drawable.logo)
+                            .setContentTitle("Suuccessfull deleting")
+                            .setContentText("RSS-channel list has been changed")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true);
+
+            final Notification notification = builder.build();
+            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(512, builder.build());
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            final String id = "com.example.newsaggregator";
+            final CharSequence name = "newsAggregator";
+            final String description = "News aggregator";
+            final int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            final NotificationChannel channel =
+                    new NotificationChannel(id, name, importance);
+            channel.setDescription(description);
+            final NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void showPopupMessage(final CharSequence text) {
