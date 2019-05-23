@@ -15,4 +15,6 @@ public interface DeletingRssChannelListView {
     void showRssChannelsLoadingError();
     void showRssChannelsDeletingErrorMessage();
     void showRssChannelsDeletingSuccessMessage();
+    void showEmptyRssChannelListMessage();
+    void hideConfirmDeletingRssChannelsButton();
 }

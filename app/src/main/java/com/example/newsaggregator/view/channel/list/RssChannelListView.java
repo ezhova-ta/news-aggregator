@@ -16,4 +16,7 @@ public interface RssChannelListView {
     void showRssChannelsLoadingErrorMessage();
     void showRssChannelsAddingErrorMessage();
     void showRssChannelsAddingSuccessMessage();
+    void showEmptyRssChannelListMessage();
+    void hideDeleteRssChannelsButton();
+    void showDeleteRssChannelsButton();
 }

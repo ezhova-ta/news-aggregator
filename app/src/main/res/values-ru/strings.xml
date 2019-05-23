@@ -10,8 +10,9 @@
     <string name="rss_channels_adding_error_message">Произошла ошибка при добавлении RSS-канала!</string>
     <string name="rss_channels_adding_success_message">RSS-канал успешно добавлен</string>
     <string name="rss_channels_deleting_error_message">Произошла ошибка при удалении RSS-канала!</string>
-    <string name="rss_channels_deleting_success_message">RSS-канал успешно удален</string>
+    <string name="rss_channels_deleting_success_message">RSS-каналы успешно удалены</string>
     <string name="news_entries_updating_error_message">Произошла ошибка при обновлении новостей!</string>
     <string name="news_entries_loading_error_message">Произошла ошибка при загрузке новостей!</string>
     <string name="empty_news_entry_list_message">Необходимо обновить список новостей</string>
+    <string name="empty_rss_channel_list_message">Список RSS-каналов пуст</string>
 </resources>

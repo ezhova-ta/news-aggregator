@@ -28,8 +28,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + " integer not null, " +
                 "unique (" + DbConstants.NEWS_ENTRY_LINK_FIELD + ")," +
                 "foreign key (" + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + ") references " +
-                DbConstants.RSS_CHANNELS_TABLE_NAME + "(" + DbConstants.RSS_CHANNEL_ID_FIELD + "))"
+                DbConstants.RSS_CHANNELS_TABLE_NAME + "(" + DbConstants.RSS_CHANNEL_ID_FIELD +
+                ") on delete cascade)"
         );
+    }
+
+    @Override
+    public void onOpen(final SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON");
     }
 
     @Override

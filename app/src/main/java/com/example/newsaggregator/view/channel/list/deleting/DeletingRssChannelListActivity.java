@@ -141,6 +141,16 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
         showPopupMessage(getResources().getText(R.string.rss_channels_deleting_success_message));
     }
 
+    @Override
+    public void showEmptyRssChannelListMessage() {
+        showPopupMessage(getResources().getText(R.string.empty_rss_channel_list_message));
+    }
+
+    @Override
+    public void hideConfirmDeletingRssChannelsButton() {
+        findViewById(R.id.confirmDeletingRssChannelsButton).setVisibility(View.GONE);
+    }
+
     private void showPopupMessage(final CharSequence text) {
         final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);

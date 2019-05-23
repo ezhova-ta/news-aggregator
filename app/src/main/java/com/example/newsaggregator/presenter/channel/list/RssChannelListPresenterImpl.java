@@ -77,7 +77,13 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
             if(result.getException() != null) {
                 presenter.get().rssChannelListView.showRssChannelsLoadingErrorMessage();
-            } else if(!result.getResult().isEmpty()) {
+            } else {
+                if(result.getResult().isEmpty()) {
+                    presenter.get().rssChannelListView.showEmptyRssChannelListMessage();
+                    presenter.get().rssChannelListView.hideDeleteRssChannelsButton();
+                } else {
+                    presenter.get().rssChannelListView.showDeleteRssChannelsButton();
+                }
                 presenter.get().rssChannelListView.showRssChannelList(result.getResult());
             }
         }
