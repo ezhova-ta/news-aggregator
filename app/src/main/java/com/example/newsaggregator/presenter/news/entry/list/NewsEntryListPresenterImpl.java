@@ -17,7 +17,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNewsEntryListItemClickListener {
-    private static final String MESSAGE_UNSUCCESSFUL_DATA_UPDATING = "Updating news entry list error!";
     private final NewsEntryListView newsEntryListView;
     private final NewsEntryListRepository repository;
 
@@ -52,7 +51,7 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
             showNewsEntryList(newsEntryListView.getRssChannelLink());
         } else if(requestResult == NewsEntryListService.FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING ||
                 requestResult == NewsEntryListView.FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT) {
-            newsEntryListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_UPDATING);
+            newsEntryListView.showNewsEntriesUpdatingErrorMessage();
         }
     }
 
@@ -73,8 +72,6 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
     }
 
     private static final class ShowNewsEntryListTask extends AsyncTask<String, Void, AsyncTaskResult<List<NewsEntry>>> {
-        private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading news entry list error!";
-        private static final String MESSAGE_NEWS_ENTRY_LIST_IS_EMPTY = "Update news list required";
         private final WeakReference<NewsEntryListPresenterImpl> presenter;
 
         private ShowNewsEntryListTask(final NewsEntryListPresenterImpl presenter) {
@@ -101,10 +98,10 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
             presenter.get().newsEntryListView.hideProgressBar();
 
             if(result.getException() != null) {
-                presenter.get().newsEntryListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
+                presenter.get().newsEntryListView.showNewsEntriesLoadingErrorMessage();
             } else {
                 if(result.getResult().isEmpty()) {
-                    presenter.get().newsEntryListView.showPopupMessage(MESSAGE_NEWS_ENTRY_LIST_IS_EMPTY);
+                    presenter.get().newsEntryListView.showEmptyNewsEntryListMessage();
                 } else {
                     presenter.get().newsEntryListView.showNewsEntryList(result.getResult());
                 }
@@ -122,7 +119,6 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
         /*
         TODO Обработка ошибок
         */
-
         @Override
         protected VoidAsyncTaskResult doInBackground(final Void... voids) {
             try {

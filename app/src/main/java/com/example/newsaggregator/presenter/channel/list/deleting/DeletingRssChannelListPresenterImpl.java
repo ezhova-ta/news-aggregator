@@ -48,8 +48,6 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
     }
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_DOWNLOADING = "RSS-channels downloaded successfully";
-        private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading RSS-channels error!";
         private WeakReference<DeletingRssChannelListPresenterImpl> presenter;
 
         private ShowRssChannelListTask(final DeletingRssChannelListPresenterImpl presenter) {
@@ -76,7 +74,7 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
             presenter.get().deletingRssChannelListView.hideProgressBar();
 
             if(result.getException() != null) {
-                presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
+                presenter.get().deletingRssChannelListView.showRssChannelsLoadingError();
             } else if(!result.getResult().isEmpty()) {
                 presenter.get().deletingRssChannelListView.showRssChannelList(result.getResult());
             }
@@ -84,8 +82,6 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
     }
 
     private static final class DeleteRssChannelListTask extends AsyncTask<List<String>, Void, VoidAsyncTaskResult> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_DELETING = "RSS-channels deleted successfully";
-        private static final String MESSAGE_UNSUCCESSFUL_DATA_DELETING = "Deleting RSS-channels error!";
         private WeakReference<DeletingRssChannelListPresenterImpl> presenter;
 
         private DeleteRssChannelListTask(final DeletingRssChannelListPresenterImpl presenter) {
@@ -110,11 +106,11 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
         @Override
         protected void onPostExecute(final VoidAsyncTaskResult result) {
             if(result.getException() != null) {
-                presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DELETING);
+                presenter.get().deletingRssChannelListView.showRssChannelsDeletingErrorMessage();
             } else {
                 final ShowRssChannelListTask task = new ShowRssChannelListTask(presenter.get());
                 task.execute();
-                presenter.get().deletingRssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_DELETING);
+                presenter.get().deletingRssChannelListView.showRssChannelsDeletingSuccessMessage();
                 presenter.get().deletingRssChannelListView.clearCheckedRssChannelLinkList();
             }
         }

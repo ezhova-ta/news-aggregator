@@ -97,13 +97,6 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void showPopupMessage(final String text) {
-        final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
-    @Override
     public void addRssChannelLink(final String rssChannelLink) {
         checkedRssChannelLinkList.add(rssChannelLink);
     }
@@ -131,5 +124,26 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRssChannelsLoadingError() {
+        showPopupMessage(getResources().getText(R.string.rss_channels_loading_error_message));
+    }
+
+    @Override
+    public void showRssChannelsDeletingErrorMessage() {
+        showPopupMessage(getResources().getText(R.string.rss_channels_deleting_error_message));
+    }
+
+    @Override
+    public void showRssChannelsDeletingSuccessMessage() {
+        showPopupMessage(getResources().getText(R.string.rss_channels_deleting_success_message));
+    }
+
+    private void showPopupMessage(final CharSequence text) {
+        final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

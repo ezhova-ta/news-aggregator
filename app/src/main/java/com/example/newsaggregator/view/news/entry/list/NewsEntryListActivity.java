@@ -116,13 +116,6 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     }
 
     @Override
-    public void showPopupMessage(final String text) {
-        final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
-    @Override
     public void startActivityToDisplayNewsEntry(final String newsEntryLinkExtraKey,
                                                 final String newsEntryLinkExtraValue) {
         final Intent intent = new Intent(this, NewsEntryActivity.class);
@@ -153,5 +146,26 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNewsEntriesUpdatingErrorMessage() {
+        showPopupMessage(getResources().getText(R.string.news_entries_updating_error_message));
+    }
+
+    @Override
+    public void showNewsEntriesLoadingErrorMessage() {
+        showPopupMessage(getResources().getText(R.string.news_entries_loading_error_message));
+    }
+
+    @Override
+    public void showEmptyNewsEntryListMessage() {
+        showPopupMessage(getResources().getText(R.string.empty_news_entry_list_message));
+    }
+
+    private void showPopupMessage(final CharSequence text) {
+        final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

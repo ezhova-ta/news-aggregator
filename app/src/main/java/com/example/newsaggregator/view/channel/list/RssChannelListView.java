@@ -11,7 +11,9 @@ public interface RssChannelListView {
     void clearAddRssChannelEditText();
     void startActivityToDisplayNewsEntryList(String rssChannelLinkExtraKey, String rssChannelLinkExtraValue);
     void startActivityToDeleteRssChannels();
-    void showPopupMessage(String text);
     void showProgressBar();
     void hideProgressBar();
+    void showRssChannelsLoadingErrorMessage();
+    void showRssChannelsAddingErrorMessage();
+    void showRssChannelsAddingSuccessMessage();
 }

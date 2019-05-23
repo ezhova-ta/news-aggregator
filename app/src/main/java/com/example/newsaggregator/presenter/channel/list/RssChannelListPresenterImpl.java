@@ -24,11 +24,6 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     }
 
     @Override
-    public void onCreate() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
     public void onResume() {
         final ShowRssChannelListTask task = new ShowRssChannelListTask(this);
         task.execute();
@@ -55,7 +50,6 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     }
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
-        private static final String MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING = "Downloading RSS-channels error!";
         private WeakReference<RssChannelListPresenterImpl> presenter;
 
         private ShowRssChannelListTask(final RssChannelListPresenterImpl presenter) {
@@ -82,7 +76,7 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
             presenter.get().rssChannelListView.hideProgressBar();
 
             if(result.getException() != null) {
-                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_DOWNLOADING);
+                presenter.get().rssChannelListView.showRssChannelsLoadingErrorMessage();
             } else if(!result.getResult().isEmpty()) {
                 presenter.get().rssChannelListView.showRssChannelList(result.getResult());
             }
@@ -90,8 +84,6 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     }
 
     private static final class AddRssChannelTask extends AsyncTask<RssChannel, Void, VoidAsyncTaskResult> {
-        private static final String MESSAGE_SUCCESSFUL_DATA_ADDING = "RSS-channels added successfully";
-        private static final String MESSAGE_UNSUCCESSFUL_DATA_ADDING = "Adding RSS-channels error!";
         private WeakReference<RssChannelListPresenterImpl> presenter;
 
         private AddRssChannelTask(final RssChannelListPresenterImpl presenter) {
@@ -113,12 +105,12 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
         @Override
         protected void onPostExecute(final VoidAsyncTaskResult result) {
             if(result.getException() != null) {
-                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_UNSUCCESSFUL_DATA_ADDING);
+                presenter.get().rssChannelListView.showRssChannelsAddingErrorMessage();
             } else {
                 presenter.get().rssChannelListView.clearAddRssChannelEditText();
                 final ShowRssChannelListTask task = new ShowRssChannelListTask(presenter.get());
                 task.execute();
-                presenter.get().rssChannelListView.showPopupMessage(MESSAGE_SUCCESSFUL_DATA_ADDING);
+                presenter.get().rssChannelListView.showRssChannelsAddingSuccessMessage();
             }
         }
     }

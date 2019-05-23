@@ -113,13 +113,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
-    public void showPopupMessage(final String text) {
-        final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
-    @Override
     public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -127,5 +120,26 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRssChannelsLoadingErrorMessage() {
+        showPopupMessage(getResources().getText(R.string.rss_channels_loading_error_message));
+    }
+
+    @Override
+    public void showRssChannelsAddingErrorMessage() {
+        showPopupMessage(getResources().getText(R.string.rss_channels_adding_error_message));
+    }
+
+    @Override
+    public void showRssChannelsAddingSuccessMessage() {
+        showPopupMessage(getResources().getText(R.string.rss_channels_adding_success_message));
+    }
+
+    private void showPopupMessage(final CharSequence text) {
+        final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

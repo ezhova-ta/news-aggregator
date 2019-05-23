@@ -5,4 +5,13 @@
     <string name="add_rss_channel_edit_text_hint">Enter URL of rss-channel</string>
     <string name="delete_rss_channels_button_text">Delete channels</string>
     <string name="confirm_deleting_rss_channels_button_text">Delete</string>
+
+    <string name="rss_channels_loading_error_message">Downloading RSS-channels error!</string>
+    <string name="rss_channels_adding_error_message">Adding RSS-channels error!</string>
+    <string name="rss_channels_adding_success_message">RSS-channels added successfully</string>
+    <string name="rss_channels_deleting_error_message">Deleting RSS-channels error!</string>
+    <string name="rss_channels_deleting_success_message">RSS-channels deleted successfully</string>
+    <string name="news_entries_updating_error_message">Updating news entry list error!</string>
+    <string name="news_entries_loading_error_message">Downloading news entry list error!</string>
+    <string name="empty_news_entry_list_message">Update news list required</string>
 </resources>

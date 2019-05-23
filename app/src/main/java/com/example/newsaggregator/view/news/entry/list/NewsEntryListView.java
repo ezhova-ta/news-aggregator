@@ -14,11 +14,13 @@ public interface NewsEntryListView {
     void showNewsEntryList(final List<NewsEntry> newsEntryList);
     void startServiceToUpdateNewsEntryList();
     String getRssChannelLink();
-    void showPopupMessage(String text);
     void startActivityToDisplayNewsEntry(String newsEntryLinkExtraKey,
             String newsEntryLinkExtraValue);
     long getNewsEntriesDetetionDateInMillis();
     void setNewsEntriesDetetionDate(long newsEntriesDetetionDateInMillis);
     void showProgressBar();
     void hideProgressBar();
+    void showNewsEntriesUpdatingErrorMessage();
+    void showNewsEntriesLoadingErrorMessage();
+    void showEmptyNewsEntryListMessage();
 }
