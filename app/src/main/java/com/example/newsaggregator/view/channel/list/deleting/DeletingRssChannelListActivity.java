@@ -1,8 +1,6 @@
 package com.example.newsaggregator.view.channel.list.deleting;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
@@ -37,6 +35,9 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     private ArrayList<String> checkedRssChannelLinkList = new ArrayList<>();
 
     private static final String CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY = "checkedRssChannelLinks";
+    private static final String UPDATE_NOTIFICATION_CONTENT_TITLE = "Suuccessfull deleting";
+    private static final String UPDATE_NOTIFICATION_CONTENT_TEXT = "RSS-channel list has been changed";
+    private static final int UPDATE_NOTIFICATION_ID = 512;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -163,41 +164,22 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     @Override
     public void showRssChannelListUpdatedNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            /*
-            TODO Выполнить сразу после запуска приложения.
-             */
-            createNotificationChannel();
-
             final Intent intent = new Intent(this, RssChannelListActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
             final NotificationCompat.Builder builder =
-                    new NotificationCompat.Builder(this, "com.example.newsaggregator")
-                            .setSmallIcon(R.drawable.logo)
-                            .setContentTitle("Suuccessfull deleting")
-                            .setContentText("RSS-channel list has been changed")
-                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true);
+                    new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle(UPDATE_NOTIFICATION_CONTENT_TITLE)
+                    .setContentText(UPDATE_NOTIFICATION_CONTENT_TEXT)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
 
             final Notification notification = builder.build();
             final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(512, builder.build());
-        }
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final String id = "com.example.newsaggregator";
-            final CharSequence name = "newsAggregator";
-            final String description = "News aggregator";
-            final int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            final NotificationChannel channel =
-                    new NotificationChannel(id, name, importance);
-            channel.setDescription(description);
-            final NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            notificationManager.notify(UPDATE_NOTIFICATION_ID, builder.build());
         }
     }
 
