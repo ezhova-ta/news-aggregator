@@ -209,12 +209,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
             final NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
-                            .setSmallIcon(R.drawable.logo)
-                            .setContentTitle(UPDATE_NOTIFICATION_CONTENT_TITLE)
-                            .setContentText(UPDATE_NOTIFICATION_CONTENT_TEXT)
-                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true);
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle(getResources().getText(R.string.update_notification_content_title))
+                    .setContentText(getResources().getText(R.string.update_notification_content_text))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
 
             final Notification notification = builder.build();
             final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);

@@ -16,4 +16,8 @@
     <string name="news_entries_loading_error_message">Downloading news entry list error!</string>
     <string name="empty_news_entry_list_message">Update news list required</string>
     <string name="empty_rss_channel_list_message">RSS-channel list is empty</string>
+
+    <string name="update_notification_content_title">Fresh news</string>
+    <string name="update_notification_content_text">There were fresh news in RSS feeds</string>
+    <string name="notification_channel_description">News aggregator</string>
 </resources>

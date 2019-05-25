@@ -5,13 +5,16 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.example.newsaggregator.R;
+
 public class NewsAggregatorApplication extends Application {
     private static NewsAggregatorApplication instance;
     private DependencyInjectionFactory diFactory;
 
     public static final String NOTIFICATION_CHANNEL_ID = "com.example.newsaggregator";
     public static final String NOTIFICATION_CHANNEL_NAME = "newsAggregator";
-    public static final String NOTIFICATION_CHANNEL_DESCRIPTION = "News aggregator";
+    public static final String NOTIFICATION_CHANNEL_DESCRIPTION =
+            getInstance().getResources().getText(R.string.notification_channel_description).toString();
 
     public static NewsAggregatorApplication getInstance() {
         return instance;

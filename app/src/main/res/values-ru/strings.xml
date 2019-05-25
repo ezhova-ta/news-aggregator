@@ -16,4 +16,8 @@
     <string name="news_entries_loading_error_message">Произошла ошибка при загрузке новостей!</string>
     <string name="empty_news_entry_list_message">Необходимо обновить список новостей</string>
     <string name="empty_rss_channel_list_message">Список RSS-каналов пуст</string>
+
+    <string name="update_notification_content_title">Свежие новости</string>
+    <string name="update_notification_content_text">В вашей RSS-ленте появились свежие новости</string>
+    <string name="notification_channel_description">Агрегатор новостей</string>
 </resources>
