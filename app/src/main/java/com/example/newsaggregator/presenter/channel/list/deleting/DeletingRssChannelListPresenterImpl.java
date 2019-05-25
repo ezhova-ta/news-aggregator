@@ -112,7 +112,6 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
             if(result.getException() != null) {
                 presenter.get().deletingRssChannelListView.showRssChannelsDeletingErrorMessage();
             } else {
-                presenter.get().deletingRssChannelListView.showRssChannelListUpdatedNotification();
                 final ShowRssChannelListTask task = new ShowRssChannelListTask(presenter.get());
                 task.execute();
                 presenter.get().deletingRssChannelListView.showRssChannelsDeletingSuccessMessage();

@@ -35,9 +35,6 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     private ArrayList<String> checkedRssChannelLinkList = new ArrayList<>();
 
     private static final String CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY = "checkedRssChannelLinks";
-    private static final String UPDATE_NOTIFICATION_CONTENT_TITLE = "Suuccessfull deleting";
-    private static final String UPDATE_NOTIFICATION_CONTENT_TEXT = "RSS-channel list has been changed";
-    private static final int UPDATE_NOTIFICATION_ID = 512;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -159,28 +156,6 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     @Override
     public void hideConfirmDeletingRssChannelsButton() {
         findViewById(R.id.confirmDeletingRssChannelsButton).setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showRssChannelListUpdatedNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final Intent intent = new Intent(this, RssChannelListActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-            final NotificationCompat.Builder builder =
-                    new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.logo)
-                    .setContentTitle(UPDATE_NOTIFICATION_CONTENT_TITLE)
-                    .setContentText(UPDATE_NOTIFICATION_CONTENT_TEXT)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
-
-            final Notification notification = builder.build();
-            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(UPDATE_NOTIFICATION_ID, builder.build());
-        }
     }
 
     private void showPopupMessage(final CharSequence text) {
