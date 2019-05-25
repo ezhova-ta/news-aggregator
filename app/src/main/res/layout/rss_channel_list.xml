@@ -29,6 +29,13 @@
         android:onClick="onDeleteRssChannelsButtonClick"
         android:text="@string/delete_rss_channels_button_text" />
 
+    <Button
+        android:id="@+id/enableUpdatingNotificationsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onEnableUpdatingNotificationsButtonClick"
+        android:text="@string/enable_updating_notifications_button_text" />
+
     <ProgressBar
         android:id="@+id/rssChannelsLoadingProgress"
         android:visibility="gone"

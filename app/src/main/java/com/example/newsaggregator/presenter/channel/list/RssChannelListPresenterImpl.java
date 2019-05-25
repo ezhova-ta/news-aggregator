@@ -3,6 +3,7 @@ package com.example.newsaggregator.presenter.channel.list;
 import android.os.AsyncTask;
 
 import com.example.newsaggregator.model.DbException;
+import com.example.newsaggregator.model.RssChannelListService;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.model.repository.RssChannelListRepository;
 import com.example.newsaggregator.presenter.AsyncTaskResult;
@@ -41,6 +42,21 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     @Override
     public void onDeleteRssChannelsButtonClick() {
         rssChannelListView.startActivityToDeleteRssChannels();
+    }
+
+    @Override
+    public void onEnableUpdatingNotificationsButtonClick() {
+        /*
+        TODO Установить enabledNotifications = true в SharedPreferences, чтобы можно было отменять подписку
+         */
+        rssChannelListView.startAlarmManagerToUpdateNewsEntryLists();
+    }
+
+    @Override
+    public void onReceiveBroadcastMessage(final int requestResult) {
+        if(requestResult == RssChannelListService.UPDATING_NEWS_ENTRY_LISTS_RESULT_FRESH_NEWS_ENTRIES) {
+            rssChannelListView.showUpdateNotification();
+        }
     }
 
     @Override

@@ -12,7 +12,13 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.channel.list.deleting.DeletingRssChannelListActivity"></activity>
+
+        <service
+            android:name=".model.RssChannelListService"
+            android:exported="false" />
+
+        <activity android:name=".view.channel.list.deleting.DeletingRssChannelListActivity" />
+
         <activity android:name=".view.news.entry.NewsEntryActivity" />
 
         <service
@@ -22,11 +28,14 @@
         <activity android:name=".view.channel.list.RssChannelListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".view.news.entry.list.NewsEntryListActivity" />
+
+        <receiver android:name=".view.channel.list.UpdatingNewsEntryListsAlarmReceiver" />
+
     </application>
 
 </manifest>

@@ -61,10 +61,11 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
     }
 
     @Override
-    public void addNewsEntryList(final String rssChannelUrl, final List<NewsEntry> newsEntryList) throws SQLiteException {
+    public boolean addNewsEntryList(final String rssChannelUrl, final List<NewsEntry> newsEntryList) throws SQLiteException {
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
         final long rssChannelId;
         ContentValues contentValues;
+        boolean isUpdated = false;
 
         final Cursor cursor = db.query(
                 DbConstants.RSS_CHANNELS_TABLE_NAME,
@@ -93,12 +94,16 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
             contentValues.put(DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD, elem.getDescription());
             contentValues.put(DbConstants.NEWS_ENTRY_PUB_DATE_FIELD, elem.getPubDate());
             contentValues.put(DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD, rssChannelId);
-            db.insertWithOnConflict(DbConstants.NEWS_ENTRIES_TABLE_NAME, null,
-                    contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+            final long rowId = db.insertWithOnConflict(DbConstants.NEWS_ENTRIES_TABLE_NAME,
+                    null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+            if(rowId != -1) {
+                isUpdated = true;
+            }
         }
 
         sqLiteOpenHelper.close();
         db.close();
+        return isUpdated;
     }
 
     @Override

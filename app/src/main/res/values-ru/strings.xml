@@ -5,6 +5,7 @@
     <string name="add_rss_channel_edit_text_hint">Введите адрес RSS-канала</string>
     <string name="delete_rss_channels_button_text">Удалить каналы</string>
     <string name="confirm_deleting_rss_channels_button_text">Удалить</string>
+    <string name="enable_updating_notifications_button_text">Подписаться на обновления</string>
 
     <string name="rss_channels_loading_error_message">Произошла ошибка при загрузке RSS-каналов!</string>
     <string name="rss_channels_adding_error_message">Произошла ошибка при добавлении RSS-канала!</string>

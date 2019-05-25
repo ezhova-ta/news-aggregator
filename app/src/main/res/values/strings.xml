@@ -5,6 +5,7 @@
     <string name="add_rss_channel_edit_text_hint">Enter URL of rss-channel</string>
     <string name="delete_rss_channels_button_text">Delete channels</string>
     <string name="confirm_deleting_rss_channels_button_text">Delete</string>
+    <string name="enable_updating_notifications_button_text">Subscribe to updates</string>
 
     <string name="rss_channels_loading_error_message">Downloading RSS-channels error!</string>
     <string name="rss_channels_adding_error_message">Adding RSS-channels error!</string>
