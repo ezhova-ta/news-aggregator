@@ -13,8 +13,7 @@ public class NewsAggregatorApplication extends Application {
 
     public static final String NOTIFICATION_CHANNEL_ID = "com.example.newsaggregator";
     public static final String NOTIFICATION_CHANNEL_NAME = "newsAggregator";
-    public static final String NOTIFICATION_CHANNEL_DESCRIPTION =
-            getInstance().getResources().getText(R.string.notification_channel_description).toString();
+    private String NOTIFICATION_CHANNEL_DESCRIPTION;
 
     public static NewsAggregatorApplication getInstance() {
         return instance;
@@ -29,6 +28,11 @@ public class NewsAggregatorApplication extends Application {
         super.onCreate();
         instance = this;
         diFactory = new DependencyInjectionFactory(getApplicationContext());
+        NOTIFICATION_CHANNEL_DESCRIPTION =
+                getInstance()
+                .getResources()
+                .getText(R.string.notification_channel_description)
+                .toString();
         createNotificationChannel();
     }
 

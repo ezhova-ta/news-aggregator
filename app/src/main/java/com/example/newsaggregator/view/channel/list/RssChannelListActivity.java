@@ -191,6 +191,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
+    public void showEnableUpdatingNotificationsMessage() {
+        showPopupMessage(getResources().getText(R.string.enable_updating_notifications_message));
+    }
+
+    @Override
     public void hideDeleteRssChannelsButton() {
         findViewById(R.id.deleteRssChannelsButton).setVisibility(View.GONE);
     }

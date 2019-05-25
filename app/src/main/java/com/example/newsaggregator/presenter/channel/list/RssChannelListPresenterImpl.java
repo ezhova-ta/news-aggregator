@@ -50,6 +50,7 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
         TODO Установить enabledNotifications = true в SharedPreferences, чтобы можно было отменять подписку
          */
         rssChannelListView.startAlarmManagerToUpdateNewsEntryLists();
+        rssChannelListView.showEnableUpdatingNotificationsMessage();
     }
 
     @Override
