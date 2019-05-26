@@ -36,11 +36,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     private static final String NOTIFICATIONS_PREFERENCES_KEY = "enabledNotifications";
     private static final int FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT = 0;
     private static final int UPDATE_NOTIFICATION_ID = 513;
-    private static final long REPEATING_ALARM_INTERVAL = 120_000;
 
     private DependencyInjectionFactory diFactory;
     private BroadcastReceiver receiver;
     private EditText addRssChannelEditText;
+    private EditText repeatingUpdateAlarmIntervalEditText;
     private RssChannelListPresenter presenter;
     private OnRssChannelListItemClickListener onRssChannelListItemClickListener;
     private RecyclerView recyclerView;
@@ -98,6 +98,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
     private void initViewElement() {
         addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
+        repeatingUpdateAlarmIntervalEditText = findViewById(R.id.repeatingUpdateAlarmIntervalEditText);
         recyclerView = findViewById(R.id.rssChannelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = findViewById(R.id.rssChannelsLoadingProgress);
@@ -127,13 +128,22 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
     @Override
     public String getAddRssChannelEditTextValue() {
-        addRssChannelEditText = findViewById(R.id.addRssChannelEditText);
         return addRssChannelEditText.getText().toString();
+    }
+
+    @Override
+    public String getRepeatingUpdateAlarmIntervalEditTextValue() {
+        return repeatingUpdateAlarmIntervalEditText.getText().toString();
     }
 
     @Override
     public void clearAddRssChannelEditText() {
         addRssChannelEditText.setText("");
+    }
+
+    @Override
+    public void clearRepeatingUpdateAlarmIntervalEditText() {
+        repeatingUpdateAlarmIntervalEditText.setText("");
     }
 
     @Override
@@ -157,7 +167,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
-    public void startAlarmManagerToUpdateNewsEntryLists() {
+    public void startAlarmManagerToUpdateNewsEntryLists(final long intervalMillis) {
         /*
         TODO magic const
          */
@@ -168,7 +178,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
                 0
         );
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), REPEATING_ALARM_INTERVAL, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), intervalMillis, pendingIntent);
         UpdatingNewsEntryListsAlarmReceiver.subscribeOnAlarmReceiverInvocation(this);
         /*
         TODO .unsubscribeOnAlarmReceiverInvocation() ??
@@ -231,6 +241,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
+    public void showInvalidReepatingUpdateAlarmIntervalMessage() {
+        showPopupMessage(getResources().getText(R.string.invalid_reepating_update_alarm_interval_message));
+    }
+
+    @Override
     public void hideDeleteRssChannelsButton() {
         findViewById(R.id.deleteRssChannelsButton).setVisibility(View.GONE);
     }
@@ -246,6 +261,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
+    public void hideRepeatingUpdateAlarmIntervalEditText() {
+        findViewById(R.id.repeatingUpdateAlarmIntervalEditText).setVisibility(View.GONE);
+    }
+
+    @Override
     public void showEnableUpdatingNotificationsButton() {
         findViewById(R.id.enableUpdatingNotificationsButton).setVisibility(View.VISIBLE);
     }
@@ -258,6 +278,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     public void showDeleteRssChannelsButton() {
         findViewById(R.id.deleteRssChannelsButton).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showRepeatingUpdateAlarmIntervalEditText() {
+        findViewById(R.id.repeatingUpdateAlarmIntervalEditText).setVisibility(View.VISIBLE);
     }
 
     @Override

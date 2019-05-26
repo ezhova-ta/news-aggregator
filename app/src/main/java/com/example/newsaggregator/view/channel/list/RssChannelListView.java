@@ -9,11 +9,13 @@ public interface RssChannelListView {
 
     void showRssChannelList(List<RssChannel> rssChannelList);
     String getAddRssChannelEditTextValue();
+    String getRepeatingUpdateAlarmIntervalEditTextValue();
     void clearAddRssChannelEditText();
+    void clearRepeatingUpdateAlarmIntervalEditText();
 
     void startActivityToDisplayNewsEntryList(String rssChannelLinkExtraKey, String rssChannelLinkExtraValue);
     void startActivityToDeleteRssChannels();
-    void startAlarmManagerToUpdateNewsEntryLists();
+    void startAlarmManagerToUpdateNewsEntryLists(long intervalMillis);
     void stopAlarmManagerToUpdateNewsEntryLists();
 
     void showProgressBar();
@@ -25,13 +27,16 @@ public interface RssChannelListView {
     void showEmptyRssChannelListMessage();
     void showEnableUpdatingNotificationsMessage();
     void showDisableUpdatingNotificationsMessage();
+    void showInvalidReepatingUpdateAlarmIntervalMessage();
 
     void hideDeleteRssChannelsButton();
     void hideEnableUpdatingNotificationsButton();
     void hideDisableUpdatingNotificationsButton();
+    void hideRepeatingUpdateAlarmIntervalEditText();
     void showEnableUpdatingNotificationsButton();
     void showDisableUpdatingNotificationsButton();
     void showDeleteRssChannelsButton();
+    void showRepeatingUpdateAlarmIntervalEditText();
 
     void showUpdateNotification();
 

@@ -51,7 +51,7 @@ class RssChannelAdapter extends RecyclerView.Adapter<RssChannelHolder> {
         onRssChannelListItemClickListener = listener;
     }
 
-    public void unSubscribeOnRssChannelListItemClick(final OnRssChannelListItemClickListener listener) {
+    public void unsubscribeOnRssChannelListItemClick(final OnRssChannelListItemClickListener listener) {
         onRssChannelListItemClickListener = null;
     }
 

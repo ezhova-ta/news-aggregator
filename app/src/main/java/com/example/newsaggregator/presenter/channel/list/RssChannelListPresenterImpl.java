@@ -54,17 +54,31 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
     @Override
     public void onEnableUpdatingNotificationsButtonClick() {
-        rssChannelListView.hideEnableUpdatingNotificationsButton();
-        rssChannelListView.showDisableUpdatingNotificationsButton();
-        rssChannelListView.setEnabledNotificationsValue(true);
-        rssChannelListView.showEnableUpdatingNotificationsMessage();
-        rssChannelListView.startAlarmManagerToUpdateNewsEntryLists();
+        final String repeatingUpdateAlarmInterval =
+                rssChannelListView.getRepeatingUpdateAlarmIntervalEditTextValue();
+
+        if(!repeatingUpdateAlarmInterval.isEmpty()) {
+            try {
+                final long intervalMillis = Long.parseLong(repeatingUpdateAlarmInterval);
+                rssChannelListView.hideEnableUpdatingNotificationsButton();
+                rssChannelListView.showDisableUpdatingNotificationsButton();
+                rssChannelListView.setEnabledNotificationsValue(true);
+                rssChannelListView.showEnableUpdatingNotificationsMessage();
+                rssChannelListView.hideRepeatingUpdateAlarmIntervalEditText();
+
+                rssChannelListView.startAlarmManagerToUpdateNewsEntryLists(intervalMillis);
+            } catch(final NumberFormatException e) {
+                rssChannelListView.showInvalidReepatingUpdateAlarmIntervalMessage();
+            }
+        }
     }
 
     @Override
     public void onDisableUpdatingNotificationsButtonClick() {
         rssChannelListView.hideDisableUpdatingNotificationsButton();
         rssChannelListView.showEnableUpdatingNotificationsButton();
+        rssChannelListView.clearRepeatingUpdateAlarmIntervalEditText();
+        rssChannelListView.showRepeatingUpdateAlarmIntervalEditText();
         rssChannelListView.setEnabledNotificationsValue(false);
         rssChannelListView.showDisableUpdatingNotificationsMessage();
         rssChannelListView.stopAlarmManagerToUpdateNewsEntryLists();
