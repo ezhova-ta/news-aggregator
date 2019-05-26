@@ -29,10 +29,12 @@ import com.example.newsaggregator.presenter.channel.list.RssChannelListPresenter
 import com.example.newsaggregator.view.channel.list.deleting.DeletingRssChannelListActivity;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListActivity;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView, AlarmReceiverListener {
+    private static final String NOTIFICATIONS_PREFERENCES_NAME = "notifications";
+    private static final String NOTIFICATIONS_PREFERENCES_KEY = "enabledNotifications";
+
     private DependencyInjectionFactory diFactory;
     private BroadcastReceiver receiver;
     private EditText addRssChannelEditText;
@@ -110,6 +112,10 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         presenter.onEnableUpdatingNotificationsButtonClick();
     }
 
+    public void onDisableUpdatingNotificationsButtonClick(final View view) {
+        presenter.onDisableUpdatingNotificationsButtonClick();
+    }
+
     @Override
     public void showRssChannelList(final List<RssChannel> rssChannelList) {
         final RssChannelAdapter adapter = new RssChannelAdapter(this, rssChannelList);
@@ -149,15 +155,36 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
     @Override
     public void startAlarmManagerToUpdateNewsEntryLists() {
-        final Calendar calendar = Calendar.getInstance();
-        final Intent intent = new Intent(this, UpdatingNewsEntryListsAlarmReceiver.class);
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        /*
+        TODO magic const
+         */
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                new Intent(this, UpdatingNewsEntryListsAlarmReceiver.class),
+                0
+        );
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), REPEATING_ALARM_INTERVAL, pendingIntent);
         UpdatingNewsEntryListsAlarmReceiver.subscribeOnAlarmReceiverInvocation(this);
         /*
-        TODO Unsubscribe ??
+        TODO .unsubscribeOnAlarmReceiverInvocation() ??
          */
+    }
+
+    @Override
+    public void stopAlarmManagerToUpdateNewsEntryLists() {
+        /*
+        TODO magic const
+         */
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                new Intent(this, UpdatingNewsEntryListsAlarmReceiver.class),
+                0
+        );
+        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 
     @Override
@@ -196,8 +223,33 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
+    public void showDisableUpdatingNotificationsMessage() {
+        showPopupMessage(getResources().getText(R.string.disable_updating_notifications_message));
+    }
+
+    @Override
     public void hideDeleteRssChannelsButton() {
         findViewById(R.id.deleteRssChannelsButton).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideEnableUpdatingNotificationsButton() {
+        findViewById(R.id.enableUpdatingNotificationsButton).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideDisableUpdatingNotificationsButton() {
+        findViewById(R.id.disableUpdatingNotificationsButton).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEnableUpdatingNotificationsButton() {
+        findViewById(R.id.enableUpdatingNotificationsButton).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showDisableUpdatingNotificationsButton() {
+        findViewById(R.id.disableUpdatingNotificationsButton).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -225,6 +277,20 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
             final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(UPDATE_NOTIFICATION_ID, builder.build());
         }
+    }
+
+    @Override
+    public void setEnabledNotificationsValue(final boolean isEnable) {
+        getSharedPreferences(NOTIFICATIONS_PREFERENCES_NAME, MODE_PRIVATE)
+                .edit()
+                .putBoolean(NOTIFICATIONS_PREFERENCES_KEY, isEnable)
+                .apply();
+    }
+
+    @Override
+    public boolean getEnabledNotificationsValue() {
+        return   getSharedPreferences(NOTIFICATIONS_PREFERENCES_NAME, MODE_PRIVATE)
+                .getBoolean(NOTIFICATIONS_PREFERENCES_KEY, false);
     }
 
     private void showPopupMessage(final CharSequence text) {

@@ -13,17 +13,31 @@ public interface RssChannelListView {
     void showRssChannelList(List<RssChannel> rssChannelList);
     String getAddRssChannelEditTextValue();
     void clearAddRssChannelEditText();
+
     void startActivityToDisplayNewsEntryList(String rssChannelLinkExtraKey, String rssChannelLinkExtraValue);
     void startActivityToDeleteRssChannels();
     void startAlarmManagerToUpdateNewsEntryLists();
+    void stopAlarmManagerToUpdateNewsEntryLists();
+
     void showProgressBar();
     void hideProgressBar();
+
     void showRssChannelsLoadingErrorMessage();
     void showRssChannelsAddingErrorMessage();
     void showRssChannelsAddingSuccessMessage();
     void showEmptyRssChannelListMessage();
     void showEnableUpdatingNotificationsMessage();
+    void showDisableUpdatingNotificationsMessage();
+
     void hideDeleteRssChannelsButton();
+    void hideEnableUpdatingNotificationsButton();
+    void hideDisableUpdatingNotificationsButton();
+    void showEnableUpdatingNotificationsButton();
+    void showDisableUpdatingNotificationsButton();
     void showDeleteRssChannelsButton();
+
     void showUpdateNotification();
+
+    void setEnabledNotificationsValue(boolean isEnable);
+    boolean getEnabledNotificationsValue();
 }

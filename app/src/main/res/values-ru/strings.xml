@@ -6,6 +6,7 @@
     <string name="delete_rss_channels_button_text">Удалить каналы</string>
     <string name="confirm_deleting_rss_channels_button_text">Удалить</string>
     <string name="enable_updating_notifications_button_text">Подписаться на обновления</string>
+    <string name="disable_updating_notifications_button_text">Отписаться от обновлений</string>
 
     <string name="rss_channels_loading_error_message">Произошла ошибка при загрузке RSS-каналов!</string>
     <string name="rss_channels_adding_error_message">Произошла ошибка при добавлении RSS-канала!</string>
@@ -17,6 +18,7 @@
     <string name="empty_news_entry_list_message">Необходимо обновить список новостей</string>
     <string name="empty_rss_channel_list_message">Список RSS-каналов пуст</string>
     <string name="enable_updating_notifications_message">Вы подписались на обновления</string>
+    <string name="disable_updating_notifications_message">Вы отписались от обновлений</string>
 
     <string name="update_notification_content_title">Свежие новости</string>
     <string name="update_notification_content_text">В вашей RSS-ленте появились свежие новости</string>

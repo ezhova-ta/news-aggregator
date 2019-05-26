@@ -5,5 +5,6 @@ public interface RssChannelListPresenter {
     void onAddRssChannelButtonClick();
     void onDeleteRssChannelsButtonClick();
     void onEnableUpdatingNotificationsButtonClick();
+    void onDisableUpdatingNotificationsButtonClick();
     void onReceiveBroadcastMessage(int requestResult);
 }

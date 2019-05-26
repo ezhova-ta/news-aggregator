@@ -26,6 +26,14 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
     @Override
     public void onResume() {
+        if(rssChannelListView.getEnabledNotificationsValue()) {
+            rssChannelListView.hideEnableUpdatingNotificationsButton();
+            rssChannelListView.showDisableUpdatingNotificationsButton();
+        } else {
+            rssChannelListView.hideDisableUpdatingNotificationsButton();
+            rssChannelListView.showEnableUpdatingNotificationsButton();
+        }
+
         final ShowRssChannelListTask task = new ShowRssChannelListTask(this);
         task.execute();
     }
@@ -46,11 +54,20 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
     @Override
     public void onEnableUpdatingNotificationsButtonClick() {
-        /*
-        TODO Установить enabledNotifications = true в SharedPreferences, чтобы можно было отменять подписку
-         */
-        rssChannelListView.startAlarmManagerToUpdateNewsEntryLists();
+        rssChannelListView.hideEnableUpdatingNotificationsButton();
+        rssChannelListView.showDisableUpdatingNotificationsButton();
+        rssChannelListView.setEnabledNotificationsValue(true);
         rssChannelListView.showEnableUpdatingNotificationsMessage();
+        rssChannelListView.startAlarmManagerToUpdateNewsEntryLists();
+    }
+
+    @Override
+    public void onDisableUpdatingNotificationsButtonClick() {
+        rssChannelListView.hideDisableUpdatingNotificationsButton();
+        rssChannelListView.showEnableUpdatingNotificationsButton();
+        rssChannelListView.setEnabledNotificationsValue(false);
+        rssChannelListView.showDisableUpdatingNotificationsMessage();
+        rssChannelListView.stopAlarmManagerToUpdateNewsEntryLists();
     }
 
     @Override
