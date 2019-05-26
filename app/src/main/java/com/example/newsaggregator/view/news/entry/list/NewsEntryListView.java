@@ -6,10 +6,8 @@ import java.util.List;
 
 public interface NewsEntryListView {
     int FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT = 0;
-    String NEWS_ENTRY_LINK_EXTRA_KEY = "com.example.newsaggregator.view.news_entry_list.NEWS_ENTRY_LINK";
-    String PREFERENCES_FILE_NAME = "news_entries";
-    String PREFERENCE_NAME = "newsEntriesDetetionDate";
     long DEFAULT_PREFERENCE_VALUE = 0;
+    String NEWS_ENTRY_LINK_EXTRA_KEY = "com.example.newsaggregator.view.news_entry_list.NEWS_ENTRY_LINK";
 
     void showNewsEntryList(final List<NewsEntry> newsEntryList);
     void startServiceToUpdateNewsEntryList();

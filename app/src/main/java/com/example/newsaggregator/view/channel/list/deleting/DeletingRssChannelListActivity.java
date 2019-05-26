@@ -1,12 +1,6 @@
 package com.example.newsaggregator.view.channel.list.deleting;
 
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,12 +14,13 @@ import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.channel.list.deleting.DeletingRssChannelListPresenter;
-import com.example.newsaggregator.view.channel.list.RssChannelListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeletingRssChannelListActivity extends AppCompatActivity implements DeletingRssChannelListView {
+    private static final String CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY = "checkedRssChannelLinks";
+
     private DependencyInjectionFactory diFactory;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -33,8 +28,6 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
     private OnRssChannelListItemCheckListener onRssChannelListItemCheckListener;
     private DeletingRssChannelListPresenter presenter;
     private ArrayList<String> checkedRssChannelLinkList = new ArrayList<>();
-
-    private static final String CHECKED_RSS_CHANNEL_LINKS_BUNDLE_KEY = "checkedRssChannelLinks";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

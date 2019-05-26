@@ -34,6 +34,9 @@ import java.util.List;
 public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView, AlarmReceiverListener {
     private static final String NOTIFICATIONS_PREFERENCES_NAME = "notifications";
     private static final String NOTIFICATIONS_PREFERENCES_KEY = "enabledNotifications";
+    private static final int FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT = 0;
+    private static final int UPDATE_NOTIFICATION_ID = 513;
+    private static final long REPEATING_ALARM_INTERVAL = 120_000;
 
     private DependencyInjectionFactory diFactory;
     private BroadcastReceiver receiver;

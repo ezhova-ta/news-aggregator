@@ -26,6 +26,9 @@ import com.example.newsaggregator.view.news.entry.NewsEntryActivity;
 import java.util.List;
 
 public class NewsEntryListActivity extends AppCompatActivity implements NewsEntryListView {
+    private static final String PREFERENCES_NAME = "news_entries";
+    private static final String PREFERENCES_KEY = "newsEntriesDetetionDate";
+
     private DependencyInjectionFactory diFactory;
     private NewsEntryListPresenter presenter;
     private OnNewsEntryListItemClickListener onNewsEntryListItemClickListener;
@@ -125,16 +128,16 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
 
     @Override
     public long getNewsEntriesDetetionDateInMillis() {
-        final SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE);
-        return preferences.getLong(PREFERENCE_NAME, DEFAULT_PREFERENCE_VALUE);
+        final SharedPreferences preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
+        return preferences.getLong(PREFERENCES_KEY, DEFAULT_PREFERENCE_VALUE);
     }
 
     @Override
     public void setNewsEntriesDetetionDate(final long newsEntriesDetetionDateInMillis) {
-        final SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE);
+        final SharedPreferences preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
         preferences
                 .edit()
-                .putLong(PREFERENCE_NAME, newsEntriesDetetionDateInMillis)
+                .putLong(PREFERENCES_KEY, newsEntriesDetetionDateInMillis)
                 .apply();
     }
 
