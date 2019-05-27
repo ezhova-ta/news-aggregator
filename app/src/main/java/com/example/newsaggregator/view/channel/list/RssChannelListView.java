@@ -28,6 +28,7 @@ public interface RssChannelListView {
     void showEnableUpdatingNotificationsMessage();
     void showDisableUpdatingNotificationsMessage();
     void showInvalidReepatingUpdateAlarmIntervalMessage();
+    void showEmptyReepatingUpdateAlarmIntervalMessage();
 
     void hideDeleteRssChannelsButton();
     void hideEnableUpdatingNotificationsButton();

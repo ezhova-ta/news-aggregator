@@ -70,6 +70,8 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
             } catch(final NumberFormatException e) {
                 rssChannelListView.showInvalidReepatingUpdateAlarmIntervalMessage();
             }
+        } else {
+            rssChannelListView.showEmptyReepatingUpdateAlarmIntervalMessage();
         }
     }
 

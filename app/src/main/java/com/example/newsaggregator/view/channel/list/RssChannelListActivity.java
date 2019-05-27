@@ -246,6 +246,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
+    public void showEmptyReepatingUpdateAlarmIntervalMessage() {
+        showPopupMessage(getResources().getText(R.string.empty_reepating_update_alarm_interval_message));
+    }
+
+    @Override
     public void hideDeleteRssChannelsButton() {
         findViewById(R.id.deleteRssChannelsButton).setVisibility(View.GONE);
     }

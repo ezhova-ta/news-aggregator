@@ -20,7 +20,8 @@
     <string name="empty_rss_channel_list_message">Список RSS-каналов пуст</string>
     <string name="enable_updating_notifications_message">Вы подписались на обновления</string>
     <string name="disable_updating_notifications_message">Вы отписались от обновлений</string>
-    <string name="invalid_reepating_update_alarm_interval_message">Задан некорректный интервал</string>
+    <string name="invalid_reepating_update_alarm_interval_message">Задана некорректная периодичность</string>
+    <string name="empty_reepating_update_alarm_interval_message">Введите периодичность</string>
 
     <string name="update_notification_content_title">Свежие новости</string>
     <string name="update_notification_content_text">В вашей RSS-ленте появились свежие новости</string>

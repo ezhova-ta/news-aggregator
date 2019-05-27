@@ -20,7 +20,8 @@
     <string name="empty_rss_channel_list_message">RSS-channel list is empty</string>
     <string name="enable_updating_notifications_message">You subscribed to updates</string>
     <string name="disable_updating_notifications_message">You unsubscribed to updates</string>
-    <string name="invalid_reepating_update_alarm_interval_message">Invalid interval</string>
+    <string name="invalid_reepating_update_alarm_interval_message">Invalid periodicity</string>
+    <string name="empty_reepating_update_alarm_interval_message">Enter the periodicity</string>
 
     <string name="update_notification_content_title">Fresh news</string>
     <string name="update_notification_content_text">There were fresh news in RSS feeds</string>
