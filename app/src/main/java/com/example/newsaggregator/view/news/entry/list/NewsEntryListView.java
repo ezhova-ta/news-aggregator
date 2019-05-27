@@ -14,8 +14,10 @@ public interface NewsEntryListView {
     String getRssChannelLink();
     void startActivityToDisplayNewsEntry(String newsEntryLinkExtraKey,
             String newsEntryLinkExtraValue);
+
     long getNewsEntriesDetetionDateInMillis();
     void setNewsEntriesDetetionDate(long newsEntriesDetetionDateInMillis);
+
     void showProgressBar();
     void hideProgressBar();
     void showNewsEntriesUpdatingErrorMessage();

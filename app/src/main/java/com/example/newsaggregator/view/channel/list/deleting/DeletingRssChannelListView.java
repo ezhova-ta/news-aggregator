@@ -10,11 +10,14 @@ public interface DeletingRssChannelListView {
     void removeRssChannelLink(String rssChannelLink);
     List<String> getCheckedRssChannelLinkList();
     void clearCheckedRssChannelLinkList();
+
     void showProgressBar();
     void hideProgressBar();
-    void showRssChannelsLoadingError();
+    void hideConfirmDeletingRssChannelsButton();
+
+    void showRssChannelsLoadingErrorMessage();
     void showRssChannelsDeletingErrorMessage();
     void showRssChannelsDeletingSuccessMessage();
     void showEmptyRssChannelListMessage();
-    void hideConfirmDeletingRssChannelsButton();
+
 }

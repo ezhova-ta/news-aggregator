@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -42,6 +43,10 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     private BroadcastReceiver receiver;
     private EditText addRssChannelEditText;
     private EditText repeatingUpdateAlarmIntervalEditText;
+    private Spinner repeatingIntervalUnitSpinner;
+    private Button deleteRssChannelsButton;
+    private Button enableUpdatingNotificationsButton;
+    private Button disableUpdatingNotificationsButton;
     private RssChannelListPresenter presenter;
     private OnRssChannelListItemClickListener onRssChannelListItemClickListener;
     private RecyclerView recyclerView;
@@ -103,6 +108,10 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         recyclerView = findViewById(R.id.rssChannelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = findViewById(R.id.rssChannelsLoadingProgress);
+        repeatingIntervalUnitSpinner = (Spinner) findViewById(R.id.repeatingIntervalUnitSpinner);
+        deleteRssChannelsButton = findViewById(R.id.deleteRssChannelsButton);
+        enableUpdatingNotificationsButton = findViewById(R.id.enableUpdatingNotificationsButton);
+        disableUpdatingNotificationsButton = findViewById(R.id.disableUpdatingNotificationsButton);
     }
 
     public void onAddRssChannelButtonClick(final View view) {
@@ -139,7 +148,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
     @Override
     public int getRepeatingIntervalUnitSpinnerSelectedItemPosition() {
-        final Spinner repeatingIntervalUnitSpinner = (Spinner) findViewById(R.id.repeatingIntervalUnitSpinner);
         return repeatingIntervalUnitSpinner.getSelectedItemPosition();
     }
 
@@ -259,52 +267,52 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
     @Override
     public void hideDeleteRssChannelsButton() {
-        findViewById(R.id.deleteRssChannelsButton).setVisibility(View.GONE);
+        deleteRssChannelsButton.setVisibility(View.GONE);
     }
 
     @Override
     public void hideEnableUpdatingNotificationsButton() {
-        findViewById(R.id.enableUpdatingNotificationsButton).setVisibility(View.GONE);
+        enableUpdatingNotificationsButton.setVisibility(View.GONE);
     }
 
     @Override
     public void hideDisableUpdatingNotificationsButton() {
-        findViewById(R.id.disableUpdatingNotificationsButton).setVisibility(View.GONE);
+        disableUpdatingNotificationsButton.setVisibility(View.GONE);
     }
 
     @Override
     public void hideRepeatingUpdateAlarmIntervalEditText() {
-        findViewById(R.id.repeatingUpdateAlarmIntervalEditText).setVisibility(View.GONE);
+        repeatingUpdateAlarmIntervalEditText.setVisibility(View.GONE);
     }
 
     @Override
     public void hideRepeatingIntervalUnitSpinner() {
-        findViewById(R.id.repeatingIntervalUnitSpinner).setVisibility(View.GONE);
+        repeatingIntervalUnitSpinner.setVisibility(View.GONE);
     }
 
     @Override
     public void showEnableUpdatingNotificationsButton() {
-        findViewById(R.id.enableUpdatingNotificationsButton).setVisibility(View.VISIBLE);
+        enableUpdatingNotificationsButton.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showDisableUpdatingNotificationsButton() {
-        findViewById(R.id.disableUpdatingNotificationsButton).setVisibility(View.VISIBLE);
+        disableUpdatingNotificationsButton.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showDeleteRssChannelsButton() {
-        findViewById(R.id.deleteRssChannelsButton).setVisibility(View.VISIBLE);
+        deleteRssChannelsButton.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showRepeatingUpdateAlarmIntervalEditText() {
-        findViewById(R.id.repeatingUpdateAlarmIntervalEditText).setVisibility(View.VISIBLE);
+        repeatingUpdateAlarmIntervalEditText.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showRepeatingIntervalUnitSpinner() {
-        findViewById(R.id.repeatingIntervalUnitSpinner).setVisibility(View.VISIBLE);
+        repeatingIntervalUnitSpinner.setVisibility(View.VISIBLE);
     }
 
     @Override
