@@ -26,4 +26,9 @@
     <string name="update_notification_content_title">Fresh news</string>
     <string name="update_notification_content_text">There were fresh news in RSS feeds</string>
     <string name="notification_channel_description">News aggregator</string>
+
+    <string-array name="repeatingIntervalUnitList">
+        <item>hours</item>
+        <item>days</item>
+    </string-array>
 </resources>

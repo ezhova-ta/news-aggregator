@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
@@ -134,6 +135,12 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     public String getRepeatingUpdateAlarmIntervalEditTextValue() {
         return repeatingUpdateAlarmIntervalEditText.getText().toString();
+    }
+
+    @Override
+    public int getRepeatingIntervalUnitSpinnerSelectedItemPosition() {
+        final Spinner repeatingIntervalUnitSpinner = (Spinner) findViewById(R.id.repeatingIntervalUnitSpinner);
+        return repeatingIntervalUnitSpinner.getSelectedItemPosition();
     }
 
     @Override
@@ -271,6 +278,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
+    public void hideRepeatingIntervalUnitSpinner() {
+        findViewById(R.id.repeatingIntervalUnitSpinner).setVisibility(View.GONE);
+    }
+
+    @Override
     public void showEnableUpdatingNotificationsButton() {
         findViewById(R.id.enableUpdatingNotificationsButton).setVisibility(View.VISIBLE);
     }
@@ -288,6 +300,11 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     @Override
     public void showRepeatingUpdateAlarmIntervalEditText() {
         findViewById(R.id.repeatingUpdateAlarmIntervalEditText).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showRepeatingIntervalUnitSpinner() {
+        findViewById(R.id.repeatingIntervalUnitSpinner).setVisibility(View.VISIBLE);
     }
 
     @Override

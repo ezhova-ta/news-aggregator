@@ -29,18 +29,32 @@
         android:onClick="onDeleteRssChannelsButtonClick"
         android:text="@string/delete_rss_channels_button_text" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/repeatingUpdateAlarmIntervalEditText"
+            android:inputType="numberDecimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/repeating_update_alarm_interval_edit_text_hint" />
+
+        <Spinner
+            android:id="@+id/repeatingIntervalUnitSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/repeatingIntervalUnitList" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/enableUpdatingNotificationsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onEnableUpdatingNotificationsButtonClick"
         android:text="@string/enable_updating_notifications_button_text" />
-
-    <EditText
-        android:id="@+id/repeatingUpdateAlarmIntervalEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/repeating_update_alarm_interval_edit_text_hint" />
 
     <Button
         android:id="@+id/disableUpdatingNotificationsButton"

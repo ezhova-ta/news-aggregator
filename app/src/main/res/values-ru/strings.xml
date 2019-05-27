@@ -26,4 +26,9 @@
     <string name="update_notification_content_title">Свежие новости</string>
     <string name="update_notification_content_text">В вашей RSS-ленте появились свежие новости</string>
     <string name="notification_channel_description">Агрегатор новостей</string>
+
+    <string-array name="repeatingIntervalUnitList">
+        <item>часы</item>
+        <item>сутки</item>
+    </string-array>
 </resources>

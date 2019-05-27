@@ -15,6 +15,9 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnRssChannelListItemClickListener {
+    private final int MILLISECONDS_PER_HOUR = 3_600_000;
+    private final int MILLISECONDS_PER_DAY = 86_400_000;
+
     private final RssChannelListView rssChannelListView;
     private final RssChannelListRepository repository;
 
@@ -54,13 +57,26 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
     @Override
     public void onEnableUpdatingNotificationsButtonClick() {
+        final int spinnerPositionHours = 0;
+        final int spinnerPositionDays = 1;
         final String repeatingUpdateAlarmInterval =
                 rssChannelListView.getRepeatingUpdateAlarmIntervalEditTextValue();
+        final int spinnerSelectedItemPosition =
+                rssChannelListView.getRepeatingIntervalUnitSpinnerSelectedItemPosition();
+        final long intervalMillis;
 
         if(!repeatingUpdateAlarmInterval.isEmpty()) {
             try {
-                final long intervalMillis = Long.parseLong(repeatingUpdateAlarmInterval);
+                if(spinnerPositionHours == spinnerSelectedItemPosition) {
+                    intervalMillis = Long.parseLong(repeatingUpdateAlarmInterval) * MILLISECONDS_PER_HOUR;
+                } else if(spinnerPositionDays == spinnerSelectedItemPosition) {
+                    intervalMillis = Long.parseLong(repeatingUpdateAlarmInterval) * MILLISECONDS_PER_DAY;
+                } else {
+                    return;
+                }
+
                 rssChannelListView.hideEnableUpdatingNotificationsButton();
+                rssChannelListView.hideRepeatingIntervalUnitSpinner();
                 rssChannelListView.showDisableUpdatingNotificationsButton();
                 rssChannelListView.setEnabledNotificationsValue(true);
                 rssChannelListView.showEnableUpdatingNotificationsMessage();
@@ -79,6 +95,7 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     public void onDisableUpdatingNotificationsButtonClick() {
         rssChannelListView.hideDisableUpdatingNotificationsButton();
         rssChannelListView.showEnableUpdatingNotificationsButton();
+        rssChannelListView.showRepeatingIntervalUnitSpinner();
         rssChannelListView.clearRepeatingUpdateAlarmIntervalEditText();
         rssChannelListView.showRepeatingUpdateAlarmIntervalEditText();
         rssChannelListView.setEnabledNotificationsValue(false);

@@ -10,6 +10,7 @@ public interface RssChannelListView {
     void showRssChannelList(List<RssChannel> rssChannelList);
     String getAddRssChannelEditTextValue();
     String getRepeatingUpdateAlarmIntervalEditTextValue();
+    int getRepeatingIntervalUnitSpinnerSelectedItemPosition();
     void clearAddRssChannelEditText();
     void clearRepeatingUpdateAlarmIntervalEditText();
 
@@ -34,10 +35,12 @@ public interface RssChannelListView {
     void hideEnableUpdatingNotificationsButton();
     void hideDisableUpdatingNotificationsButton();
     void hideRepeatingUpdateAlarmIntervalEditText();
+    void hideRepeatingIntervalUnitSpinner();
     void showEnableUpdatingNotificationsButton();
     void showDisableUpdatingNotificationsButton();
     void showDeleteRssChannelsButton();
     void showRepeatingUpdateAlarmIntervalEditText();
+    void showRepeatingIntervalUnitSpinner();
 
     void showUpdateNotification();
 
