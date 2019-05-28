@@ -1,5 +1,6 @@
 package com.example.newsaggregator.view.channel.list.deleting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.RssChannel;
 import com.example.newsaggregator.presenter.channel.list.deleting.DeletingRssChannelListPresenter;
+import com.example.newsaggregator.view.channel.list.RssChannelListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +89,12 @@ public class DeletingRssChannelListActivity extends AppCompatActivity implements
 
     public void onConfirmDeletingRssChannelsButtonClick(final View view) {
         presenter.onConfirmDeletingRssChannelsButtonClick();
+    }
+
+    @Override
+    public void startActivityToDisplayRssChannelList() {
+        final Intent intent = new Intent(this, RssChannelListActivity.class);
+        startActivity(intent);
     }
 
     @Override

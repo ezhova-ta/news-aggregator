@@ -78,7 +78,7 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
             } else {
                 if(result.getResult().isEmpty()) {
                     presenter.get().deletingRssChannelListView.hideConfirmDeletingRssChannelsButton();
-                    presenter.get().deletingRssChannelListView.showEmptyRssChannelListMessage();
+                    presenter.get().deletingRssChannelListView.startActivityToDisplayRssChannelList();
                 }
                 presenter.get().deletingRssChannelListView.showRssChannelList(result.getResult());
             }
