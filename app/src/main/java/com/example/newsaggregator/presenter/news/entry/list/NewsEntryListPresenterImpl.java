@@ -42,13 +42,15 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
 
     @Override
     public void onUpdateNewsEntryListButtonClick() {
-        newsEntryListView.startServiceToUpdateNewsEntryList();
         newsEntryListView.showProgressBar();
+        newsEntryListView.showDownloadingNewsEntryListNotification();
+        newsEntryListView.startServiceToUpdateNewsEntryList();
     }
 
     @Override
     public void onReceiveBroadcastMessage(final int requestResult) {
         newsEntryListView.hideProgressBar();
+        newsEntryListView.hideDownloadingNewsEntryListNotification();
 
         if(requestResult == NewsEntryListService.FETCHING_NEWS_ENTRY_LIST_RESULT_OK) {
             showNewsEntryList(newsEntryListView.getRssChannelLink());

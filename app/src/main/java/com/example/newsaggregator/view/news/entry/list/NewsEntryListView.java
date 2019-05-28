@@ -23,4 +23,7 @@ public interface NewsEntryListView {
     void showNewsEntriesUpdatingErrorMessage();
     void showNewsEntriesLoadingErrorMessage();
     void showEmptyNewsEntryListMessage();
+
+    void showDownloadingNewsEntryListNotification();
+    void hideDownloadingNewsEntryListNotification();
 }

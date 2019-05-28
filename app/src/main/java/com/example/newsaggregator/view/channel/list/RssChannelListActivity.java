@@ -1,7 +1,6 @@
 package com.example.newsaggregator.view.channel.list;
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -333,7 +332,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
 
-            final Notification notification = builder.build();
             final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(UPDATE_NOTIFICATION_ID, builder.build());
         }
