@@ -43,10 +43,13 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
     @Override
     public void onUpdateNewsEntryListButtonClick() {
         newsEntryListView.startServiceToUpdateNewsEntryList();
+        newsEntryListView.showProgressBar();
     }
 
     @Override
     public void onReceiveBroadcastMessage(final int requestResult) {
+        newsEntryListView.hideProgressBar();
+
         if(requestResult == NewsEntryListService.FETCHING_NEWS_ENTRY_LIST_RESULT_OK) {
             showNewsEntryList(newsEntryListView.getRssChannelLink());
         } else if(requestResult == NewsEntryListService.FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING ||
@@ -79,11 +82,6 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
         }
 
         @Override
-        protected void onPreExecute() {
-            presenter.get().newsEntryListView.showProgressBar();
-        }
-
-        @Override
         protected AsyncTaskResult<List<NewsEntry>> doInBackground(final String... rssChannelLinks) {
             try {
                 final List<NewsEntry> newsEntryList = presenter.get().repository.getNewsEntryList(rssChannelLinks[0]);
@@ -95,8 +93,6 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
 
         @Override
         protected void onPostExecute(final AsyncTaskResult<List<NewsEntry>> result) {
-            presenter.get().newsEntryListView.hideProgressBar();
-
             if(result.getException() != null) {
                 presenter.get().newsEntryListView.showNewsEntriesLoadingErrorMessage();
             } else {
