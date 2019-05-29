@@ -9,6 +9,7 @@ public final class DbConstants {
 
     public static final String RSS_CHANNEL_ID_FIELD = "id";
     public static final String RSS_CHANNEL_LINK_FIELD = "rss_channel_link";
+    public static final String RSS_CHANNEL_READED_FIELD = "readed";
     public static final String NEWS_ENTRY_ID_FIELD = "id";
     public static final String NEWS_ENTRY_TITLE_FIELD = "title";
     public static final String NEWS_ENTRY_LINK_FIELD = "news_entry_link";

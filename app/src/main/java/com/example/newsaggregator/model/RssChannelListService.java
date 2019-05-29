@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteException;
 
 import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
+import com.example.newsaggregator.model.datasource.local.LocalNewsEntryListDataSource;
+import com.example.newsaggregator.model.datasource.local.LocalRssChannelDataSource;
 import com.example.newsaggregator.model.entity.NewsEntry;
 import com.example.newsaggregator.model.entity.RssChannel;
 
@@ -40,6 +42,8 @@ public class RssChannelListService extends IntentService {
     }
 
     private void handleActionUpdateNewsEntryLists() {
+        final LocalNewsEntryListDataSource newsEntryListDataSource = diFactory.provideLocalNewsEntryListDataSource();
+        final LocalRssChannelDataSource rssChannelDataSource = diFactory.provideLocalRssChannelDataSource();
         final Intent responseIntent = new Intent(ACTION_UPDATE_NEWS_ENTRY_LISTS);
         final Parser parser;
         final List<RssChannel> rssChannelList;
@@ -54,7 +58,10 @@ public class RssChannelListService extends IntentService {
                 newsEntryList = (List<NewsEntry>) parser.parse(rssChannel.getLink());
 
                 if(!newsEntryList.isEmpty()) {
-                    isUpdated = diFactory.provideLocalNewsEntryListDataSource().addNewsEntryList(rssChannel.getLink(), newsEntryList);
+                    if(newsEntryListDataSource.addNewsEntryList(rssChannel.getLink(), newsEntryList)) {
+                        isUpdated = true;
+                        rssChannelDataSource.setRssChannelReaded(rssChannel.getLink(), false);
+                    }
                 }
             }
 

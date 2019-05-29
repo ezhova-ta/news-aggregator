@@ -37,7 +37,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     private static final String NOTIFICATIONS_PREFERENCES_KEY = "enabledNotifications";
     private static final String UNREAD_RSS_CHANNELS_PREFERENCES_NAME = "rssChannels";
     private static final String UNREAD_RSS_CHANNELS_PREFERENCES_KEY = "unreadRssChannelsSet";
-    private static final int FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT = 0;
+    private static final int UPDATING_NEWS_ENTRY_LIST_DEFAULT_RESULT = 0;
     private static final int UPDATE_NOTIFICATION_ID = 513;
 
     private DependencyInjectionFactory diFactory;
@@ -67,7 +67,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
             @Override
             public void onReceive(final Context context, final Intent intent) {
                 final int requestResult = intent.getIntExtra(RssChannelListService.EXTRA_PARAM_REQUEST_RESULT,
-                        FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT);
+                        UPDATING_NEWS_ENTRY_LIST_DEFAULT_RESULT);
                 presenter.onReceiveBroadcastMessage(requestResult);
             }
         };

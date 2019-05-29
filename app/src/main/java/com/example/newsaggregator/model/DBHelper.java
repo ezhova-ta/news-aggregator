@@ -15,7 +15,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(
                 "create table if not exists " + DbConstants.RSS_CHANNELS_TABLE_NAME +
                 " (" + DbConstants.RSS_CHANNEL_ID_FIELD + " integer primary key autoincrement, " +
-                DbConstants.RSS_CHANNEL_LINK_FIELD + " text," +
+                DbConstants.RSS_CHANNEL_LINK_FIELD + " text, " +
+                DbConstants.RSS_CHANNEL_READED_FIELD + " integer default 0, " +
                 "unique (" + DbConstants.RSS_CHANNEL_LINK_FIELD + "))"
         );
         db.execSQL(

@@ -3,7 +3,7 @@
     <string name="update_news_entry_list_button_text">Update</string>
     <string name="add_rss_channel_button_text">Add</string>
     <string name="add_rss_channel_edit_text_hint">Enter URL of rss-channel</string>
-    <string name="repeating_update_alarm_interval_edit_text_hint">Enter repeating alarm interval</string>
+    <string name="repeating_update_alarm_interval_edit_text_hint">Enter update frequency</string>
     <string name="delete_rss_channels_button_text">Delete channels</string>
     <string name="confirm_deleting_rss_channels_button_text">Delete</string>
     <string name="enable_updating_notifications_button_text">Subscribe to updates</string>

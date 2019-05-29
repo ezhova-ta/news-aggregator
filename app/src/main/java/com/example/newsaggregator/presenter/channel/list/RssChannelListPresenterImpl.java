@@ -31,10 +31,14 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     public void onResume() {
         if(rssChannelListView.getEnabledNotificationsValue()) {
             rssChannelListView.hideEnableUpdatingNotificationsButton();
+            rssChannelListView.hideRepeatingUpdateAlarmIntervalEditText();
+            rssChannelListView.hideRepeatingIntervalUnitSpinner();
             rssChannelListView.showDisableUpdatingNotificationsButton();
         } else {
             rssChannelListView.hideDisableUpdatingNotificationsButton();
             rssChannelListView.showEnableUpdatingNotificationsButton();
+            rssChannelListView.showRepeatingIntervalUnitSpinner();
+            rssChannelListView.showRepeatingUpdateAlarmIntervalEditText();
         }
 
         final ShowRssChannelListTask task = new ShowRssChannelListTask(this);
@@ -76,11 +80,11 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
                 }
 
                 rssChannelListView.hideEnableUpdatingNotificationsButton();
+                rssChannelListView.hideRepeatingUpdateAlarmIntervalEditText();
                 rssChannelListView.hideRepeatingIntervalUnitSpinner();
                 rssChannelListView.showDisableUpdatingNotificationsButton();
                 rssChannelListView.setEnabledNotificationsValue(true);
                 rssChannelListView.showEnableUpdatingNotificationsMessage();
-                rssChannelListView.hideRepeatingUpdateAlarmIntervalEditText();
 
                 rssChannelListView.startAlarmManagerToUpdateNewsEntryLists(intervalMillis);
             } catch(final NumberFormatException e) {
@@ -106,6 +110,8 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     @Override
     public void onReceiveBroadcastMessage(final int requestResult) {
         if(requestResult == RssChannelListService.UPDATING_NEWS_ENTRY_LISTS_RESULT_FRESH_NEWS_ENTRIES) {
+            final ShowRssChannelListTask task = new ShowRssChannelListTask(this);
+            task.execute();
             rssChannelListView.showUpdateNotification();
         }
     }
@@ -114,6 +120,15 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     public void onRssChannelListItemClick(final RssChannel rssChannel) {
         rssChannelListView.startActivityToDisplayNewsEntryList(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY,
                 rssChannel.getLink());
+
+        try {
+            repository.setRssChannelReaded(rssChannel.getLink(), true);
+        } catch (final DbException e) {
+            /*
+            TODO Обработка исключения
+             */
+            e.printStackTrace();
+        }
     }
 
     private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {

@@ -1,5 +1,6 @@
 package com.example.newsaggregator.view.channel.list;
 
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +18,9 @@ class RssChannelHolder extends RecyclerView.ViewHolder {
     }
 
     void fillView(final RssChannel rssChannel) {
+        if(!rssChannel.isReaded()) {
+            rssChannelLinkTextView.setTypeface(null, Typeface.BOLD);
+        }
         rssChannelLinkTextView.setText(rssChannel.getLink());
     }
 }

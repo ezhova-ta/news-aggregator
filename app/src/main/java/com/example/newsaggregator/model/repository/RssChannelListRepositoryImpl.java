@@ -44,4 +44,13 @@ public class RssChannelListRepositoryImpl implements RssChannelListRepository {
             throw new DbException(e.getMessage());
         }
     }
+
+    @Override
+    public void setRssChannelReaded(final String link, final boolean readed) throws DbException {
+        try {
+            dataSource.setRssChannelReaded(link, readed);
+        } catch(final SQLiteException e) {
+            throw new DbException(e.getMessage());
+        }
+    }
 }

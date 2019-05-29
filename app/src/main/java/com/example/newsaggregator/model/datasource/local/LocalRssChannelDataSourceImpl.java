@@ -27,7 +27,7 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
 
         final Cursor cursor = db.query(
                 DbConstants.RSS_CHANNELS_TABLE_NAME,
-                new String[]{DbConstants.RSS_CHANNEL_LINK_FIELD},
+                new String[]{DbConstants.RSS_CHANNEL_LINK_FIELD, DbConstants.RSS_CHANNEL_READED_FIELD},
                 null,
                 null,
                 null,
@@ -37,9 +37,16 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
 
         if(cursor.moveToFirst()) {
             final int linkColumnIndex = cursor.getColumnIndex(DbConstants.RSS_CHANNEL_LINK_FIELD);
+            final int readedColumnIndex = cursor.getColumnIndex(DbConstants.RSS_CHANNEL_READED_FIELD);
 
             do {
-                rssChannel = new RssChannel(cursor.getString(linkColumnIndex));
+                rssChannel = new RssChannel(
+                        cursor.getString(linkColumnIndex),
+                        /*
+                        TODO magic const
+                         */
+                        cursor.getInt(readedColumnIndex) == 1 ? true : false
+                );
                 rssChannelList.add(rssChannel);
             } while(cursor.moveToNext());
         }
@@ -73,10 +80,37 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
     @Override
     public int deleteRssChannel(final String link) throws SQLiteException {
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
-        return db.delete(
+        final int rowNumber = db.delete(
                 DbConstants.RSS_CHANNELS_TABLE_NAME,
                 DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?",
                 new String[]{link}
         );
+
+        sqLiteOpenHelper.close();
+        db.close();
+
+        return rowNumber;
+    }
+
+    @Override
+    public int setRssChannelReaded(final String link, final boolean readed) throws SQLiteException {
+        final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+        final ContentValues contentValues = new ContentValues();
+
+        /*
+        TODO magic const
+         */
+        contentValues.put(DbConstants.RSS_CHANNEL_READED_FIELD, readed ? 1 : 0);
+        final int rowNumber = db.update(
+                DbConstants.RSS_CHANNELS_TABLE_NAME,
+                contentValues,
+                DbConstants.RSS_CHANNEL_LINK_FIELD + " = ?",
+                new String[]{link}
+        );
+
+        sqLiteOpenHelper.close();
+        db.close();
+
+        return rowNumber;
     }
 }

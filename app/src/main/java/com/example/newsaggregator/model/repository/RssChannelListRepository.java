@@ -9,4 +9,5 @@ public interface RssChannelListRepository {
     List<RssChannel> getRssChannelList() throws DbException;
     void addRssChannel(RssChannel rssChannel) throws DbException;
     void deleteRssChannel(String link) throws DbException;
+    void setRssChannelReaded(String link, boolean readed) throws DbException;
 }
