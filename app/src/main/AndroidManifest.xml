@@ -3,6 +3,7 @@
     package="com.example.newsaggregator">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".app.NewsAggregatorApplication"
@@ -15,7 +16,8 @@
 
         <service
             android:name=".model.RssChannelListService"
-            android:exported="false" />
+            android:exported="false"
+            android:enabled="true" />
 
         <activity android:name=".view.channel.list.deleting.DeletingRssChannelListActivity" />
 
@@ -34,7 +36,9 @@
 
         <activity android:name=".view.news.entry.list.NewsEntryListActivity" />
 
-        <receiver android:name=".view.channel.list.UpdatingNewsEntryListsAlarmReceiver" />
+        <receiver
+            android:name=".view.channel.list.UpdatingNewsEntryListsAlarmReceiver"
+            android:enabled="true" />
 
     </application>
 

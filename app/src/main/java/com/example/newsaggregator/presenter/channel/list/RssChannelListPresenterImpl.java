@@ -112,7 +112,6 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
         if(requestResult == RssChannelListService.UPDATING_NEWS_ENTRY_LISTS_RESULT_FRESH_NEWS_ENTRIES) {
             final ShowRssChannelListTask task = new ShowRssChannelListTask(this);
             task.execute();
-            rssChannelListView.showUpdateNotification();
         }
     }
 

@@ -6,10 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +29,7 @@ import com.example.newsaggregator.view.news.entry.list.NewsEntryListActivity;
 
 import java.util.List;
 
-public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView, AlarmReceiverListener {
+public class RssChannelListActivity extends AppCompatActivity implements RssChannelListView {
     private static final String NOTIFICATIONS_PREFERENCES_NAME = "notifications";
     private static final String NOTIFICATIONS_PREFERENCES_KEY = "enabledNotifications";
     private static final String UNREAD_RSS_CHANNELS_PREFERENCES_NAME = "rssChannels";
@@ -137,6 +134,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         recyclerView.setAdapter(adapter);
         adapter.subscribeOnRssChannelListItemClick(onRssChannelListItemClickListener);
     }
+
     @Override
     public String getAddRssChannelEditTextValue() {
         return addRssChannelEditText.getText().toString();
@@ -176,7 +174,8 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         startActivity(intent);
     }
 
-    private void startServiceToUpdateNewsEntryLists() {
+    @Override
+    public void startServiceToUpdateNewsEntryLists() {
         final Intent intent = new Intent(this, RssChannelListService.class);
         intent.setAction(RssChannelListService.ACTION_UPDATE_NEWS_ENTRY_LISTS);
         startService(intent);
@@ -195,10 +194,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         );
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), intervalMillis, pendingIntent);
-        UpdatingNewsEntryListsAlarmReceiver.subscribeOnAlarmReceiverInvocation(this);
-        /*
-        TODO .unsubscribeOnAlarmReceiverInvocation() ??
-         */
     }
 
     @Override
@@ -225,6 +220,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
     }
+
 
     @Override
     public void showRssChannelsLoadingErrorMessage() {
@@ -317,27 +313,6 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
-    public void showUpdateNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final Intent intent = new Intent(this, RssChannelListActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-            final NotificationCompat.Builder builder =
-                    new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.logo)
-                    .setContentTitle(getResources().getText(R.string.update_notification_content_title))
-                    .setContentText(getResources().getText(R.string.update_notification_content_text))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
-
-            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(UPDATE_NOTIFICATION_ID, builder.build());
-        }
-    }
-
-    @Override
     public void setEnabledNotificationsValue(final boolean isEnable) {
         getSharedPreferences(NOTIFICATIONS_PREFERENCES_NAME, MODE_PRIVATE)
                 .edit()
@@ -355,10 +330,5 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         final Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-    }
-
-    @Override
-    public void onAlarmReceiverInvoked() {
-        startServiceToUpdateNewsEntryLists();
     }
 }

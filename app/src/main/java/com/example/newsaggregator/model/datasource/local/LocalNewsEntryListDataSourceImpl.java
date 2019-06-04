@@ -54,9 +54,7 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
         }
 
         cursor.close();
-        sqLiteOpenHelper.close();
         db.close();
-
         return newsEntryList;
     }
 
@@ -101,7 +99,7 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
             }
         }
 
-        sqLiteOpenHelper.close();
+        cursor.close();
         db.close();
         return isUpdated;
     }
@@ -117,9 +115,7 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
                 new String[]{Long.toString(currentDateInMillis - storagePeriodInMillis)}
         );
 
-        sqLiteOpenHelper.close();
         db.close();
-
         return rowCount;
     }
 }

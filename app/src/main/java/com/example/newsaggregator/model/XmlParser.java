@@ -84,10 +84,6 @@ public class XmlParser implements Parser<List<NewsEntry>> {
     }
 
     private long convertToMillis(final String date) throws ParseException {
-        /*
-        TODO Адекватно решить проблему с несколькими форматами дат в <pubDate>
-         */
-
         DateFormat format = new SimpleDateFormat(DATE_PATTERN_WITHOUT_DAY_OF_WEEK, new Locale("en"));
         final Calendar calendar = format.getCalendar();
         Date formattedDate;

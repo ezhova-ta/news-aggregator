@@ -8,12 +8,7 @@ import android.widget.TextView;
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.model.entity.NewsEntry;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 class NewsEntryHolder extends RecyclerView.ViewHolder {
     private final TextView newsEntryTitleTextView;

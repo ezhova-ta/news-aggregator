@@ -52,9 +52,7 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
         }
 
         cursor.close();
-        sqLiteOpenHelper.close();
         db.close();
-
         return rssChannelList;
     }
 
@@ -71,9 +69,7 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
                 SQLiteDatabase.CONFLICT_IGNORE
         );
 
-        sqLiteOpenHelper.close();
         db.close();
-
         return rowId;
     }
 
@@ -86,9 +82,7 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
                 new String[]{link}
         );
 
-        sqLiteOpenHelper.close();
         db.close();
-
         return rowNumber;
     }
 
@@ -108,9 +102,7 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
                 new String[]{link}
         );
 
-        sqLiteOpenHelper.close();
         db.close();
-
         return rowNumber;
     }
 }
