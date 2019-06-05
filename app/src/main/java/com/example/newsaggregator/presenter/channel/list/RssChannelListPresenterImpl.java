@@ -15,8 +15,8 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnRssChannelListItemClickListener {
-    private final int MILLISECONDS_PER_HOUR = 3_600_000;
-    private final int MILLISECONDS_PER_DAY = 86_400_000;
+    private static final int MILLISECONDS_PER_HOUR = 3_600_000;
+    private static final int MILLISECONDS_PER_DAY = 86_400_000;
 
     private final RssChannelListView rssChannelListView;
     private final RssChannelListRepository repository;
@@ -116,6 +116,22 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     }
 
     @Override
+    public void onReceiveExternalRssChannel(final String rssChannelLink) {
+        final AddRssChannelTask task = new AddRssChannelTask(this);
+        task.execute(new RssChannel(rssChannelLink));
+        rssChannelListView.startActivityToDisplayNewsEntryList(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY, rssChannelLink);
+
+        try {
+            repository.setRssChannelReaded(rssChannelLink, true);
+        } catch (final DbException e) {
+            /*
+            TODO Обработка исключения
+             */
+            e.printStackTrace(System.err);
+        }
+    }
+
+    @Override
     public void onRssChannelListItemClick(final RssChannel rssChannel) {
         rssChannelListView.startActivityToDisplayNewsEntryList(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY,
                 rssChannel.getLink());
@@ -126,7 +142,7 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
             /*
             TODO Обработка исключения
              */
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 

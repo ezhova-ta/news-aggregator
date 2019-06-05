@@ -56,6 +56,13 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
         setContentView(R.layout.rss_channel_list);
         initViewElement();
 
+        final String action = getIntent().getAction();
+        final String data = getIntent().getDataString();
+
+        if(Intent.ACTION_VIEW.equals(action) && data != null) {
+            onReceiveExternalRssChannel(data);
+        }
+
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         onRssChannelListItemClickListener = diFactory.provideOnRssChannelListItemClickListener(this);
         presenter = diFactory.provideRssChannelListPresenter(this);
@@ -71,6 +78,18 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
         final IntentFilter intentFilter = new IntentFilter(RssChannelListService.ACTION_UPDATE_NEWS_ENTRY_LISTS);
         registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
+    protected void onNewIntent(final Intent intent) {
+        super.onNewIntent(intent);
+
+        final String action = intent.getAction();
+        final String data = intent.getDataString();
+
+        if(Intent.ACTION_VIEW.equals(action) && data != null) {
+            onReceiveExternalRssChannel(data);
+        }
     }
 
     @Override
@@ -126,6 +145,10 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
 
     public void onDisableUpdatingNotificationsButtonClick(final View view) {
         presenter.onDisableUpdatingNotificationsButtonClick();
+    }
+
+    private void onReceiveExternalRssChannel(final String rssChannelLink) {
+        presenter.onReceiveExternalRssChannel(rssChannelLink);
     }
 
     @Override

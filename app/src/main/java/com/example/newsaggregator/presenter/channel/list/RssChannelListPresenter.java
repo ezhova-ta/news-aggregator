@@ -7,4 +7,5 @@ public interface RssChannelListPresenter {
     void onEnableUpdatingNotificationsButtonClick();
     void onDisableUpdatingNotificationsButtonClick();
     void onReceiveBroadcastMessage(int requestResult);
+    void onReceiveExternalRssChannel(String rssChannelLink);
 }

@@ -27,10 +27,18 @@
             android:name=".model.NewsEntryListService"
             android:exported="false" />
 
-        <activity android:name=".view.channel.list.RssChannelListActivity">
+        <activity
+            android:name=".view.channel.list.RssChannelListActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="https" />
             </intent-filter>
         </activity>
 
