@@ -15,8 +15,8 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnRssChannelListItemClickListener {
+    private static final int MILLISECONDS_PER_MINUTE = 60_000;
     private static final int MILLISECONDS_PER_HOUR = 3_600_000;
-    private static final int MILLISECONDS_PER_DAY = 86_400_000;
 
     private final RssChannelListView rssChannelListView;
     private final RssChannelListRepository repository;
@@ -61,8 +61,8 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
     @Override
     public void onEnableUpdatingNotificationsButtonClick() {
-        final int spinnerPositionHours = 0;
-        final int spinnerPositionDays = 1;
+        final int spinnerPositionMinutes = 0;
+        final int spinnerPositionHours = 1;
         final String repeatingUpdateAlarmInterval =
                 rssChannelListView.getRepeatingUpdateAlarmIntervalEditTextValue();
         final int spinnerSelectedItemPosition =
@@ -71,10 +71,10 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
 
         if(!repeatingUpdateAlarmInterval.isEmpty()) {
             try {
-                if(spinnerPositionHours == spinnerSelectedItemPosition) {
+                if(spinnerPositionMinutes == spinnerSelectedItemPosition) {
+                    intervalMillis = Long.parseLong(repeatingUpdateAlarmInterval) * MILLISECONDS_PER_MINUTE;
+                } else if(spinnerPositionHours == spinnerSelectedItemPosition) {
                     intervalMillis = Long.parseLong(repeatingUpdateAlarmInterval) * MILLISECONDS_PER_HOUR;
-                } else if(spinnerPositionDays == spinnerSelectedItemPosition) {
-                    intervalMillis = Long.parseLong(repeatingUpdateAlarmInterval) * MILLISECONDS_PER_DAY;
                 } else {
                     return;
                 }

@@ -29,7 +29,7 @@
     <string name="downloading_news_entry_list_notification_content_title">Updating news list</string>
 
     <string-array name="repeatingIntervalUnitList">
+        <item>minutes</item>
         <item>hours</item>
-        <item>days</item>
     </string-array>
 </resources>
