@@ -44,7 +44,7 @@ public class DependencyInjectionFactory {
     }
 
     public SQLiteOpenHelper provideSQLiteOpenHelper() {
-        return new DBHelper(context, DbConstants.DB_NAME, null, DbConstants.DB_VERSION);
+        return DBHelper.getInstance(context);
     }
 
     public LocalRssChannelDataSource provideLocalRssChannelDataSource() {

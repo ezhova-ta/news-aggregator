@@ -5,9 +5,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public DBHelper(final Context context, final String dbName,
+    private static DBHelper instance;
+
+    private DBHelper(final Context context, final String dbName,
                     final SQLiteDatabase.CursorFactory factory, final int version) {
         super(context, dbName, factory, version);
+    }
+
+    public static DBHelper getInstance(final Context context) {
+        if(instance == null) {
+            instance = new DBHelper(context, DbConstants.DB_NAME, null, DbConstants.DB_VERSION);
+        }
+
+        return instance;
     }
 
     @Override
@@ -27,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD + " text, " +
                 DbConstants.NEWS_ENTRY_PUB_DATE_FIELD + " integer, " +
                 DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + " integer not null, " +
-                "unique (" + DbConstants.NEWS_ENTRY_LINK_FIELD + ")," +
+                "unique (" + DbConstants.NEWS_ENTRY_TITLE_FIELD + ", " + DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD + ")," +
                 "foreign key (" + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + ") references " +
                 DbConstants.RSS_CHANNELS_TABLE_NAME + "(" + DbConstants.RSS_CHANNEL_ID_FIELD +
                 ") on delete cascade)"

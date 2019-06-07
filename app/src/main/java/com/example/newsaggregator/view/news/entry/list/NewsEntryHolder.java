@@ -32,8 +32,25 @@ class NewsEntryHolder extends RecyclerView.ViewHolder {
     private String convertToString(final long dateInMillis) {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(dateInMillis);
-        return  calendar.get(Calendar.DAY_OF_MONTH) + "." +
-                (calendar.get(Calendar.MONTH) + 1) + "." +
-                calendar.get(Calendar.YEAR);
+
+        final int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        final String dayOfMonthString = dayOfMonth > 9 ? Integer.toString(dayOfMonth) : "0" + dayOfMonth;
+
+        final int month = calendar.get(Calendar.MONTH) + 1;
+        final String monthString = month > 9 ? Integer.toString(month) : "0" + month;
+
+        final int year = calendar.get(Calendar.YEAR);
+
+        final int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        final String hourOfDayString = hourOfDay > 9 ? Integer.toString(hourOfDay) : "0" + hourOfDay;
+
+        final int minute = calendar.get(Calendar.MINUTE);
+        final String minuteString = minute > 9 ? Integer.toString(minute) : "0" + minute;
+
+        final int second = calendar.get(Calendar.SECOND);
+        final String secondString = second > 9 ? Integer.toString(second) : "0" + second;
+
+        return  dayOfMonthString + "." + monthString + "." + year + " " +
+                hourOfDayString + ":" + minuteString + ":" + secondString;
     }
 }
