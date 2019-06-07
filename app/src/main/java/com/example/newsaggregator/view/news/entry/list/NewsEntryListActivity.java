@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import com.example.newsaggregator.view.news.entry.NewsEntryActivity;
 import java.util.List;
 
 public class NewsEntryListActivity extends AppCompatActivity implements NewsEntryListView {
+    private static final String RSS_CHANNEL_LINK_BUNDLE_KEY = "rssChannelLink";
     private static final String PREFERENCES_NAME = "news_entries";
     private static final String PREFERENCES_KEY = "newsEntriesDetetionDate";
     private static final int DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID = 514;
@@ -50,8 +52,13 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         setContentView(R.layout.news_entry_list);
         initViewElement();
 
+        if(savedInstanceState != null) {
+            rssChannelLink = savedInstanceState.getString(RSS_CHANNEL_LINK_BUNDLE_KEY);
+        } else {
+            rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
+        }
+
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
-        rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
         rssChannelName.setText(rssChannelLink);
         onNewsEntryListItemClickListener = diFactory.provideOnNewsEntryListItemClickListener(this);
         presenter = diFactory.provideNewsEntryListPresenter(this);
@@ -94,6 +101,12 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(RSS_CHANNEL_LINK_BUNDLE_KEY, rssChannelLink);
     }
 
     private void initViewElement() {
