@@ -12,9 +12,11 @@ import com.example.newsaggregator.presenter.news.entry.NewsEntryPresenter;
 import com.example.newsaggregator.view.news.entry.list.NewsEntryListView;
 
 public class NewsEntryActivity extends AppCompatActivity implements NewsEntryView {
+    private static final String NEWS_ENTRY_LINK_BUNDLE_KEY = "newsEntryLink";
     private DependencyInjectionFactory diFactory;
     private NewsEntryPresenter presenter;
     private WebView newsEntryWebView;
+    private String newsEntryLink;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -22,7 +24,12 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
         setContentView(R.layout.news_entry);
         initViewElement();
 
-        final String newsEntryLink = getIntent().getStringExtra(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY);
+        if(savedInstanceState != null) {
+            newsEntryLink = savedInstanceState.getString(NEWS_ENTRY_LINK_BUNDLE_KEY);
+        } else {
+            newsEntryLink = getIntent().getStringExtra(NewsEntryListView.NEWS_ENTRY_LINK_EXTRA_KEY);
+        }
+
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         presenter = diFactory.provideNewsEntryPresenter(this);
         presenter.onCreate(newsEntryLink);
@@ -51,6 +58,12 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(NEWS_ENTRY_LINK_BUNDLE_KEY, newsEntryLink);
     }
 
     private void initViewElement() {
