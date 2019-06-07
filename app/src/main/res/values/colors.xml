@@ -5,4 +5,5 @@
     <color name="colorAccent">#5F7F9E</color>
 
     <color name="colorNewsEntryTitle">#67861F</color>
+    <color name="colorRssChannelLink">#EE9528</color>
 </resources>

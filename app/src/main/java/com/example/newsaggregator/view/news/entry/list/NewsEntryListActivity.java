@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newsaggregator.R;
@@ -36,6 +37,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     private DependencyInjectionFactory diFactory;
     private NewsEntryListPresenter presenter;
     private OnNewsEntryListItemClickListener onNewsEntryListItemClickListener;
+    private TextView rssChannelName;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private BroadcastReceiver receiver;
@@ -50,6 +52,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
 
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
         rssChannelLink = getIntent().getStringExtra(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY);
+        rssChannelName.setText(rssChannelLink);
         onNewsEntryListItemClickListener = diFactory.provideOnNewsEntryListItemClickListener(this);
         presenter = diFactory.provideNewsEntryListPresenter(this);
         presenter.onCreate();
@@ -94,6 +97,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     }
 
     private void initViewElement() {
+        rssChannelName = findViewById(R.id.rssChannelName);
         recyclerView = findViewById(R.id.newsEntryList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = findViewById(R.id.NewsEntriesLoadingProgress);

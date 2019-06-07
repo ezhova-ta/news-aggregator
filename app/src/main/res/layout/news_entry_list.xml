@@ -15,6 +15,13 @@
         android:onClick="onUpdateNewsEntryListButtonClick"
         android:text="@string/update_news_entry_list_button_text" />
 
+    <TextView
+        style="@style/RssChannelLink"
+        android:id="@+id/rssChannelName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" />
+
     <ProgressBar
         android:id="@+id/NewsEntriesLoadingProgress"
         android:visibility="gone"
