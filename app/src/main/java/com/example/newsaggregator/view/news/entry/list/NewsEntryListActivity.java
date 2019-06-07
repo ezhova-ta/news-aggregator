@@ -34,7 +34,7 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     private static final String RSS_CHANNEL_LINK_BUNDLE_KEY = "rssChannelLink";
     private static final String PREFERENCES_NAME = "news_entries";
     private static final String PREFERENCES_KEY = "newsEntriesDetetionDate";
-    private static final int DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID = 514;
+//    private static final int DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID = 514;
 
     private DependencyInjectionFactory diFactory;
     private NewsEntryListPresenter presenter;
@@ -186,27 +186,6 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     @Override
     public void showEmptyNewsEntryListMessage() {
         showPopupMessage(getResources().getText(R.string.empty_news_entry_list_message));
-    }
-
-    @Override
-    public void showDownloadingNewsEntryListNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationBuilder =
-                    new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.logo)
-                    .setContentTitle(getResources().getText(R.string.downloading_news_entry_list_notification_content_title))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setProgress(0, 0, true);
-
-            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID, notificationBuilder.build());
-        }
-    }
-
-    @Override
-    public void hideDownloadingNewsEntryListNotification() {
-        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.cancel(DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID);
     }
 
     private void showPopupMessage(final CharSequence text) {

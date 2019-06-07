@@ -3,7 +3,11 @@ package com.example.newsaggregator.model;
 import android.app.IntentService;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 
+import com.example.newsaggregator.R;
 import com.example.newsaggregator.app.DependencyInjectionFactory;
 import com.example.newsaggregator.app.NewsAggregatorApplication;
 import com.example.newsaggregator.model.entity.NewsEntry;
@@ -22,7 +26,9 @@ public class NewsEntryListService extends IntentService {
             "com.example.newsaggregator.model.extra.REQUEST_RESULT";
     public static final int FETCHING_NEWS_ENTRY_LIST_RESULT_OK = 1;
     public static final int FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING = -1;
+    private static final int DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID = 514;
 
+    private NotificationCompat.Builder notificationBuilder;
     private final DependencyInjectionFactory diFactory;
 
     public NewsEntryListService() {
@@ -45,6 +51,8 @@ public class NewsEntryListService extends IntentService {
         final Intent responseIntent = new Intent(ACTION_FETCH_NEWS_ENTRY_LIST);
         final Parser parser;
 
+        showDownloadingNewsEntryListNotification();
+
         try {
             parser = diFactory.provideParser();
             final List<NewsEntry> newsEntryList = (List<NewsEntry>) parser.parse(rssChannelUrl);
@@ -64,7 +72,27 @@ public class NewsEntryListService extends IntentService {
             responseIntent.putExtra(EXTRA_PARAM_REQUEST_RESULT, FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING);
         }
 
+        hideDownloadingNewsEntryListNotification();
         sendBroadcast(responseIntent);
         stopSelf();
+    }
+
+    private void showDownloadingNewsEntryListNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationBuilder =
+                    new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle(getResources().getText(R.string.downloading_news_entry_list_notification_content_title))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setProgress(0, 0, true);
+
+            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID, notificationBuilder.build());
+        }
+    }
+
+    private void hideDownloadingNewsEntryListNotification() {
+        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.cancel(DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID);
     }
 }
