@@ -99,6 +99,8 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
                 presenter.get().newsEntryListView.showNewsEntriesLoadingErrorMessage();
             } else {
                 if(result.getResult().isEmpty()) {
+                    presenter.get().newsEntryListView.showProgressBar();
+                    presenter.get().newsEntryListView.showDownloadingNewsEntryListNotification();
                     presenter.get().newsEntryListView.startServiceToUpdateNewsEntryList();
                 } else {
                     presenter.get().newsEntryListView.showNewsEntryList(result.getResult());
