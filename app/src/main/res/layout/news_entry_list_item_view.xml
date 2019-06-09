@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginBottom="20dp" >
+    style="@style/NewsEntryListItemContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <TextView
-        style="@style/NewsEntryTitle"
-        android:id="@+id/newsEntryTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/NewsEntryListItemTitle"
+        android:id="@+id/newsEntryTitle" />
 
     <TextView
-        style="@style/NewsEntryDescription"
-        android:id="@+id/newsEntryDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/NewsEntryListItemDescription"
+        android:id="@+id/newsEntryDescription" />
 
     <TextView
-        style="@style/NewsEntryPubDate"
-        android:id="@+id/newsEntryPubDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/NewsEntryListItemPubDate"
+        android:id="@+id/newsEntryPubDate" />
 
 </LinearLayout>

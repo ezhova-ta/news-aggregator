@@ -14,7 +14,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static DBHelper getInstance(final Context context) {
         if(instance == null) {
-            instance = new DBHelper(context, DbConstants.DB_NAME, null, DbConstants.DB_VERSION);
+            instance = new DBHelper(
+                    context,
+                    DbConstants.DB_NAME,
+                    null,
+                    DbConstants.DB_VERSION_1
+            );
         }
 
         return instance;
@@ -22,25 +27,35 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
+        final int CHANNEL_NOT_READED_DB_VALUE = 0;
+
         db.execSQL(
-                "create table if not exists " + DbConstants.RSS_CHANNELS_TABLE_NAME +
-                " (" + DbConstants.RSS_CHANNEL_ID_FIELD + " integer primary key autoincrement, " +
-                DbConstants.RSS_CHANNEL_LINK_FIELD + " text, " +
-                DbConstants.RSS_CHANNEL_READED_FIELD + " integer default 0, " +
-                "unique (" + DbConstants.RSS_CHANNEL_LINK_FIELD + "))"
+                "create table if not exists " + DbConstants.RSS_CHANNELS_TABLE_NAME + " (" +
+                        DbConstants.RSS_CHANNEL_ID_FIELD + " integer primary key autoincrement, " +
+                        DbConstants.RSS_CHANNEL_LINK_FIELD + " text, " +
+                        DbConstants.RSS_CHANNEL_READED_FIELD + " integer default " + CHANNEL_NOT_READED_DB_VALUE + ", " +
+                        "unique (" + DbConstants.RSS_CHANNEL_LINK_FIELD + ")" +
+                ")"
         );
+
         db.execSQL(
-                "create table if not exists " + DbConstants.NEWS_ENTRIES_TABLE_NAME +
-                " (" + DbConstants.NEWS_ENTRY_ID_FIELD + " integer primary key autoincrement, " +
-                DbConstants.NEWS_ENTRY_TITLE_FIELD + " text, " +
-                DbConstants.NEWS_ENTRY_LINK_FIELD + " text, " +
-                DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD + " text, " +
-                DbConstants.NEWS_ENTRY_PUB_DATE_FIELD + " integer, " +
-                DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + " integer not null, " +
-                "unique (" + DbConstants.NEWS_ENTRY_TITLE_FIELD + ", " + DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD + ")," +
-                "foreign key (" + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + ") references " +
-                DbConstants.RSS_CHANNELS_TABLE_NAME + "(" + DbConstants.RSS_CHANNEL_ID_FIELD +
-                ") on delete cascade)"
+                "create table if not exists " + DbConstants.NEWS_ENTRIES_TABLE_NAME + " (" +
+                        DbConstants.NEWS_ENTRY_ID_FIELD + " integer primary key autoincrement, " +
+                        DbConstants.NEWS_ENTRY_TITLE_FIELD + " text, " +
+                        DbConstants.NEWS_ENTRY_LINK_FIELD + " text, " +
+                        DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD + " text, " +
+                        DbConstants.NEWS_ENTRY_PUB_DATE_FIELD + " integer, " +
+                        DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + " integer not null, " +
+                        "unique (" +
+                                DbConstants.NEWS_ENTRY_TITLE_FIELD + ", " +
+                                DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD +
+                        ")," +
+                        "foreign key " +
+                                "(" + DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD + ") " +
+                        "references " +
+                                DbConstants.RSS_CHANNELS_TABLE_NAME + "(" + DbConstants.RSS_CHANNEL_ID_FIELD + ") " +
+                                "on delete cascade" +
+                ")"
         );
     }
 
@@ -51,5 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {}
+    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
 }

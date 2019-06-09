@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    style="@style/DeletingRssChannelListContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.channel.list.deleting.DeletingRssChannelListActivity"
-    android:orientation="vertical"
-    android:padding="10dp" >
+    tools:context=".view.channel.list.deleting.DeletingRssChannelListActivity" >
 
     <ProgressBar
-        android:id="@+id/rssChannelsDeletingProgress"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        style="@style/RssChannelsDeletingProgress"
+        android:id="@+id/rssChannelsDeletingProgress" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rssChannelListForDeleting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_marginTop="20dp" />
+        style="@style/RssChannelListForDeleting"
+        android:id="@+id/rssChannelListForDeleting" />
 
     <Button
+        style="@style/ConfirmDeletingRssChannelsButton"
         android:id="@+id/confirmDeletingRssChannelsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:onClick="onConfirmDeletingRssChannelsButtonClick"
         android:text="@string/confirm_deleting_rss_channels_button_text" />
 </LinearLayout>

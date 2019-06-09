@@ -31,10 +31,11 @@ public class RssChannelListService extends IntentService {
     public static final int UPDATING_NEWS_ENTRY_LISTS_RESULT_NO_FRESH_NEWS_ENTRIES = 2;
     public static final int UPDATING_NEWS_ENTRY_LISTS_RESULT_FAILING = -1;
     private static final int UPDATE_NOTIFICATION_ID = 513;
+
     private final DependencyInjectionFactory diFactory;
 
     public RssChannelListService() {
-        super("RssChannelListService");
+        super(RssChannelListService.class.getSimpleName());
         diFactory = NewsAggregatorApplication.getInstance().getDiFactory();
     }
 
@@ -73,7 +74,6 @@ public class RssChannelListService extends IntentService {
             }
 
             if(isUpdated) {
-                // TODO Создание уведомления, если версия API < 26
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     final Intent intent = new Intent(this, RssChannelListActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -81,12 +81,12 @@ public class RssChannelListService extends IntentService {
 
                     final NotificationCompat.Builder builder =
                             new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
-                                    .setSmallIcon(R.drawable.logo)
-                                    .setContentTitle(getResources().getText(R.string.update_notification_content_title))
-                                    .setContentText(getResources().getText(R.string.update_notification_content_text))
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                    .setContentIntent(pendingIntent)
-                                    .setAutoCancel(true);
+                            .setSmallIcon(R.drawable.logo)
+                            .setContentTitle(getResources().getText(R.string.update_notification_content_title))
+                            .setContentText(getResources().getText(R.string.update_notification_content_text))
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true);
 
                     final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
                     notificationManager.notify(UPDATE_NOTIFICATION_ID, builder.build());

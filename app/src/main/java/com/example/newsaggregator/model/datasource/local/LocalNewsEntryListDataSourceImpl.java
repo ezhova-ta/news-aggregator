@@ -23,7 +23,8 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
     @Override
     public List<NewsEntry> getNewsEntryList(final String rssChannelLink) throws SQLiteException {
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
-        final List<NewsEntry> newsEntryList = new ArrayList<>(10);
+        final int NEWS_ENTRY_ARRAY_LIST_INITIAL_CAPACITY = 10;
+        final List<NewsEntry> newsEntryList = new ArrayList<>(NEWS_ENTRY_ARRAY_LIST_INITIAL_CAPACITY);
         NewsEntry newsEntry;
 
         final String sqlQuery =
@@ -59,7 +60,8 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
     }
 
     @Override
-    public boolean addNewsEntryList(final String rssChannelUrl, final List<NewsEntry> newsEntryList) throws SQLiteException {
+    public boolean addNewsEntryList(final String rssChannelUrl, final List<NewsEntry> newsEntryList)
+            throws SQLiteException {
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
         final long rssChannelId;
         ContentValues contentValues;
@@ -92,8 +94,13 @@ public class LocalNewsEntryListDataSourceImpl implements LocalNewsEntryListDataS
             contentValues.put(DbConstants.NEWS_ENTRY_DESCRIPTION_FIELD, elem.getDescription());
             contentValues.put(DbConstants.NEWS_ENTRY_PUB_DATE_FIELD, elem.getPubDate());
             contentValues.put(DbConstants.NEWS_ENTRY_RSS_CHANNEL_ID_FIELD, rssChannelId);
-            final long rowId = db.insertWithOnConflict(DbConstants.NEWS_ENTRIES_TABLE_NAME,
-                    null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+
+            final long rowId = db.insertWithOnConflict(
+                    DbConstants.NEWS_ENTRIES_TABLE_NAME,
+                    null,
+                    contentValues,
+                    SQLiteDatabase.CONFLICT_IGNORE
+            );
             if(rowId != -1) {
                 isUpdated = true;
             }

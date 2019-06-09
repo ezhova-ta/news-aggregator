@@ -18,6 +18,7 @@ public interface RssChannelListView {
     void startActivityToDeleteRssChannels();
     void startAlarmManagerToUpdateNewsEntryLists(long intervalMillis);
     void stopAlarmManagerToUpdateNewsEntryLists();
+    void startServiceToUpdateNewsEntryLists();
 
     void showProgressBar();
     void hideProgressBar();
@@ -45,6 +46,4 @@ public interface RssChannelListView {
 
     void setEnabledNotificationsValue(boolean isEnable);
     boolean getEnabledNotificationsValue();
-
-    void startServiceToUpdateNewsEntryLists();
 }

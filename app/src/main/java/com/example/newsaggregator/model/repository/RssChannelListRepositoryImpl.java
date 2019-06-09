@@ -26,10 +26,11 @@ public class RssChannelListRepositoryImpl implements RssChannelListRepository {
 
     @Override
     public void addRssChannel(final RssChannel rssChannel) throws DbException {
+        final String INSERTING_ERROR_MESSAGE = "An inserting error occurred.";
         try {
             final long rowId = dataSource.addRssChannel(rssChannel);
             if(rowId == -1) {
-                throw new DbException("An inserting error occurred.");
+                throw new DbException(INSERTING_ERROR_MESSAGE);
             }
         } catch(final SQLiteException e) {
             throw new DbException(e.getMessage());

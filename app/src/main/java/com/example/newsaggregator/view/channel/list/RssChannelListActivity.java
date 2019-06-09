@@ -35,6 +35,7 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     private static final String UNREAD_RSS_CHANNELS_PREFERENCES_NAME = "rssChannels";
     private static final String UNREAD_RSS_CHANNELS_PREFERENCES_KEY = "unreadRssChannelsSet";
     private static final int UPDATING_NEWS_ENTRY_LIST_DEFAULT_RESULT = 0;
+    private static final int ALARM_MANAGER_REQUEST_CODE = 0;
     private static final int UPDATE_NOTIFICATION_ID = 513;
 
     private DependencyInjectionFactory diFactory;
@@ -198,40 +199,39 @@ public class RssChannelListActivity extends AppCompatActivity implements RssChan
     }
 
     @Override
-    public void startServiceToUpdateNewsEntryLists() {
-        final Intent intent = new Intent(this, RssChannelListService.class);
-        intent.setAction(RssChannelListService.ACTION_UPDATE_NEWS_ENTRY_LISTS);
-        startService(intent);
-    }
-
-    @Override
     public void startAlarmManagerToUpdateNewsEntryLists(final long intervalMillis) {
-        /*
-        TODO magic const
-         */
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this,
-                0,
+                ALARM_MANAGER_REQUEST_CODE,
                 new Intent(this, UpdatingNewsEntryListsAlarmReceiver.class),
-                0
+                PendingIntent.FLAG_CANCEL_CURRENT
         );
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), intervalMillis, pendingIntent);
+        alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis(),
+                intervalMillis,
+                pendingIntent
+        );
     }
 
     @Override
     public void stopAlarmManagerToUpdateNewsEntryLists() {
-        /*
-        TODO magic const
-         */
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this,
-                0,
+                ALARM_MANAGER_REQUEST_CODE,
                 new Intent(this, UpdatingNewsEntryListsAlarmReceiver.class),
-                0
+                PendingIntent.FLAG_CANCEL_CURRENT
         );
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
+    }
+
+    @Override
+    public void startServiceToUpdateNewsEntryLists() {
+        final Intent intent = new Intent(this, RssChannelListService.class);
+        intent.setAction(RssChannelListService.ACTION_UPDATE_NEWS_ENTRY_LISTS);
+        startService(intent);
     }
 
     @Override

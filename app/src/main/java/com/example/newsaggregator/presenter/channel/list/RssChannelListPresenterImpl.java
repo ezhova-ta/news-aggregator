@@ -119,34 +119,34 @@ public class RssChannelListPresenterImpl implements RssChannelListPresenter, OnR
     public void onReceiveExternalRssChannel(final String rssChannelLink) {
         final AddRssChannelTask task = new AddRssChannelTask(this);
         task.execute(new RssChannel(rssChannelLink));
-        rssChannelListView.startActivityToDisplayNewsEntryList(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY, rssChannelLink);
+        rssChannelListView.startActivityToDisplayNewsEntryList(
+                RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY,
+                rssChannelLink
+        );
 
         try {
             repository.setRssChannelReaded(rssChannelLink, true);
         } catch (final DbException e) {
-            /*
-            TODO Обработка исключения
-             */
             e.printStackTrace(System.err);
         }
     }
 
     @Override
     public void onRssChannelListItemClick(final RssChannel rssChannel) {
-        rssChannelListView.startActivityToDisplayNewsEntryList(RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY,
-                rssChannel.getLink());
+        rssChannelListView.startActivityToDisplayNewsEntryList(
+                RssChannelListView.RSS_CHANNEL_LINK_EXTRA_KEY,
+                rssChannel.getLink()
+        );
 
         try {
             repository.setRssChannelReaded(rssChannel.getLink(), true);
         } catch (final DbException e) {
-            /*
-            TODO Обработка исключения
-             */
             e.printStackTrace(System.err);
         }
     }
 
-    private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
+    private static final class ShowRssChannelListTask extends
+            AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
         private WeakReference<RssChannelListPresenterImpl> presenter;
 
         private ShowRssChannelListTask(final RssChannelListPresenterImpl presenter) {

@@ -28,7 +28,6 @@ public class NewsEntryListService extends IntentService {
     public static final int FETCHING_NEWS_ENTRY_LIST_RESULT_FAILING = -1;
     private static final int DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID = 514;
 
-    private NotificationCompat.Builder notificationBuilder;
     private final DependencyInjectionFactory diFactory;
 
     public NewsEntryListService() {
@@ -79,7 +78,7 @@ public class NewsEntryListService extends IntentService {
 
     private void showDownloadingNewsEntryListNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationBuilder =
+            final NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, NewsAggregatorApplication.NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(R.drawable.logo)
                     .setContentTitle(getResources().getText(R.string.downloading_news_entry_list_notification_content_title))

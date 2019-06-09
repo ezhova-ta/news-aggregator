@@ -34,7 +34,6 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
     private static final String RSS_CHANNEL_LINK_BUNDLE_KEY = "rssChannelLink";
     private static final String PREFERENCES_NAME = "news_entries";
     private static final String PREFERENCES_KEY = "newsEntriesDetetionDate";
-//    private static final int DOWNLOADING_NEWS_ENTRY_LIST_NOTIFICATION_ID = 514;
 
     private DependencyInjectionFactory diFactory;
     private NewsEntryListPresenter presenter;
@@ -67,8 +66,10 @@ public class NewsEntryListActivity extends AppCompatActivity implements NewsEntr
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
-                final int requestResult = intent.getIntExtra(NewsEntryListService.EXTRA_PARAM_REQUEST_RESULT,
-                        FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT);
+                final int requestResult = intent.getIntExtra(
+                        NewsEntryListService.EXTRA_PARAM_REQUEST_RESULT,
+                        FETCHING_NEWS_ENTRY_LIST_DEFAULT_RESULT
+                );
                 presenter.onReceiveBroadcastMessage(requestResult);
             }
         };

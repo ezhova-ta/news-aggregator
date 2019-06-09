@@ -1,38 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    style="@style/NewsEntryListContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.news.entry.list.NewsEntryListActivity"
-    android:orientation="vertical" >
+    tools:context=".view.news.entry.list.NewsEntryListActivity" >
 
     <Button
+        style="@style/UpdateNewsEntryListButton"
         android:id="@+id/updateNewsEntryListButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:onClick="onUpdateNewsEntryListButtonClick"
         android:text="@string/update_news_entry_list_button_text" />
 
     <TextView
-        style="@style/RssChannelLink"
-        android:id="@+id/rssChannelName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" />
+        style="@style/NewsEntryListRssChannelLink"
+        android:id="@+id/rssChannelName" />
 
     <ProgressBar
-        android:id="@+id/NewsEntriesLoadingProgress"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        style="@style/NewsEntriesLoadingProgress"
+        android:id="@+id/NewsEntriesLoadingProgress" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/newsEntryList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_marginTop="20dp" />
+        style="@style/NewsEntryList"
+        android:id="@+id/newsEntryList" />
 </LinearLayout>

@@ -4,6 +4,7 @@ public final class DbConstants {
     private DbConstants() {}
 
     public static final String DB_NAME = "rss_news_reader";
+    public static final int DB_VERSION_1 = 1;
     public static final String RSS_CHANNELS_TABLE_NAME = "rss_channels";
     public static final String NEWS_ENTRIES_TABLE_NAME = "news_entries";
 
@@ -20,6 +21,4 @@ public final class DbConstants {
     public static final long MILLISECONDS_PER_DAY = 86_400_000;
     public static final long NEWS_ENTRY_STORAGE_PERIOD_IN_MILLIS = MILLISECONDS_PER_DAY * 3;
     public static final long NEWS_ENTRIES_CHECK_PERIODICITY = MILLISECONDS_PER_DAY;
-
-    public static final int DB_VERSION = 1;
 }

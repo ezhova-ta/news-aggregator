@@ -8,8 +8,7 @@ public class NewsEntry {
 
     public NewsEntry() {}
 
-    public NewsEntry(final String title, final String link,
-                     final String description, final long pubDate) {
+    public NewsEntry(final String title, final String link, final String description, final long pubDate) {
         this.title = title;
         this.link = link;
         this.description = description;

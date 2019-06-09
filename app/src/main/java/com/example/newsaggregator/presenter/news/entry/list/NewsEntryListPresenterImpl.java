@@ -113,9 +113,6 @@ public class NewsEntryListPresenterImpl implements NewsEntryListPresenter, OnNew
             this.presenter = new WeakReference<>(presenter);
         }
 
-        /*
-        TODO Обработка ошибок
-        */
         @Override
         protected VoidAsyncTaskResult doInBackground(final Void... voids) {
             try {

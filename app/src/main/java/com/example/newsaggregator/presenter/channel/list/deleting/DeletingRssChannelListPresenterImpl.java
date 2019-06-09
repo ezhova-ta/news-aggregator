@@ -13,12 +13,13 @@ import com.example.newsaggregator.view.channel.list.deleting.OnRssChannelListIte
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelListPresenter, OnRssChannelListItemCheckListener {
+public class DeletingRssChannelListPresenterImpl implements
+        DeletingRssChannelListPresenter, OnRssChannelListItemCheckListener {
     private DeletingRssChannelListView deletingRssChannelListView;
     private RssChannelListRepository repository;
 
     public DeletingRssChannelListPresenterImpl(final DeletingRssChannelListView deletingRssChannelListView,
-                                       final RssChannelListRepository repository) {
+                                               final RssChannelListRepository repository) {
         this.deletingRssChannelListView = deletingRssChannelListView;
         this.repository = repository;
     }
@@ -47,7 +48,8 @@ public class DeletingRssChannelListPresenterImpl implements DeletingRssChannelLi
         }
     }
 
-    private static final class ShowRssChannelListTask extends AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
+    private static final class ShowRssChannelListTask extends
+            AsyncTask<Void, Void, AsyncTaskResult<List<RssChannel>>> {
         private WeakReference<DeletingRssChannelListPresenterImpl> presenter;
 
         private ShowRssChannelListTask(final DeletingRssChannelListPresenterImpl presenter) {

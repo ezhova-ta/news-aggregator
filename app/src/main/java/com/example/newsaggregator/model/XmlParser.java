@@ -83,7 +83,7 @@ public class XmlParser implements Parser<List<NewsEntry>> {
         return newsEntryList;
     }
 
-    private long convertToMillis(final String date) throws ParseException {
+    private static long convertToMillis(final String date) throws ParseException {
         DateFormat format = new SimpleDateFormat(DATE_PATTERN_WITHOUT_DAY_OF_WEEK, new Locale("en"));
         final Calendar calendar = format.getCalendar();
         Date formattedDate;

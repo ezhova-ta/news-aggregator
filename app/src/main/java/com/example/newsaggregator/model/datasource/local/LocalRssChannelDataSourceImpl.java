@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource {
+    private static final int CHANNEL_READED_DB_VALUE = 1;
+    private static final int CHANNEL_NOT_READED_DB_VALUE = 0;
+
     private final SQLiteOpenHelper sqLiteOpenHelper;
 
     public LocalRssChannelDataSourceImpl(final SQLiteOpenHelper sqLiteOpenHelper) {
@@ -22,12 +25,16 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
     @Override
     public List<RssChannel> getRssChannelList() throws SQLiteException {
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
-        final List<RssChannel> rssChannelList = new ArrayList<>(10);
+        final int RSS_CHANNEL_ARRAY_LIST_INITIAL_CAPACITY = 10;
+        final List<RssChannel> rssChannelList = new ArrayList<>(RSS_CHANNEL_ARRAY_LIST_INITIAL_CAPACITY);
         RssChannel rssChannel;
 
         final Cursor cursor = db.query(
                 DbConstants.RSS_CHANNELS_TABLE_NAME,
-                new String[]{DbConstants.RSS_CHANNEL_LINK_FIELD, DbConstants.RSS_CHANNEL_READED_FIELD},
+                new String[]{
+                        DbConstants.RSS_CHANNEL_LINK_FIELD,
+                        DbConstants.RSS_CHANNEL_READED_FIELD
+                },
                 null,
                 null,
                 null,
@@ -42,10 +49,7 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
             do {
                 rssChannel = new RssChannel(
                         cursor.getString(linkColumnIndex),
-                        /*
-                        TODO magic const
-                         */
-                        cursor.getInt(readedColumnIndex) == 1 ? true : false
+                        cursor.getInt(readedColumnIndex) == CHANNEL_READED_DB_VALUE ? true : false
                 );
                 rssChannelList.add(rssChannel);
             } while(cursor.moveToNext());
@@ -91,10 +95,10 @@ public class LocalRssChannelDataSourceImpl implements LocalRssChannelDataSource 
         final SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
         final ContentValues contentValues = new ContentValues();
 
-        /*
-        TODO magic const
-         */
-        contentValues.put(DbConstants.RSS_CHANNEL_READED_FIELD, readed ? 1 : 0);
+        contentValues.put(
+                DbConstants.RSS_CHANNEL_READED_FIELD,
+                readed ? CHANNEL_READED_DB_VALUE : CHANNEL_NOT_READED_DB_VALUE
+        );
         final int rowNumber = db.update(
                 DbConstants.RSS_CHANNELS_TABLE_NAME,
                 contentValues,

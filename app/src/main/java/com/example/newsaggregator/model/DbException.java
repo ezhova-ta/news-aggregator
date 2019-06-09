@@ -6,4 +6,9 @@ public class DbException extends Exception {
     public DbException(final String message) {
         this.message = message;
     }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }
