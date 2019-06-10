@@ -2,8 +2,10 @@ package com.example.newsaggregator.view.news.entry;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.example.newsaggregator.R;
 import com.example.newsaggregator.app.DependencyInjectionFactory;
@@ -16,6 +18,7 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
     private DependencyInjectionFactory diFactory;
     private NewsEntryPresenter presenter;
     private WebView newsEntryWebView;
+    private ProgressBar progressBar;
     private String newsEntryLink;
 
     @Override
@@ -68,6 +71,7 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
 
     private void initViewElement() {
         newsEntryWebView = findViewById(R.id.newsEntryWebView);
+        progressBar = findViewById(R.id.newsEntryProgressBar);
     }
 
     @Override
@@ -75,4 +79,16 @@ public class NewsEntryActivity extends AppCompatActivity implements NewsEntryVie
         newsEntryWebView.setWebViewClient(webViewClient);
         newsEntryWebView.loadUrl(newsEntryLink);
     }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+
 }

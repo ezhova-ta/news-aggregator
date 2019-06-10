@@ -13,7 +13,7 @@ public class NewsEntryPresenterImpl implements NewsEntryPresenter {
     @Override
     public void onCreate(final String newsEntryLink) {
         newsEntryView.showNewsEntry(
-                NewsAggregatorApplication.getInstance().getDiFactory().provideWebViewClient(),
+                NewsAggregatorApplication.getInstance().getDiFactory().provideWebViewClient(newsEntryView),
                 newsEntryLink
         );
     }

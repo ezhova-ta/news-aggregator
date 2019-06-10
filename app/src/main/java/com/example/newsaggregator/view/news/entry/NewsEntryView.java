@@ -4,4 +4,6 @@ import android.webkit.WebViewClient;
 
 public interface NewsEntryView {
     void showNewsEntry(WebViewClient webViewClient, String newsEntryLink);
+    void showProgress();
+    void hideProgress();
 }

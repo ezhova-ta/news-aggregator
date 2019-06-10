@@ -6,6 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.news.entry.NewsEntryActivity">
 
+    <ProgressBar
+        style="@style/NewsEntryProgressBar"
+        android:id="@+id/newsEntryProgressBar" />
+
     <WebView
         style="@style/NewsEntry"
         android:id="@+id/newsEntryWebView" />

@@ -95,7 +95,7 @@ public class DependencyInjectionFactory {
         return new DeletingRssChannelListPresenterImpl(view, provideRssChannelListRepository());
     }
 
-    public WebViewClient provideWebViewClient() {
-        return new NewsEntryWebViewClient();
+    public WebViewClient provideWebViewClient(final NewsEntryView view) {
+        return new NewsEntryWebViewClient(view);
     }
 }
